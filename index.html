@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRODUTO Smart — Status Report</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+
+  .card {
+    width: 100%;
+    background: #fff;
+    min-height: 100vh;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  /* ── HEADER ── */
+  .card-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 28px 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-header::before {
+    content: '';
+    position: absolute;
+    top: -70px; right: -70px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F482E7, #83C0F2);
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #F482E7, #83C0F2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .card-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .card-header .subtitle {
+    font-size: 12.5px;
+    color: #8da4c4;
+  }
+  .header-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .header-meta .owner-label {
+    font-size: 9px;
+    color: #556680;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+  .header-meta .owner-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #83C0F2;
+  }
+  .header-meta .report-date {
+    font-size: 10.5px;
+    color: #556680;
+    margin-top: 2px;
+  }
+
+  /* ── TABS NAV ── */
+  .tabs-nav {
+    display: flex;
+    background: #f7f9fc;
+    border-bottom: 1px solid #eaecf2;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8a94a8;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.15s;
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  }
+  .tab-btn:hover { color: #4a5568; }
+  .tab-btn.active {
+    color: #2d3748;
+    border-bottom: 2px solid #F482E7;
+    background: #fff;
+  }
+  .tab-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  /* ── TAB PANELS ── */
+  .tab-panel { display: none; padding: 24px; }
+  .tab-panel.active { display: block; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 22px; }
+  .section:last-child { margin-bottom: 0; }
+  .section-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: #aab0be;
+    margin-bottom: 10px;
+  }
+
+  /* ── OVERVIEW ITEMS ── */
+  .overview-grid { display: flex; flex-direction: column; gap: 7px; }
+  .ov-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    background: #f7f9fc;
+    border: 1px solid #eaecf2;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .ov-item:hover { background: #f0f4fa; }
+  .ov-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+  .ov-content { flex: 1; min-width: 0; }
+  .ov-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 2px;
+    word-wrap: break-word;
+  }
+  .ov-sub {
+    font-size: 11px;
+    color: #8a94a8;
+    line-height: 1.45;
+    word-wrap: break-word;
+  }
+  .ov-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+    min-width: 80px;
+  }
+  .deadline-tag {
+    font-size: 9.5px;
+    color: #9aa0b0;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .deadline-tag.urgent { color: #e07b3a; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .badge-done    { background: #e4f5e9; color: #2e7d4f; }
+  .badge-ongoing { background: linear-gradient(90deg, #F482E7, #83C0F2); color: #fff; }
+  .badge-pending { background: #fff3e0; color: #b06010; }
+  .badge-blocked { background: #fdecea; color: #c0392b; }
+
+  /* ── DETAIL BLOCKS ── */
+  .detail-block {
+    background: #f7f9fc;
+    border: 1px solid #eaecf2;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .detail-block:last-child { margin-bottom: 0; }
+  .detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .detail-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2d3748;
+  }
+  .detail-body {
+    font-size: 13px;
+    color: #4a5568;
+    line-height: 1.65;
+    word-wrap: break-word;
+  }
+  .detail-body strong { color: #2d3748; }
+
+  /* ── BULLET LIST ── */
+  .update-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 8px;
+  }
+  .update-list li {
+    display: block;
+    position: relative;
+    padding-left: 14px;
+    font-size: 13px;
+    color: #4a5568;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .update-list li::before {
+    content: '›';
+    color: #F482E7;
+    font-weight: 700;
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: 1.45;
+  }
+  .update-list li strong { color: #2d3748; }
+
+  /* ── BLOCKER BOX ── */
+  .blocker-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fdecea;
+    border: 1px solid #f5c6c2;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #8b2519;
+    line-height: 1.55;
+    word-wrap: break-word;
+  }
+  .blocker-box::before {
+    content: '⛔';
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e2e6ef, transparent);
+    margin: 0 0 22px;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, #fdf0fc 0%, #eef6ff 100%);
+    border-left: 3px solid #F482E7;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: #2d3748;
+    line-height: 1.6;
+    margin-top: 10px;
+    word-wrap: break-word;
+  }
+  .highlight-box.blue { border-left-color: #83C0F2; }
+  .highlight-box strong { color: #1a1a2e; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex;
+    position: relative;
+    margin-top: 4px;
+    gap: 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, #F482E7, #83C0F2);
+    z-index: 0;
+  }
+  .tl-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .tl-dot {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .tl-dot.done   { background: linear-gradient(135deg, #F482E7, #83C0F2); box-shadow: 0 3px 10px rgba(244,130,231,0.3); }
+  .tl-dot.active { background: linear-gradient(135deg, #F482E7, #83C0F2); animation: glow 2s infinite; }
+  .tl-dot.next   { background: #e8edf5; }
+  @keyframes glow {
+    0%,100% { box-shadow: 0 3px 10px rgba(131,192,242,0.4); }
+    50%      { box-shadow: 0 3px 20px rgba(131,192,242,0.7); }
+  }
+  .tl-info { text-align: center; padding: 0 4px; }
+  .tl-date  { font-size: 9.5px; font-weight: 700; color: #8a94a8; margin-bottom: 2px; }
+  .tl-label { font-size: 11.5px; font-weight: 600; color: #2d3748; line-height: 1.3; }
+  .tl-sub   { font-size: 10px; color: #9aa0b0; margin-top: 2px; }
+
+  /* ── DELIVERABLES LIST ── */
+  .deliv-list { display: flex; flex-direction: column; gap: 7px; }
+  .deliv-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 13px;
+    background: #f7f9fc;
+    border: 1px solid #eaecf2;
+    border-radius: 8px;
+  }
+  .deliv-icon { font-size: 14px; flex-shrink: 0; }
+  .deliv-text { font-size: 12.5px; font-weight: 500; color: #2d3748; flex: 1; min-width: 0; }
+
+  /* ── INFOGRAPHIC ── */
+  .infographic-wrap {
+    background: #f7f9fc;
+    border: 1px solid #eaecf2;
+    border-radius: 10px;
+    padding: 14px 12px;
+    overflow: hidden;
+  }
+
+  /* ── FOOTER ── */
+  .card-footer {
+    background: #f7f9fc;
+    border-top: 1px solid #eaecf2;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .footer-brand {
+    font-size: 11px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #F482E7, #83C0F2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .footer-date { font-size: 10.5px; color: #9aa0b0; }
+
+  /* ── KPI / BIG NUMBERS ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .kpi-grid.col3 { grid-template-columns: repeat(3, 1fr); }
+  .kpi-grid.col2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 600px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .kpi-card {
+    background: #fff;
+    border: 1px solid #eaecf2;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .kpi-card.accent { border-top: 3px solid #F482E7; }
+  .kpi-card.accent-blue { border-top: 3px solid #83C0F2; }
+  .kpi-card.accent-warn { border-top: 3px solid #f59e0b; }
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #9aa0b0;
+  }
+  .kpi-value {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #F482E7, #83C0F2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .kpi-sub {
+    font-size: 10.5px;
+    color: #6b7280;
+  }
+  .company-block {
+    background: #f9fafb;
+    border: 1px solid #eaecf2;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .company-block-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .company-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #F482E7, #83C0F2);
+    color: #fff;
+  }
+  .conflict-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    font-size: 11px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #374151;
+  }
+  .conflict-row:last-child { border-bottom: none; }
+  .conflict-header {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #9aa0b0;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="card-header">
+    <div class="header-top">
+      <div>
+        <div class="tag">SmartBus · Grupo Guanabara</div>
+        <h1>PRODUTO Smart</h1>
+        <div class="subtitle">Status consolidado de iniciativas — semana 24 jun 2026</div>
+      </div>
+      <div class="header-meta">
+        <div class="owner-label">Owner</div>
+        <div class="owner-name">Maurício</div>
+        <div class="report-date">24 jun 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS NAV -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('geral',this)">
+      <span class="tab-dot" style="background:#83C0F2"></span>Visão Geral
+    </button>
+    <button class="tab-btn" onclick="switchTab('motor',this)">
+      <span class="tab-dot" style="background:#F482E7"></span>Motor de Conexões
+    </button>
+    <button class="tab-btn" onclick="switchTab('vtr',this)">
+      <span class="tab-dot" style="background:#f4a250"></span>VTR
+    </button>
+    <button class="tab-btn" onclick="switchTab('osp',this)">
+      <span class="tab-dot" style="background:#a78bfa"></span>OSP
+    </button>
+    <button class="tab-btn" onclick="switchTab('reforma',this)">
+      <span class="tab-dot" style="background:#f59e0b"></span>Reforma Tributária
+    </button>
+  </div>
+
+  <!-- ══════════════ TAB: GERAL ══════════════ -->
+  <div id="tab-geral" class="tab-panel active">
+    <div class="section">
+      <div class="section-label">Iniciativas da semana</div>
+      <div class="overview-grid">
+
+        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
+          <div class="ov-icon">🔌</div>
+          <div class="ov-content">
+            <div class="ov-title">Report Motor de Conexões V2</div>
+            <div class="ov-sub">Card de resultados — volume de localidades, share regional SE/NE</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag urgent">26/06</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
+          <div class="ov-icon">🌍</div>
+          <div class="ov-content">
+            <div class="ov-title">Motor de Conexões — Senna & Europa</div>
+            <div class="ov-sub">Senna online: ativado em 25/06, desativado à noite por bug de exibição + CPU Mongo elevada. Europa (Royal PT): reunião 29/06.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">Diário</span>
+            <span class="badge badge-blocked">Incidente ativo</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
+          <div class="ov-icon">💰</div>
+          <div class="ov-content">
+            <div class="ov-title">Preço Dinâmico ThoughtWorks × Motor de Conexões</div>
+            <div class="ov-sub">Reunião a marcar com Morelo, Roberto e José Carlos</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">25/06</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('vtr',document.querySelectorAll('.tab-btn')[2])">
+          <div class="ov-icon">🚌</div>
+          <div class="ov-content">
+            <div class="ov-title">Inclusão da VTR no VG/Senna</div>
+            <div class="ov-sub">237k bilhetes · R$ 38,9M (Jan–Jun). TOTAL: 46 serviços, 5.514 trechos. TOTAL2: 63% via BlaBlacar. 8 conflitos com GB no eixo PE/PB.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">26/06</span>
+            <span class="badge badge-done">Dados consolidados</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('osp',document.querySelectorAll('.tab-btn')[3])">
+          <div class="ov-icon">🔁</div>
+          <div class="ov-content">
+            <div class="ov-title">Simultâneas Parciais (OSP)</div>
+            <div class="ov-sub">Regras de negócio avançadas com time comercial. Documentação pausada — Daniel redirecionado para Motor de Conexões. Eng II semana de 30/06.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">30/06</span>
+            <span class="badge badge-pending">Pausado</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('reforma',document.querySelectorAll('.tab-btn')[4])">
+          <div class="ov-icon">📋</div>
+          <div class="ov-content">
+            <div class="ov-title">Reforma Tributária & RTC + Pagamentos</div>
+            <div class="ov-sub">ENCAT concluído. Discovery avançou: proposta estratégica com 2 domínios (Motor Tributário + Pagamentos). Deck para Diretoria em elaboração. Reunião técnica Felipe Moimaz semana 30/06.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">30/06</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: MOTOR DE CONEXÕES ══════════════ -->
+  <div id="tab-motor" class="tab-panel">
+
+    <div class="section">
+      <div class="section-label">Comitê Motor de Conexões V2 — 26/06</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Decisões e to-dos da reunião de hoje</div>
+          <span class="badge badge-ongoing">Em acompanhamento</span>
+        </div>
+        <div class="detail-body">
+          Participantes: Laryssa, Beatriz, Roberto, Rafael, Marcos, José, Felipe, Daniel, Tomás, Maurício. Meta definida: <strong>15% de receita via conexões</strong>. Comitê semanal estabelecido.
+        </div>
+        <ul class="update-list">
+          <li>⚠️ <strong>3 trechos e 2 conexões habilitados</strong> (26/06 09:50) e <strong>revertidos</strong> (26/06 10:46) — spike de CPU no MongoDB associado à ativação identificado por Adones. Reativação prevista para <strong>segunda-feira (30/06)</strong> após melhorias de infra.</li>
+          <li>Beatriz defendeu liberar o motor sem restrições prévias para mapear oportunidades antes de restringir — decisão de negócio, tecnologia dá suporte.</li>
+          <li>Roberto sinalizou risco: conexões em locais sem cruzamento de linhas geram ofertas irrelevantes e poluição visual.</li>
+          <li>Motor não persiste lista de combinações ofertadas — Daniel + Tomás + Felipe vão desenvolver script via cloud para análise.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>To-dos abertos:</strong> Grupo do comitê (Rafael) · Filtro de priorização de diretos no front (Daniel + Michel) · Dash com Zé — reunião às 16h hoje · Entender localidades para testes com Claude.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Motor V2 — Ativação, Incidentes & Expansão</div>
+
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🖥️ Senna — Ecommerce & Mobile</div>
+          <span class="badge badge-blocked">Desativado — bug</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>25/06 15:15</strong> — Ecommerce Senna ativado por André Rocha.</li>
+          <li><strong>25/06 15:45</strong> — Mobile Senna ativado por André Rocha.</li>
+          <li><strong>25/06 19:36 — Adones:</strong> identificado problema de exibição de informações incorretas nas conexões no site e app. Motor <strong>desativado para canais online</strong>. Senna vai tratar a correção; Smart valida melhorias no endpoint.</li>
+          <li>Ponto de infra: consumo de CPU do MongoDB aumentou significativamente após ativação — ação prevista para hoje (26/06).</li>
+          <li><strong>26/06 10:46 — Adones</strong> comunicou plano de contenção: (1) reverter para 2 trechos sem canais online ✓, (2) desplegar melhorias, (3) monitorar banco, (4) reativar canais online <strong>hoje</strong>, (5) reativar 3 trechos na <strong>segunda-feira (30/06)</strong>.</li>
+          <li><strong>26/06 11:23 — Guilherme</strong> abriu thread de acompanhamento das melhorias no banco para Tomás, Adones e Débora — monitoramento em andamento.</li>
+        </ul>
+        <div class="blocker-box">
+          Motor desativado nos canais online (site + app) desde 25/06 19:36. Dois problemas ativos: (1) bug de exibição — Senna trata, Smart valida endpoint; (2) spike de CPU Mongo — equipe trabalhando, melhorias a desplegar hoje.
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">📊 Gap Analysis — V1 vs V2 (SMRT-132)</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <ul class="update-list">
+          <li>40 localidades de conexão habilitadas (era 18 — time comercial adicionou mais; 1 adicionada em 23/06, demais desde 19/06 ou antes).</li>
+          <li>Roberto confirmou: principais pontos de cruzamento já cadastrados. Adicionar mais sem cruzamento real apenas polui o sistema.</li>
+          <li>V1 retornava ~600 localidades (sem filtros). V2 retorna ~40 (filtradas por regras). Análise qualitativa em curso.</li>
+          <li>23/06: aprovado avanço para ativação online após alinhamento com Tomás e Daniel.</li>
+        </ul>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🔌 Motor V2 External Sale — Pré-prod Guanabara BR (ClickBus, Buson, etc.)</div>
+          <span class="badge badge-blocked">Stopped — aprovação pendente</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>25/06 — Italo:</strong> plano era liberar pré-prod pela manhã de 26/06. Testes internos primeiro; se ok, comunicação aos parceiros.</li>
+          <li><strong>26/06 — Guilherme:</strong> durante a preparação, identificado problema nos deploys. Investigação revelou <strong>necessidade de nova infraestrutura não prevista inicialmente, com custo elevado</strong>. Sem avanço.</li>
+          <li><strong>Decisão:</strong> aguardando validação e aprovação de investimento.</li>
+          <li><strong>Próx. passo:</strong> Tomás alinha com a diretoria na <strong>segunda-feira (29/06)</strong> para aprovação. Adones retorna com novo prazo até <strong>terça-feira (30/06)</strong>.</li>
+        </ul>
+        <div class="blocker-box">
+          Bloqueio mudou de deploy para <strong>aprovação de investimento em nova infraestrutura</strong>. Parceiros External Sale (ClickBus, Buson etc.) aguardam definição após alinhamento com diretoria.
+        </div>
+      </div>
+
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🌍 Europa (Gipsyy PT / Royal PT)</div>
+          <span class="badge badge-blocked">Bloqueado</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>26/06 — Italo:</strong> Royal PT já está preparada para receber dados do Motor V2 via Trips. Porém utiliza o fluxo que <strong>não passa pelo Trips</strong> — são dois fluxos possíveis dentro da Smart, e Royal opera pelo alternativo.</li>
+          <li>Necessária reestruturação do ambiente para viabilizar a adequação ao novo motor. Impacto em front office e gateway.</li>
+          <li>Sem retorno da equipe técnica, Produto não consegue avançar — dependência das estimativas para planejamento.</li>
+        </ul>
+        <div class="blocker-box">
+          Prazo: <strong>segunda-feira (29/06)</strong> — equipe técnica estima habilitação do Trips via Hermes no ambiente PT. Resultado desta reunião define os próximos passos para ativação da Gipsyy PT.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Preço Dinâmico ThoughtWorks × Motor de Conexões — Deadline 25/06</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Alinhamento com Rafael Morelo (ThoughtWorks)</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <ul class="update-list">
+          <li>Reunião realizada em <strong>28/05</strong>: PD por baldes de assentos, degraus tarifários por ocupação, elasticidade própria e cruzada. Conexões não contempladas de forma integrada no escopo atual — precificação separada por trecho.</li>
+          <li>Ponto crítico: mesmo que o PD da ThoughtWorks passe a contemplar conexões, o <strong>SmartBus não está preparado para receber</strong> — preço é gerenciado por SKU, e inputar precificação de conexão quebraria o preço dos trechos vendidos de forma avulsa. Há desenvolvimento necessário do nosso lado.</li>
+          <li>Tópico não fecha no curto prazo. Próximo passo é mapear next steps com o time.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Próximo passo:</strong> Daniel vai marcar reunião com Morelo. Levar <strong>Roberto e José Carlos</strong>. Maurício como opcional. Deixar claro que o escopo vai além do PD — há desenvolvimento necessário no SmartBus.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB: VTR ══════════════ -->
+  <div id="tab-vtr" class="tab-panel">
+
+    <div class="section">
+      <div class="section-label">Dados Macros VTR — VIAÇÃO TOTAL + Total 2 · Jan–Jun 2026</div>
+
+      <!-- BIG NUMBERS CONSOLIDADOS -->
+      <div class="kpi-grid">
+        <div class="kpi-card accent">
+          <div class="kpi-label">Bilhetes totais (5 meses)</div>
+          <div class="kpi-value">237k</div>
+          <div class="kpi-sub">165k TOTAL · 72k TOTAL2</div>
+        </div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Volume de vendas</div>
+          <div class="kpi-value">R$ 38,9M</div>
+          <div class="kpi-sub">R$ 36,8M TOTAL · R$ 2,1M TOTAL2</div>
+        </div>
+        <div class="kpi-card accent">
+          <div class="kpi-label">Ticket médio TOTAL</div>
+          <div class="kpi-value">R$ 222</div>
+          <div class="kpi-sub">Alta temp. dez+jan: ~R$ 9,8M/mês</div>
+        </div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Ticket médio TOTAL2</div>
+          <div class="kpi-value">R$ 30</div>
+          <div class="kpi-sub">Corredor curto JPA–REC</div>
+        </div>
+      </div>
+
+      <!-- VIACAO TOTAL -->
+      <div class="company-block">
+        <div class="company-block-title">
+          VIAÇÃO TOTAL
+          <span class="company-tag">MS · GO · DF · MT · SP</span>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card accent">
+            <div class="kpi-label">Serviços ativos</div>
+            <div class="kpi-value">46</div>
+            <div class="kpi-sub">129 cidades de origem</div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-label">Trechos ativos</div>
+            <div class="kpi-value">5.514</div>
+            <div class="kpi-sub">3.670 abertos p/ venda</div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-label">Pico jan (alta temp.)</div>
+            <div class="kpi-value">37.232</div>
+            <div class="kpi-sub">bilhetes · R$ 9,8M</div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-label">Média mensal</div>
+            <div class="kpi-value">33.100</div>
+            <div class="kpi-sub">bilhetes · R$ 7,2M</div>
+          </div>
+        </div>
+        <div style="font-size:11.5px; color:#374151; margin-top:4px;">
+          <strong>Alta temporada:</strong> Dezembro e Janeiro — Dez/25 = R$ 9,7M · Jan/26 = R$ 9,8M (vs ~R$ 7,2M nos demais meses).<br>
+          <strong>Top trechos:</strong> BSB↔CGR, GYN↔CGR, CGR↔CGB, CGR↔SJP, CGR↔SP — dominância do eixo Campo Grande.<br>
+          <strong>Canais digitais:</strong> INTERNET J3 (21.596 blt), DISTRIBUSION (9.312), WHATSAPP/VOYON (8.647), BLABLACAR (5.264), BUSON (4.248).<br>
+          <strong>Pagamento:</strong> Dinheiro 52% · Crédito 13% · Débito 12% · PIX 10%.
+        </div>
+      </div>
+
+      <!-- TOTAL2 -->
+      <div class="company-block">
+        <div class="company-block-title">
+          VIAÇÃO TOTAL 2
+          <span class="company-tag">PE · PB</span>
+        </div>
+        <div class="kpi-grid col3">
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">Serviços ativos</div>
+            <div class="kpi-value">2</div>
+            <div class="kpi-sub">12 trechos · 100% JPA–REC</div>
+          </div>
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">BlaBlacar (canal único)</div>
+            <div class="kpi-value">63%</div>
+            <div class="kpi-sub">44.964 de 71.815 bilhetes</div>
+          </div>
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">Pico jan (alta temp.)</div>
+            <div class="kpi-value">17.134</div>
+            <div class="kpi-sub">bilhetes · R$ 525k</div>
+          </div>
+        </div>
+        <div style="font-size:11.5px; color:#374151; margin-top:4px;">
+          <strong>Top trechos:</strong> REC↔JPA (5k–5.5k/mês em Jan) — operação totalmente concentrada no corredor Nordeste.<br>
+          <strong>Dependência BlaBlacar:</strong> risco de concentração em canal externo que representa 63% do volume total da empresa.<br>
+          <strong>Pagamento:</strong> Dinheiro 82% — base muito presencial.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Conflitos Identificados com Grupo Guanabara</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Sobreposição de trechos — eixo PE/PB</div>
+          <span class="badge badge-blocked">8 conflitos</span>
+        </div>
+        <div style="margin-top:8px;">
+          <div class="conflict-row conflict-header">
+            <span>Origem</span><span>Destino</span><span>Empresas</span>
+          </div>
+          <div class="conflict-row"><span>João Pessoa - PB</span><span>Recife - PE</span><span>Guanabara × Total + Total2</span></div>
+          <div class="conflict-row"><span>Recife - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total + Total2</span></div>
+          <div class="conflict-row"><span>João Pessoa - PB</span><span>Goiana - PE</span><span>Guanabara × Total</span></div>
+          <div class="conflict-row"><span>Goiana - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total</span></div>
+          <div class="conflict-row"><span>Goiana - PE</span><span>Recife - PE</span><span>Guanabara × Total</span></div>
+          <div class="conflict-row"><span>Recife - PE</span><span>Goiana - PE</span><span>Guanabara × Total</span></div>
+          <div class="conflict-row"><span>Recife (Caxanga) - PE</span><span>Recife - PE</span><span>Guanabara × Total2</span></div>
+          <div class="conflict-row"><span>Recife (Caxanga) - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total2</span></div>
+        </div>
+        <div class="highlight-box" style="margin-top:10px;">
+          A Total2 opera <strong>exclusivamente</strong> nesse corredor — exposição total a conflitos com Guanabara. Total2 utiliza <strong>30 reais de ticket médio</strong> vs tarifas Guanabara, indicando competição por preço.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Integração Técnica VTR</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Inclusão no sistema</div>
+          <span class="badge badge-pending">A revalidar</span>
+        </div>
+        <ul class="update-list">
+          <li>Felipe indicou que a inclusão seria <strong>trabalho de 1 dia</strong> — porém Adones sinalizou que <strong>sua estimativa não foi validada por ele</strong> e que há necessidade de informações adicionais para o planejamento e desenho da solução.</li>
+          <li>Tomás precisa estar envolvido para o avanço da iniciativa.</li>
+          <li>Bia acionada para priorizar com TI.</li>
+        </ul>
+        <div class="highlight-box" style="margin-top:10px;">
+          <strong>Próximo passo — reunião 30/06 (terça):</strong> Michel, Tomás, Italo, Maurício, Daniel e demais envolvidos. Objetivo: alinhar o tema, definir priorização e desenho de solução para inclusão da VTR no VG/Senna.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB: OSP ══════════════ -->
+  <div id="tab-osp" class="tab-panel">
+
+    <div class="section">
+      <div class="section-label">Simultâneas Parciais (OSP) — SmartBus</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Contexto</div>
+        </div>
+        <div class="detail-body">
+          O OSP permite que dois serviços de ônibus distintos compartilhem fisicamente um único veículo em um trecho comum às duas rotas. Cada serviço mantém sua identidade, vende passagens de forma independente e possui seu próprio inventário — porém ambos competem pelas mesmas poltronas físicas dentro da zona de sobreposição.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Exemplo — BSBxSSZ × GYNxCWB</div>
+      <div class="infographic-wrap">
+        <svg viewBox="0 0 580 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:Calibri,Arial,sans-serif;">
+          <defs>
+            <linearGradient id="gPink2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#F482E7"/><stop offset="100%" style="stop-color:#c06fd0"/>
+            </linearGradient>
+            <linearGradient id="gBlue2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#4a9fd4"/><stop offset="100%" style="stop-color:#83C0F2"/>
+            </linearGradient>
+            <linearGradient id="gOvl2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#F482E7;stop-opacity:0.1"/>
+              <stop offset="100%" style="stop-color:#83C0F2;stop-opacity:0.1"/>
+            </linearGradient>
+          </defs>
+          <rect x="255" y="14" width="178" height="138" rx="6" fill="url(#gOvl2)" stroke="#d0a8e8" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="344" y="10" text-anchor="middle" font-size="8" font-weight="700" fill="#a06abd" letter-spacing="0.5">SOBREPOSIÇÃO</text>
+          <text x="8" y="58" font-size="9" font-weight="700" fill="#F482E7">BSBxSSZ</text>
+          <line x1="36" y1="70" x2="540" y2="70" stroke="url(#gPink2)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="36" cy="70" r="5" fill="#F482E7"/>
+          <text x="36" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">BSB</text>
+          <text x="36" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">Brasília</text>
+          <circle cx="115" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="115" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CAT</text>
+          <circle cx="258" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
+          <circle cx="258" cy="70" r="2.5" fill="#F482E7"/>
+          <text x="258" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">UDI</text>
+          <text x="258" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">Uberlândia</text>
+          <circle cx="314" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="314" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">UBA</text>
+          <circle cx="370" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="370" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CPQ</text>
+          <circle cx="432" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
+          <circle cx="432" cy="70" r="2.5" fill="#F482E7"/>
+          <text x="432" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">SAO</text>
+          <text x="432" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">São Paulo</text>
+          <circle cx="490" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="490" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SNS</text>
+          <circle cx="540" cy="70" r="5" fill="#F482E7"/>
+          <text x="540" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SVT</text>
+          <text x="540" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">S. Vicente</text>
+          <text x="8" y="126" font-size="9" font-weight="700" fill="#83C0F2">GYNxCWB</text>
+          <line x1="36" y1="138" x2="258" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="258" y1="138" x2="432" y2="138" stroke="#83C0F2" stroke-width="4" stroke-dasharray="7,4" opacity="0.7" stroke-linecap="round"/>
+          <line x1="432" y1="138" x2="540" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="36" cy="138" r="5" fill="#83C0F2"/>
+          <text x="36" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">GYN</text>
+          <text x="36" y="164" text-anchor="middle" font-size="7" fill="#8a94a8">Goiânia</text>
+          <circle cx="147" cy="138" r="3.5" fill="#83C0F2" opacity="0.7"/>
+          <text x="147" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">TPU</text>
+          <circle cx="258" cy="138" r="6" fill="#fff" stroke="#83C0F2" stroke-width="2.5"/>
+          <circle cx="258" cy="138" r="2.5" fill="#83C0F2"/>
+          <circle cx="432" cy="138" r="6" fill="#fff" stroke="#83C0F2" stroke-width="2.5"/>
+          <circle cx="432" cy="138" r="2.5" fill="#83C0F2"/>
+          <circle cx="490" cy="138" r="3.5" fill="#83C0F2" opacity="0.7"/>
+          <text x="490" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">REG</text>
+          <circle cx="540" cy="138" r="5" fill="#83C0F2"/>
+          <text x="540" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CWB</text>
+          <text x="540" y="164" text-anchor="middle" font-size="7" fill="#8a94a8">Curitiba</text>
+          <line x1="258" y1="75" x2="258" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
+          <line x1="432" y1="75" x2="432" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
+          <rect x="269" y="96" width="152" height="16" rx="4" fill="#1a1a2e" opacity="0.8"/>
+          <text x="345" y="107" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">🚌 1 veículo físico compartilhado</text>
+          <circle cx="258" cy="182" r="4" fill="#fff" stroke="#888" stroke-width="1.5"/>
+          <circle cx="258" cy="182" r="1.5" fill="#888"/>
+          <text x="266" y="185" font-size="7.5" fill="#6a7080">Transbordo</text>
+          <line x1="336" y1="182" x2="354" y2="182" stroke="#83C0F2" stroke-width="2.5" stroke-dasharray="5,3"/>
+          <text x="358" y="185" font-size="7.5" fill="#6a7080">Usa veículo BSBxSSZ</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Cronograma</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-info">
+            <div class="tl-date">Concluído</div>
+            <div class="tl-label">Discovery &amp; Escopo</div>
+            <div class="tl-sub">POC + regras</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-info">
+            <div class="tl-date">Sem. 16 jun</div>
+            <div class="tl-label">Engenharia I</div>
+            <div class="tl-sub">Debate técnico</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot active">◉</div>
+          <div class="tl-info">
+            <div class="tl-date">Esta semana</div>
+            <div class="tl-label">Comercial + Docs</div>
+            <div class="tl-sub">Regras avançadas — docs pausadas</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot next">→</div>
+          <div class="tl-info">
+            <div class="tl-date">Sem. 30 jun</div>
+            <div class="tl-label">Engenharia II</div>
+            <div class="tl-sub">Fechamento + dev</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Entregáveis do Discovery</div>
+      <div class="deliv-list">
+        <div class="deliv-item">
+          <span class="deliv-icon">🖥️</span>
+          <span class="deliv-text">Simulador interativo de inventário OSP (v3)</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📊</span>
+          <span class="deliv-text">Infográfico AS-IS / TO-BE</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📋</span>
+          <span class="deliv-text">Referência regulatória e operacional (ANTT / OSI)</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📌</span>
+          <span class="deliv-text">Regras de Negócio Consolidadas</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📝</span>
+          <span class="deliv-text">Especificação técnica para refinamento com o time</span>
+          <span class="badge badge-pending">Pausado</span>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top:12px;">
+        <strong>26/06 — Daniel:</strong> regras de negócio avançaram com o time comercial. Documentação pausada — Daniel foi redirecionado para demandas do Motor de Conexões. Segundo refinamento com Engenharia mantido para semana de <strong>30/06</strong>.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB: REFORMA TRIBUTÁRIA ══════════════ -->
+  <div id="tab-reforma" class="tab-panel">
+    <div class="section">
+      <div class="section-label">Conexão com Angélica — Reforma Tributária — Deadline 26/06</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Alinhamento com Angélica (ENCAT)</div>
+          <span class="badge badge-done">Concluído</span>
+        </div>
+        <ul class="update-list">
+          <li>Alinhamento realizado — Angélica irá incluir Maurício na <strong>próxima reunião do ENCAT</strong>.</li>
+          <li>Felipe será acionado caso seja necessário alguém mais técnico.</li>
+        </ul>
+        <div class="highlight-box">
+          <strong>Próximo passo:</strong> Aguardar convite da Angélica para reunião ENCAT. Avaliar com Felipe a necessidade de incluir o time de TI.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC + Pagamentos — Proposta Estratégica SmartBus · 26/06</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Discovery avançado — Proposta para Diretoria</div>
+          <span class="badge badge-done">Formalizado</span>
+        </div>
+        <div class="detail-body">
+          O diagnóstico foi confirmado e expandido: o problema não é só de cálculo de tributos — é de <strong>responsabilidade e arquitetura</strong>. O SmartBus foi construído sem escopo fiscal estruturado; qualquer mudança de regra exige intervenção no core. Com a RTC atualizando Notas Técnicas continuamente, o modelo de "remendar o monolito" não acompanha o ritmo.<br><br>
+          No lado de pagamentos, a situação é equivalente: cada adquirente tem sua própria integração (Fiserv/TEF, Mercado Pago, Cielo LIO, PIX via MP). Sem domínio unificado, o <strong>Split Payment vai exigir desenvolvimento separado para cada forma de pagamento</strong>.
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">🧮 Motor Tributário — domínio extraído do monolito</div>
+          <span class="badge badge-ongoing">Em desenvolvimento</span>
+        </div>
+        <ul class="update-list">
+          <li>Integração com Calculadora RTC — IBS/CBS/IS dinâmico por município de embarque.</li>
+          <li>Engine ICMS/PIS-COFINS legada em coexistência até 2033.</li>
+          <li>Mapeamento cClassTrib por tipo de operação.</li>
+          <li>Módulo de regras por país (expansão internacional).</li>
+          <li>Payload fiscal certificado para BPe XML + auditoria de cálculo.</li>
+        </ul>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">💳 Domínio de Pagamentos — domínio extraído do monolito</div>
+          <span class="badge badge-ongoing">Em desenvolvimento</span>
+        </div>
+        <ul class="update-list">
+          <li>Orquestrador multi-acquirer com roteamento inteligente — <strong>economia estimada: R$ 1M–2,5M/ano</strong>.</li>
+          <li>Rateio multi-bilhete isolado do core.</li>
+          <li>Engine de rastreabilidade encadeada de estornos.</li>
+          <li>Adapter para Split Payment IBS/CBS.</li>
+          <li>Reconciliação financeira e fiscal integrada.</li>
+        </ul>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">Próximos passos</div>
+        </div>
+        <ul class="update-list">
+          <li>📅 <strong>Semana de 30/06</strong> — Papo técnico com Felipe Moimaz: validar viabilidade arquitetural e esforço estimado.</li>
+          <li>📅 <strong>Agosto 2026</strong> — Aprovação estratégica da Diretoria: deck com direção arquitetural, sponsor, budget e KPIs.</li>
+          <li>📅 <strong>Setembro 2026</strong> — Mapeamento cClassTrib com Comitê RTC (insumo bloqueante para o Motor Tributário).</li>
+          <li>📅 <strong>Setembro 2026</strong> — Análise fiscal das receitas sem DFe (Contábil + Jurídico): taxas de conveniência, add-ons e seguro.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Deck para Diretoria em elaboração.</strong> Papo técnico com Felipe Moimaz semana de 30/06 é pré-requisito para sustentar a proposta arquitetural.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card-footer">
+    <div class="footer-brand">Smart Travel IT · Arara Tech</div>
+    <div class="footer-date">Atualizado em 26 jun 2026 · 12:15</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
