@@ -1202,4 +1202,84 @@
         <div class="highlight-box">
           <strong>Próximo passo:</strong> Aguardar convite da Angélica para reunião ENCAT. Avaliar com Felipe a necessidade de incluir o time de TI.
         </div>
-      </di
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC + Pagamentos — Proposta Estratégica SmartBus · 26/06</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Discovery avançado — Proposta para Diretoria</div>
+          <span class="badge badge-done">Formalizado</span>
+        </div>
+        <div class="detail-body">
+          O diagnóstico foi confirmado e expandido: o problema não é só de cálculo de tributos — é de <strong>responsabilidade e arquitetura</strong>. O SmartBus foi construído sem escopo fiscal estruturado; qualquer mudança de regra exige intervenção no core. Com a RTC atualizando Notas Técnicas continuamente, o modelo de "remendar o monolito" não acompanha o ritmo.<br><br>
+          No lado de pagamentos, a situação é equivalente: cada adquirente tem sua própria integração (Fiserv/TEF, Mercado Pago, Cielo LIO, PIX via MP). Sem domínio unificado, o <strong>Split Payment vai exigir desenvolvimento separado para cada forma de pagamento</strong>.
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">🧮 Motor Tributário — domínio extraído do monolito</div>
+          <span class="badge badge-ongoing">Em desenvolvimento</span>
+        </div>
+        <ul class="update-list">
+          <li>Integração com Calculadora RTC — IBS/CBS/IS dinâmico por município de embarque.</li>
+          <li>Engine ICMS/PIS-COFINS legada em coexistência até 2033.</li>
+          <li>Mapeamento cClassTrib por tipo de operação.</li>
+          <li>Módulo de regras por país (expansão internacional).</li>
+          <li>Payload fiscal certificado para BPe XML + auditoria de cálculo.</li>
+        </ul>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">💳 Domínio de Pagamentos — domínio extraído do monolito</div>
+          <span class="badge badge-ongoing">Em desenvolvimento</span>
+        </div>
+        <ul class="update-list">
+          <li>Orquestrador multi-acquirer com roteamento inteligente — <strong>economia estimada: R$ 1M–2,5M/ano</strong>.</li>
+          <li>Rateio multi-bilhete isolado do core.</li>
+          <li>Engine de rastreabilidade encadeada de estornos.</li>
+          <li>Adapter para Split Payment IBS/CBS.</li>
+          <li>Reconciliação financeira e fiscal integrada.</li>
+        </ul>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">Próximos passos</div>
+        </div>
+        <ul class="update-list">
+          <li>📅 <strong>Semana de 30/06</strong> — Papo técnico com Felipe Moimaz: validar viabilidade arquitetural e esforço estimado.</li>
+          <li>📅 <strong>Agosto 2026</strong> — Aprovação estratégica da Diretoria: deck com direção arquitetural, sponsor, budget e KPIs.</li>
+          <li>📅 <strong>Setembro 2026</strong> — Mapeamento cClassTrib com Comitê RTC (insumo bloqueante para o Motor Tributário).</li>
+          <li>📅 <strong>Setembro 2026</strong> — Análise fiscal das receitas sem DFe (Contábil + Jurídico): taxas de conveniência, add-ons e seguro.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Deck para Diretoria em elaboração.</strong> Papo técnico com Felipe Moimaz semana de 30/06 é pré-requisito para sustentar a proposta arquitetural.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="card-footer">
+    <div class="footer-brand">Smart Travel IT · Arara Tech</div>
+    <div class="footer-date">Atualizado em 30 jun 2026 · 16:10</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
