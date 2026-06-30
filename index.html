@@ -551,11 +551,47 @@
           <div class="ov-icon">🌍</div>
           <div class="ov-content">
             <div class="ov-title">Motor de Conexões — Senna & Europa</div>
-            <div class="ov-sub">Senna: revertido após spike CPU MongoDB (26/06). Melhorias de DB em andamento. Europa (Royal PT): depende de habilitação Trips — reunião Italo + Hermes (29/06).</div>
+            <div class="ov-sub">Validações em campo: grupo de gestores regionais ativo, 6 reports P2, +21% vendas V2 vs V1. Europa: habilitação Trips em definição.</div>
           </div>
           <div class="ov-right">
             <span class="deadline-tag">Diário</span>
-            <span class="badge badge-blocked">Incidente ativo</span>
+            <span class="badge badge-ongoing">Em campo</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
+          <div class="ov-icon">🖥️</div>
+          <div class="ov-content">
+            <div class="ov-title">Motor V2 — Nova Tela Frontoffice</div>
+            <div class="ov-sub">Mockup dos agrupadores (direto, mesma linha, vira bandeira, cruzamento) validado pelo Fabão no Figma. Aguardando refinamento com time tech.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">30/06</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
+          <div class="ov-icon">📊</div>
+          <div class="ov-content">
+            <div class="ov-title">Motor V2 — Dashboard de Acompanhamento</div>
+            <div class="ov-sub">Documentação e mockup aprovados pelo time de negócio e GPM. Issues a criar no Linear para rastreabilidade.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">30/06</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
+          <div class="ov-icon">🎫</div>
+          <div class="ov-content">
+            <div class="ov-title">Riocard Totem RJ — Documentação Técnica</div>
+            <div class="ov-sub">Sem retorno do time do Riocard sobre agendamento da reunião para debate da documentação técnica.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">Aguardando</span>
+            <span class="badge badge-pending">Bloqueado</span>
           </div>
         </div>
 
@@ -642,17 +678,17 @@
       <div class="section-label">Motor de Conexões V2 — Validações por Canal</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">Tracker de validação — iniciativa aberta em 26/06</div>
-          <span class="badge badge-ongoing">Em acompanhamento</span>
+          <div class="detail-title">Validações em Campo — 30/06</div>
+          <span class="badge badge-ongoing">Em campo</span>
         </div>
         <div class="detail-body">
-          Iniciativa aberta a partir do Comitê de 26/06. O V2 precisa ser validado e estabilizado canal a canal para atingir a meta de <strong>15% de receita via conexões</strong>. Validação sequencial com monitoramento ativo de receita e performance.
+          Grupo de validação aberto para gestores regionais da Guanabara em 29/06. Template de report padronizado com prioridades (🔴 P0 / 🟠 P1 / 🔵 P2) em uso. <strong>6 reports recebidos — todos P2</strong> (observação), sem bloqueio de venda ativa. Motor registrou <strong>+21% de vendas</strong> no período V2 vs V1. Ítalo assumiu N1 de triagem. Bugs confirmados → Linear (Interline Connection). Requests fora do escopo V2 → backlog V3.
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;">
-          <div style="border:1px solid #fcd34d; border-radius:8px; padding:12px; background:#fffbeb;">
-            <div style="font-weight:700; font-size:12px; color:#92400e; margin-bottom:4px;">🖥️ Senna (ecommerce + mobile)</div>
-            <span style="display:inline-block; background:#fef3c7; color:#92400e; border-radius:4px; padding:1px 8px; font-size:11px; font-weight:600; margin-bottom:6px;">Revertido — aguardando fix DB</span>
-            <div style="font-size:12px; color:#555;">Bug exibição + spike CPU MongoDB. Guilherme trabalhando em melhorias. Reativação: após fix concluído.</div>
+          <div style="border:1px solid #86efac; border-radius:8px; padding:12px; background:#f0fdf4;">
+            <div style="font-weight:700; font-size:12px; color:#166534; margin-bottom:4px;">🖥️ Senna (ecommerce + mobile)</div>
+            <span style="display:inline-block; background:#dcfce7; color:#166534; border-radius:4px; padding:1px 8px; font-size:11px; font-weight:600; margin-bottom:6px;">Em validação — +21% vendas V2 vs V1</span>
+            <div style="font-size:12px; color:#555;">6 reports recebidos (P2). Ítalo N1 de triagem. Retorno individualizado até 01/07.</div>
           </div>
           <div style="border:1px solid #fca5a5; border-radius:8px; padding:12px; background:#fef2f2;">
             <div style="font-weight:700; font-size:12px; color:#991b1b; margin-bottom:4px;">🔌 External Sale (ClickBus, Buson)</div>
@@ -762,6 +798,53 @@
         <div class="highlight-box blue">
           <strong>Próx. passo:</strong> Agendar reunião de refinamento com o time tech.
         </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Motor V2 — Frontoffice & Dashboard · 30/06</div>
+
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🖥️ Nova Tela do Frontoffice — Agrupadores de Ofertas</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>30/06 — Daniel:</strong> nova tela projetada para exibição dos agrupadores de ofertas de trechos: trecho direto, conexão de mesma linha, vira bandeira e cruzamento.</li>
+          <li>Protótipo implementado no Figma, validado e aprovado pelo <strong>Fabão</strong>.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Agendar reunião de refinamento com o time tech.
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">📊 Dashboard de Acompanhamento V2</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>30/06 — Daniel:</strong> documentação estruturada e mockup elaborado para validação com stakeholders.</li>
+          <li>Revisados e <strong>aprovados pelo time de negócio e pelo GPM</strong>.</li>
+          <li><strong>Decisão:</strong> criar issues no Linear e centralizar toda a documentação na plataforma para rastreabilidade do desenvolvimento.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Agendar reunião de refinamento com o time tech.
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">🎫 Riocard Totem RJ — Documentação Técnica</div>
+          <span class="badge badge-pending">Aguardando</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>30/06 — Daniel:</strong> sem retorno do time do Riocard sobre o agendamento da reunião para debate da documentação técnica.</li>
+        </ul>
       </div>
     </div>
 
@@ -1119,84 +1202,4 @@
         <div class="highlight-box">
           <strong>Próximo passo:</strong> Aguardar convite da Angélica para reunião ENCAT. Avaliar com Felipe a necessidade de incluir o time de TI.
         </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="section">
-      <div class="section-label">RTC + Pagamentos — Proposta Estratégica SmartBus · 26/06</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">Discovery avançado — Proposta para Diretoria</div>
-          <span class="badge badge-done">Formalizado</span>
-        </div>
-        <div class="detail-body">
-          O diagnóstico foi confirmado e expandido: o problema não é só de cálculo de tributos — é de <strong>responsabilidade e arquitetura</strong>. O SmartBus foi construído sem escopo fiscal estruturado; qualquer mudança de regra exige intervenção no core. Com a RTC atualizando Notas Técnicas continuamente, o modelo de "remendar o monolito" não acompanha o ritmo.<br><br>
-          No lado de pagamentos, a situação é equivalente: cada adquirente tem sua própria integração (Fiserv/TEF, Mercado Pago, Cielo LIO, PIX via MP). Sem domínio unificado, o <strong>Split Payment vai exigir desenvolvimento separado para cada forma de pagamento</strong>.
-        </div>
-      </div>
-
-      <div class="detail-block" style="margin-top:10px;">
-        <div class="detail-header">
-          <div class="detail-title">🧮 Motor Tributário — domínio extraído do monolito</div>
-          <span class="badge badge-ongoing">Em desenvolvimento</span>
-        </div>
-        <ul class="update-list">
-          <li>Integração com Calculadora RTC — IBS/CBS/IS dinâmico por município de embarque.</li>
-          <li>Engine ICMS/PIS-COFINS legada em coexistência até 2033.</li>
-          <li>Mapeamento cClassTrib por tipo de operação.</li>
-          <li>Módulo de regras por país (expansão internacional).</li>
-          <li>Payload fiscal certificado para BPe XML + auditoria de cálculo.</li>
-        </ul>
-      </div>
-
-      <div class="detail-block" style="margin-top:10px;">
-        <div class="detail-header">
-          <div class="detail-title">💳 Domínio de Pagamentos — domínio extraído do monolito</div>
-          <span class="badge badge-ongoing">Em desenvolvimento</span>
-        </div>
-        <ul class="update-list">
-          <li>Orquestrador multi-acquirer com roteamento inteligente — <strong>economia estimada: R$ 1M–2,5M/ano</strong>.</li>
-          <li>Rateio multi-bilhete isolado do core.</li>
-          <li>Engine de rastreabilidade encadeada de estornos.</li>
-          <li>Adapter para Split Payment IBS/CBS.</li>
-          <li>Reconciliação financeira e fiscal integrada.</li>
-        </ul>
-      </div>
-
-      <div class="detail-block" style="margin-top:10px;">
-        <div class="detail-header">
-          <div class="detail-title">Próximos passos</div>
-        </div>
-        <ul class="update-list">
-          <li>📅 <strong>Semana de 30/06</strong> — Papo técnico com Felipe Moimaz: validar viabilidade arquitetural e esforço estimado.</li>
-          <li>📅 <strong>Agosto 2026</strong> — Aprovação estratégica da Diretoria: deck com direção arquitetural, sponsor, budget e KPIs.</li>
-          <li>📅 <strong>Setembro 2026</strong> — Mapeamento cClassTrib com Comitê RTC (insumo bloqueante para o Motor Tributário).</li>
-          <li>📅 <strong>Setembro 2026</strong> — Análise fiscal das receitas sem DFe (Contábil + Jurídico): taxas de conveniência, add-ons e seguro.</li>
-        </ul>
-        <div class="highlight-box blue">
-          <strong>Deck para Diretoria em elaboração.</strong> Papo técnico com Felipe Moimaz semana de 30/06 é pré-requisito para sustentar a proposta arquitetural.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="card-footer">
-    <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 30 jun 2026 · 16:00</div>
-  </div>
-
-</div>
-
-<script>
-  function switchTab(id, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + id).classList.add('active');
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-</script>
-</body>
-</html>
+      </di
