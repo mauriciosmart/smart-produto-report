@@ -1038,14 +1038,112 @@
   <!-- ══════════════ TAB: OSP ══════════════ -->
   <div id="tab-osp" class="tab-panel">
 
-    <div class="section">
-      <div class="section-label">Simultâneas Parciais (OSP) — SmartBus</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">Contexto</div>
+    <!-- INITIATIVE HEADER -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:12.5px; color:#8a94a8; margin-bottom:4px;">Simultâneas Parciais — dois serviços compartilhando um mesmo veículo em trecho comum · Discovery concluído</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Daniel · Maurício</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 15 jul 2026</span>
+      </div>
+    </div>
+
+    <!-- ALERT CARDS -->
+    <div class="section-label">Requer atenção</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+
+      <div style="border-radius:12px;padding:14px 16px;border:1px solid #f4a250;background:#fff8f0;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#854F0B;margin-bottom:8px;">
+          ⏸️ Pausada
         </div>
-        <div class="detail-body">
-          O OSP permite que dois serviços de ônibus distintos compartilhem fisicamente um único veículo em um trecho comum às duas rotas. Cada serviço mantém sua identidade, vende passagens de forma independente e possui seu próprio inventário — porém ambos competem pelas mesmas poltronas físicas dentro da zona de sobreposição.
+        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">OSP pausada — foco total no Motor V2</div>
+        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Daniel redirecionado para o Motor V2 em 15/07. Primeiro refinamento técnico já realizado; Maurício construiu simulador para clarificar o comportamento esperado.</div>
+        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Retomada depende da estabilização do Motor V2 · sem decisão de prazo</div>
+      </div>
+
+      <div style="border-radius:12px;padding:14px 16px;border:1px solid #86efac;background:#f0fdf4;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:8px;">
+          ✅ Discovery pronto
+        </div>
+        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">4 de 5 entregáveis concluídos</div>
+        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Simulador v3, infográfico AS-IS/TO-BE, referência regulatória (ANTT/OSI) e regras de negócio prontos. Falta apenas a spec técnica para refinamento — pausada junto com a iniciativa.</div>
+        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Pronto para retomada assim que houver capacidade do time</div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ENTREGÁVEIS DO DISCOVERY -->
+    <div class="section">
+      <div class="section-label">Entregáveis do Discovery</div>
+      <div class="deliv-list">
+        <div class="deliv-item">
+          <span class="deliv-icon">🖥️</span>
+          <span class="deliv-text">Simulador interativo de inventário OSP (v3)</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📊</span>
+          <span class="deliv-text">Infográfico AS-IS / TO-BE</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📋</span>
+          <span class="deliv-text">Referência regulatória e operacional (ANTT / OSI)</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📌</span>
+          <span class="deliv-text">Regras de Negócio Consolidadas</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📝</span>
+          <span class="deliv-text">Especificação técnica para refinamento com o time</span>
+          <span class="badge badge-pending">Pausado</span>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top:12px;">
+        <strong>15/07 — Daniel:</strong> Iniciativa pausada por foco total da equipe no Motor V2. Primeiro refinamento técnico realizado. Maurício construiu simulador para clarificar o comportamento esperado. Retomada depende da estabilização do Motor V2.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section archived-section">
+      <div class="section-label">Cronograma <span class="archive-tag">Arquivado</span></div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-info">
+            <div class="tl-date">Concluído</div>
+            <div class="tl-label">Discovery &amp; Escopo</div>
+            <div class="tl-sub">POC + regras</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-info">
+            <div class="tl-date">Sem. 16 jun</div>
+            <div class="tl-label">Engenharia I</div>
+            <div class="tl-sub">Debate técnico</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot active">◉</div>
+          <div class="tl-info">
+            <div class="tl-date">Pausado</div>
+            <div class="tl-label">Comercial + Docs</div>
+            <div class="tl-sub">Pausado — foco total Motor V2</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot next">→</div>
+          <div class="tl-info">
+            <div class="tl-date">Sem. 30 jun</div>
+            <div class="tl-label">Engenharia II</div>
+            <div class="tl-sub">Fechamento + dev</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1127,77 +1225,13 @@
 
     <div class="divider"></div>
 
-    <div class="section archived-section">
-      <div class="section-label">Cronograma <span class="archive-tag">Arquivado</span></div>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-dot done">✓</div>
-          <div class="tl-info">
-            <div class="tl-date">Concluído</div>
-            <div class="tl-label">Discovery &amp; Escopo</div>
-            <div class="tl-sub">POC + regras</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot done">✓</div>
-          <div class="tl-info">
-            <div class="tl-date">Sem. 16 jun</div>
-            <div class="tl-label">Engenharia I</div>
-            <div class="tl-sub">Debate técnico</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot active">◉</div>
-          <div class="tl-info">
-            <div class="tl-date">Pausado</div>
-            <div class="tl-label">Comercial + Docs</div>
-            <div class="tl-sub">Pausado — foco total Motor V2</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot next">→</div>
-          <div class="tl-info">
-            <div class="tl-date">Sem. 30 jun</div>
-            <div class="tl-label">Engenharia II</div>
-            <div class="tl-sub">Fechamento + dev</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
+    <!-- CONTEXTO -->
     <div class="section">
-      <div class="section-label">Entregáveis do Discovery</div>
-      <div class="deliv-list">
-        <div class="deliv-item">
-          <span class="deliv-icon">🖥️</span>
-          <span class="deliv-text">Simulador interativo de inventário OSP (v3)</span>
-          <span class="badge badge-done">Pronto</span>
+      <div class="section-label">Contexto — o que é o OSP</div>
+      <div class="detail-block">
+        <div class="detail-body">
+          O OSP permite que dois serviços de ônibus distintos compartilhem fisicamente um único veículo em um trecho comum às duas rotas. Cada serviço mantém sua identidade, vende passagens de forma independente e possui seu próprio inventário — porém ambos competem pelas mesmas poltronas físicas dentro da zona de sobreposição.
         </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📊</span>
-          <span class="deliv-text">Infográfico AS-IS / TO-BE</span>
-          <span class="badge badge-done">Pronto</span>
-        </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📋</span>
-          <span class="deliv-text">Referência regulatória e operacional (ANTT / OSI)</span>
-          <span class="badge badge-done">Pronto</span>
-        </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📌</span>
-          <span class="deliv-text">Regras de Negócio Consolidadas</span>
-          <span class="badge badge-done">Pronto</span>
-        </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📝</span>
-          <span class="deliv-text">Especificação técnica para refinamento com o time</span>
-          <span class="badge badge-pending">Pausado</span>
-        </div>
-      </div>
-      <div class="highlight-box" style="margin-top:12px;">
-        <strong>15/07 — Daniel:</strong> Iniciativa pausada por foco total da equipe no Motor V2. Primeiro refinamento técnico realizado. Maurício construiu simulador para clarificar o comportamento esperado. Retomada depende da estabilização do Motor V2.
       </div>
     </div>
 
@@ -1431,7 +1465,7 @@
   <!-- FOOTER -->
   <div class="card-footer">
     <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 16 jul 2026 · 12:10</div>
+    <div class="footer-date">Atualizado em 16 jul 2026 · 12:15</div>
   </div>
 
 </div>
