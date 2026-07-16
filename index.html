@@ -488,7 +488,14 @@
     text-transform: uppercase;
     color: #9aa0b0;
     letter-spacing: 0.5px;
-  }
+  }    /* ── ARCHIVE STYLES ── */
+    .archived-section { opacity: 0.55; filter: grayscale(0.25); }
+    .archived-section .section-label { color: #9aa0b0; }
+    .archived-section .detail-block { background: #f9fafb !important; border-color: #e5e7eb !important; }
+    .archived-section .highlight-box { background: #f9fafb !important; border-left-color: #d1d5db !important; }
+    .archive-tag { font-size:9px; padding:2px 8px; border-radius:8px; background:#e5e7eb; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-left:8px; vertical-align:middle; }
+
+
 </style>
 </head>
 <body>
@@ -758,19 +765,6 @@
 
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">🖥️ Nova Tela Frontoffice — Agrupadores de oferta</div>
-          <span class="badge badge-done">Entregue ✓</span>
-        </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          Tela com 4 agrupadores: <strong>trecho direto, mesma linha, vira bandeira, cruzamento</strong>. Levantada em visita à rodoviária de Juiz de Fora + reunião semanal Motor (sextas, 9h). Deploy realizado e validado pelo time de negócio — elogios do time de operações.
-        </div>
-        <div class="highlight-box" style="border-left-color:#1D9E75;background:#f0fdf4;">
-          <strong>Iniciativa encerrada.</strong> Nenhum próximo passo.
-        </div>
-      </div>
-
-      <div class="detail-block" style="margin-top:10px;">
-        <div class="detail-header">
           <div class="detail-title">📊 Dashboard de Acompanhamento V2</div>
           <span class="badge" style="background:#eff6ff;color:#1e40af;">Em refinamento</span>
         </div>
@@ -779,6 +773,19 @@
         </div>
         <div class="highlight-box blue">
           <strong>Próx. passo:</strong> Abrir chamado no GLPI para BI enfileirar desenvolvimento · Daniel fala com Rafael Morelo para prioridade · até 17/07
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">🖥️ Nova Tela Frontoffice — Agrupadores de oferta</div>
+          <span class="badge badge-done">Entregue ✓</span>
+        </div>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+          Tela com 4 agrupadores: <strong>trecho direto, mesma linha, vira bandeira, cruzamento</strong>. Levantada em visita à rodoviária de Juiz de Fora + reunião semanal Motor (sextas, 9h). Deploy realizado e validado pelo time de negócio — elogios do time de operações.
+        </div>
+        <div class="highlight-box" style="border-left-color:#1D9E75;background:#f0fdf4;">
+          <strong>Iniciativa encerrada.</strong> Nenhum próximo passo.
         </div>
       </div>
 
@@ -799,8 +806,8 @@
     <div class="divider"></div>
 
     <!-- COMITÊ / CONTEXTO -->
-    <div class="section">
-      <div class="section-label">Comitê V2 — Decisões de 26/06</div>
+    <div class="section archived-section">
+      <div class="section-label">Comitê V2 — Decisões de 26/06 <span class="archive-tag">Arquivado</span></div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">Diretrizes estabelecidas</div>
@@ -1040,8 +1047,8 @@
 
     <div class="divider"></div>
 
-    <div class="section">
-      <div class="section-label">Exemplo — BSBxSSZ × GYNxCWB</div>
+    <div class="section archived-section">
+      <div class="section-label">Exemplo — BSBxSSZ × GYNxCWB <span class="archive-tag">Referência</span></div>
       <div class="infographic-wrap">
         <svg viewBox="0 0 580 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:Calibri,Arial,sans-serif;">
           <defs>
@@ -1115,8 +1122,8 @@
 
     <div class="divider"></div>
 
-    <div class="section">
-      <div class="section-label">Cronograma</div>
+    <div class="section archived-section">
+      <div class="section-label">Cronograma <span class="archive-tag">Arquivado</span></div>
       <div class="timeline">
         <div class="tl-item">
           <div class="tl-dot done">✓</div>
@@ -1217,7 +1224,111 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">Conexão com Angélica — Reforma Tributária — Deadline 26/06</div>
+      <div class="section-label">RTC · CORE-008 — BPEs cancelados · Relatório Protheus</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">📄 BPEs cancelados de períodos anteriores — Relatório exportação Protheus</div>
+          <span class="badge badge-ongoing">Em homologação</span>
+        </div>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+          Implementação concluída e validada em QA interno. Demonstração realizada com equipes fiscais do Nordeste e Sudeste do Grupo Guanabara e equipe Protheus — comportamento do retorno dos BPEs no arquivo confirmado como conforme.
+        </div>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Publicar em pré-produção em 16/07 · Acompanhar testes da companhia e Protheus · Ítalo
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC · Consultoria Técnica-Fiscal — Seleção</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🔍 Consultoria Técnica-Fiscal — Seleção em andamento</div>
+          <span class="badge badge-ongoing">Em seleção</span>
+        </div>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+          Lacuna identificada: o time de produto não tem capacidade interna para traduzir NTs BPe em requisito sem apoio especializado. O incidente da API BPe (endpoint documentado sem validação fiscal) materializou o risco. Proposta levada à diretoria — <strong>Bia aprovou a contratação</strong>. Angélica (Guanabara) validou a necessidade em Comitê de 14/07.
+        </div>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          Escopo definido: a consultoria precisa dominar BPe + RTC e atuar desde a leitura da norma até a validação do requisito. Brief de Escopo, Protocolo de Envolvimento Fiscal e Matriz de Responsabilidades formalizados.
+        </div>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Iniciar processo de seleção com base no brief · Maurício · até 31/07
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC · CORE-004 — Integrações Smartbus e ERPs</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🔗 CORE-004 · Integrações Smartbus e ERPs (NT v1.14 + Leiaute v200)</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+          <strong>Spec concluída — 16 regras de negócio mapeadas.</strong> Escopo delimitado em reunião de 09/07 com Prevatto, Victor, Flávia, Cristiane e Benício. A integração atual (NT v1.10 + Leiaute v193) não cobre as evoluções exigidas pela NT v1.14 e Leiaute v200 — novos campos no BPE (45, 46, 47), IBE (13, 14, 15) e dois novos registros (RDD e IRD).
+        </div>
+        <ul class="update-list" style="margin-top:8px;">
+          <li>SMRT-125/126/127 (Fortes Fiscal — BPE/DBE/IBE): <strong>autorizado a avançar independente do Protheus.</strong></li>
+          <li>RDD/IRD: bloqueados — aguardando padrão TOTVS.</li>
+          <li>SMRT-130 (API Protheus): em espera — Protheus permanece em v193 até PST-3416.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Refinamento técnico com o time · Maurício · 16/07
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC · CORE-002 — Compras Governamentais</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🏛️ CORE-002 · Compras Governamentais — suporte ao grupo gCompraGov</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+          <strong>Spec v13 fechada.</strong> Decisões consolidadas em reuniões de 30/06 e 08/07 com André Rocha e Paulo Balbino: modelo 1:N de Entidade Governamental com vigências, pRedutor e zeragem de alíquota por tpEnteGov (Art. 472/473). Menu Administração > Fiscal confirmado com Paulo Balbino. Desenvolvimento autorizado a avançar em paralelo à contratação da consultoria.
+        </div>
+        <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
+          <strong>Atenção:</strong> Lacunas de interpretação normativa (itens BPE-08, BPE-06, BPE-13 do Caderno de Testes) podem gerar retrabalho se a consultoria revisar a leitura das NTs.
+        </div>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Iniciar seleção da consultoria técnica-fiscal · Maurício · até 31/07
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC · Motor Tributário — Discovery</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🧮 Motor Tributário — Discovery</div>
+          <span class="badge" style="background:#f3e8ff;color:#6b21a8;">Em discovery</span>
+        </div>
+        <ul class="update-list">
+          <li>Discovery em andamento — definição de arquitetura ainda aberta.</li>
+          <li>Calculadora oficial da RF (piloto-cbs.tributos.gov.br, build V0038) em beta — sem cobertura confirmada para BP-e e compras governamentais (tpEnteGov). <strong>Não é opção viável no curto prazo.</strong></li>
+          <li>Sem calculadora RF, Smartbus pode emitir BPe com cálculo incorreto em cenários de governo (Art. 473).</li>
+          <li>Consultoria técnica-fiscal cobrirá parte desse gap — definirá se é necessário motor próprio.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Concluir discovery e definir arquitetura do motor · Maurício · até 31/07
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section archived-section">
+      <div class="section-label">Conexão com Angélica — Reforma Tributária — Deadline 26/06 <span class="archive-tag">Arquivado</span></div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">Alinhamento com Angélica (ENCAT)</div>
@@ -1235,8 +1346,8 @@
 
     <div class="divider"></div>
 
-    <div class="section">
-      <div class="section-label">RTC + Pagamentos — Proposta Estratégica SmartBus · 26/06</div>
+    <div class="section archived-section">
+      <div class="section-label">RTC + Pagamentos — Proposta Estratégica SmartBus · 26/06 <span class="archive-tag">Arquivado</span></div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">Discovery avançado — Proposta para Diretoria</div>
@@ -1245,22 +1356,6 @@
         <div class="detail-body">
           O diagnóstico foi confirmado e expandido: o problema não é só de cálculo de tributos — é de <strong>responsabilidade e arquitetura</strong>. O SmartBus foi construído sem escopo fiscal estruturado; qualquer mudança de regra exige intervenção no core. Com a RTC atualizando Notas Técnicas continuamente, o modelo de "remendar o monolito" não acompanha o ritmo.<br><br>
           No lado de pagamentos, a situação é equivalente: cada adquirente tem sua própria integração (Fiserv/TEF, Mercado Pago, Cielo LIO, PIX via MP). Sem domínio unificado, o <strong>Split Payment vai exigir desenvolvimento separado para cada forma de pagamento</strong>.
-        </div>
-      </div>
-
-      <div class="detail-block" style="margin-top:10px;">
-        <div class="detail-header">
-          <div class="detail-title">🧮 Motor Tributário — Discovery</div>
-          <span class="badge" style="background:#f3e8ff;color:#6b21a8;">Em discovery</span>
-        </div>
-        <ul class="update-list">
-          <li>Discovery em andamento — definição de arquitetura ainda aberta.</li>
-          <li>Calculadora oficial da RF (piloto-cbs.tributos.gov.br, build V0038) em beta — sem cobertura confirmada para BP-e e compras governamentais (tpEnteGov). <strong>Não é opção viável no curto prazo.</strong></li>
-          <li>Sem calculadora RF, Smartbus pode emitir BPe com cálculo incorreto em cenários de governo (Art. 473).</li>
-          <li>Consultoria técnica-fiscal cobrirá parte desse gap — definirá se é necessário motor próprio.</li>
-        </ul>
-        <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Concluir discovery e definir arquitetura do motor · Maurício · até 31/07
         </div>
       </div>
 
@@ -1293,95 +1388,12 @@
         </div>
       </div>
     </div>
-
-    <div class="divider"></div>
-
-    <div class="section">
-      <div class="section-label">RTC · Consultoria Técnica-Fiscal — Seleção</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">🔍 Consultoria Técnica-Fiscal — Seleção em andamento</div>
-          <span class="badge badge-ongoing">Em seleção</span>
-        </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          Lacuna identificada: o time de produto não tem capacidade interna para traduzir NTs BPe em requisito sem apoio especializado. O incidente da API BPe (endpoint documentado sem validação fiscal) materializou o risco. Proposta levada à diretoria — <strong>Bia aprovou a contratação</strong>. Angélica (Guanabara) validou a necessidade em Comitê de 14/07.
-        </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6; margin-top:8px;">
-          Escopo definido: a consultoria precisa dominar BPe + RTC e atuar desde a leitura da norma até a validação do requisito. Brief de Escopo, Protocolo de Envolvimento Fiscal e Matriz de Responsabilidades formalizados.
-        </div>
-        <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Iniciar processo de seleção com base no brief · Maurício · até 31/07
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="section">
-      <div class="section-label">RTC · CORE-002 — Compras Governamentais</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">🏛️ CORE-002 · Compras Governamentais — suporte ao grupo gCompraGov</div>
-          <span class="badge badge-ongoing">Em andamento</span>
-        </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          <strong>Spec v13 fechada.</strong> Decisões consolidadas em reuniões de 30/06 e 08/07 com André Rocha e Paulo Balbino: modelo 1:N de Entidade Governamental com vigências, pRedutor e zeragem de alíquota por tpEnteGov (Art. 472/473). Menu Administração > Fiscal confirmado com Paulo Balbino. Desenvolvimento autorizado a avançar em paralelo à contratação da consultoria.
-        </div>
-        <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
-          <strong>Atenção:</strong> Lacunas de interpretação normativa (itens BPE-08, BPE-06, BPE-13 do Caderno de Testes) podem gerar retrabalho se a consultoria revisar a leitura das NTs.
-        </div>
-        <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Iniciar seleção da consultoria técnica-fiscal · Maurício · até 31/07
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="section">
-      <div class="section-label">RTC · CORE-004 — Integrações Smartbus e ERPs</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">🔗 CORE-004 · Integrações Smartbus e ERPs (NT v1.14 + Leiaute v200)</div>
-          <span class="badge badge-ongoing">Em andamento</span>
-        </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          <strong>Spec concluída — 16 regras de negócio mapeadas.</strong> Escopo delimitado em reunião de 09/07 com Prevatto, Victor, Flávia, Cristiane e Benício. A integração atual (NT v1.10 + Leiaute v193) não cobre as evoluções exigidas pela NT v1.14 e Leiaute v200 — novos campos no BPE (45, 46, 47), IBE (13, 14, 15) e dois novos registros (RDD e IRD).
-        </div>
-        <ul class="update-list" style="margin-top:8px;">
-          <li>SMRT-125/126/127 (Fortes Fiscal — BPE/DBE/IBE): <strong>autorizado a avançar independente do Protheus.</strong></li>
-          <li>RDD/IRD: bloqueados — aguardando padrão TOTVS.</li>
-          <li>SMRT-130 (API Protheus): em espera — Protheus permanece em v193 até PST-3416.</li>
-        </ul>
-        <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Refinamento técnico com o time · Maurício · 16/07
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="section">
-      <div class="section-label">RTC · CORE-008 — BPEs cancelados · Relatório Protheus</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">📄 BPEs cancelados de períodos anteriores — Relatório exportação Protheus</div>
-          <span class="badge badge-ongoing">Em homologação</span>
-        </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          Implementação concluída e validada em QA interno. Demonstração realizada com equipes fiscais do Nordeste e Sudeste do Grupo Guanabara e equipe Protheus — comportamento do retorno dos BPEs no arquivo confirmado como conforme.
-        </div>
-        <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Publicar em pré-produção em 16/07 · Acompanhar testes da companhia e Protheus · Ítalo
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- FOOTER -->
   <div class="card-footer">
     <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 16 jul 2026 · 09:00</div>
+    <div class="footer-date">Atualizado em 16 jul 2026 · 21:00</div>
   </div>
 
 </div>
