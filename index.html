@@ -668,7 +668,7 @@
           <div class="ov-icon">📋</div>
           <div class="ov-content">
             <div class="ov-title">Reforma Tributária — RTC + Pagamentos</div>
-            <div class="ov-sub">Motor Tributário e Domínio de Pagamentos unificados em 1 frente de discovery — riscos apresentados ao time técnico. Specs seguem para NT 2026.001 e 2026.002.</div>
+            <div class="ov-sub">Produto apresentou riscos ao time técnico sobre tributos/pagamentos no monolito. Tech decidiu manter o modelo atual — Produto segue com discovery, refinamento e spec da RTC (NT 2026.001/002).</div>
           </div>
           <div class="ov-right">
             <span class="deadline-tag">30/06</span>
@@ -1308,7 +1308,7 @@
         <div style="border-radius:10px;padding:12px;border:1px solid #fca5a5;background:#fef2f2;">
           <div style="font-size:10px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">⚠️ Risco — Discovery aberto</div>
           <div style="font-size:13px;font-weight:700;color:#2d3748;">Motor Tributário + Domínio de Pagamentos</div>
-          <div style="font-size:11.5px;color:#4a5568;margin-top:4px;">1 mesma frente — reunião com o time técnico apresentou os riscos de seguir com as adequações no Motor, tanto para tributos quanto para pagamentos. Consultoria não vai endereçar o Motor — decisão de arquitetura segue em discovery interno.</div>
+          <div style="font-size:11.5px;color:#4a5568;margin-top:4px;">Produto apresentou ao time técnico os riscos de seguir com tributos e pagamentos no monolito. Tech optou por seguir com os ajustes no modelo atual. Produto segue com discovery, refinamento e spec do que já está definido na RTC.</div>
         </div>
       </div>
     </div>
@@ -1406,17 +1406,18 @@
           <span class="badge" style="background:#f3e8ff;color:#6b21a8;">Em discovery</span>
         </div>
         <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          Reunião com o time técnico apresentou os riscos de seguir com as adequações da reforma diretamente no Motor — tanto para tributos quanto para pagamentos. Os dois temas passam a ser tratados como <strong>uma única frente de discovery</strong>, não como domínios/desenvolvimentos separados. Domínio de Pagamentos <strong>não está em desenvolvimento</strong>.
+          <strong>Produto apresentou ao time técnico os riscos de seguir tratando tributos e pagamentos dentro do monolito atual.</strong> Tech avaliou e <strong>optou por seguir com os ajustes no modelo atual</strong> — sem extrair um motor/domínio separado neste momento. Domínio de Pagamentos <strong>não está em desenvolvimento</strong> como frente isolada.
         </div>
         <ul class="update-list" style="margin-top:8px;">
+          <li>Com a decisão de manter o modelo atual, <strong>Produto segue com discovery, refinamento e especificação</strong> do que já está definido na RTC.</li>
           <li>Discovery e especificação seguem para atender as versões mais recentes: <strong>NT 2026.002 — Reforma Tributária do Consumo v1.00 (10/06/2026)</strong> e <strong>NT 2026.001 — Vinculação com a transação de pagamento do DFe</strong>.</li>
           <li>Ambas exigem <strong>flexibilização dos cadastros de impostos</strong> via tabelas de classificações tributárias (cClassTrib).</li>
           <li>Calculadora oficial da RF (piloto-cbs.tributos.gov.br, build V0038) em beta — sem cobertura confirmada para BP-e e compras governamentais (tpEnteGov). <strong>Não é opção viável no curto prazo.</strong></li>
-          <li>Sem arquitetura definida, Smartbus pode emitir BPe com cálculo incorreto em cenários de governo (Art. 473).</li>
-          <li>Consultoria técnica-fiscal <strong>não vai endereçar a decisão sobre o Motor</strong> — seu escopo é interpretação normativa e validação fiscal de requisitos, não arquitetura de sistema. Definição do motor segue como discovery interno, sob Maurício.</li>
+          <li>Risco sinalizado por Produto: manter cálculo no modelo atual pode gerar BPe com cálculo incorreto em cenários de governo (Art. 473) — tech ciente, segue com ajustes no modelo vigente.</li>
+          <li>Consultoria técnica-fiscal <strong>não vai endereçar a decisão sobre o Motor</strong> — seu escopo é interpretação normativa e validação fiscal de requisitos.</li>
         </ul>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Concluir discovery e definir arquitetura única (tributos + pagamentos) · Maurício · até 31/07
+          <strong>Próx. passo:</strong> Produto segue com discovery, refinamento e especificação do que já está definido na RTC · Maurício · em andamento
         </div>
       </div>
     </div>
@@ -1557,7 +1558,7 @@
   <!-- FOOTER -->
   <div class="card-footer">
     <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 16 jul 2026 · 13:05</div>
+    <div class="footer-date">Atualizado em 16 jul 2026 · 13:15</div>
   </div>
 
 </div>
