@@ -46,6 +46,18 @@ Qualquer um dos 4 autorizados (Ítalo, Daniel, Rafael, Maurício) pode aprovar
 e mesclar.
 ```
 
+## Notificação no Slack
+
+Sempre que uma branch for enviada para revisão, Claude posta no canal
+`#smart-produto-core-status-report` (`C0BCPDAB66P`) avisando que há uma
+mudança pronta para PR, com breve descrição do que foi alterado e o link
+de compare para abrir e aprovar.
+
+Por política de segurança, o envio de mensagens no Slack em nome do usuário
+sempre passa por confirmação explícita no chat antes de ser enviado — Claude
+prepara a mensagem (como rascunho) e pede um "pode enviar" antes de postar.
+Isso vale a cada PR, mesmo já tendo sido combinado uma vez.
+
 ## Proteção de branch (configurar uma vez no GitHub)
 
 Em `Settings → Branches → Branch protection rules`, criar regra para `main`:
