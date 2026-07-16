@@ -5,28 +5,173 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRODUTO Smart — Status Report</title>
 <style>
+  :root {
+    --brand-pink: #F482E7;
+    --brand-blue: #83C0F2;
+    --brand-gradient: linear-gradient(90deg, var(--brand-pink), var(--brand-blue));
+    --ink-900: #1a1a2e;
+    --ink-800: #2d3748;
+    --ink-700: #4a5568;
+    --ink-muted: #5c6577;
+    --ink-muted-2: #6b7280;
+    --surface: #fff;
+    --surface-muted: #f7f9fc;
+    --surface-body: #f0f2f5;
+    --border: #eaecf2;
+    --success-bg: #e4f5e9; --success-fg: #2e7d4f;
+    --warning-bg: #fff3e0; --warning-fg: #b06010;
+    --danger-bg: #fdecea;  --danger-fg: #c0392b;
+  }
+
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    background: #f0f2f5;
+    background: var(--surface-body);
     min-height: 100vh;
     padding: 0;
     margin: 0;
   }
 
+  a, button { font-family: inherit; }
+
+  /* focus visível para navegação por teclado em todos os elementos interativos */
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--brand-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
   .card {
     width: 100%;
-    background: #fff;
+    background: var(--surface);
     min-height: 100vh;
-    box-shadow: none;
-    border-radius: 0;
+  }
+
+  /* ── SIDEBAR: fixa na viewport, não acompanha o scroll do conteúdo ── */
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--surface-muted);
+    border-right: 1px solid var(--border);
+    padding: 18px 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 20;
+  }
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-logo-mark { width: 26px; height: 26px; flex-shrink: 0; }
+  .sidebar-logo-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #5c6577;
+    letter-spacing: 0.2px;
+  }
+  .sidebar-logo-text strong { font-weight: 800; color: #2d3748; }
+
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .menu-toggle svg { width: 18px; height: 18px; }
+  .sidebar-backdrop { display: none; }
+
+  .side-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    padding: 9px 10px;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    color: var(--ink-700);
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 2px;
+  }
+  .side-item svg { width: 17px; height: 17px; flex-shrink: 0; color: #8a94ab; }
+  .side-item:hover { background: #eef1f7; }
+  .side-item.active { background: #fff; color: var(--ink-900); box-shadow: 0 1px 3px rgba(26,26,46,0.08); }
+  .side-item.active svg { color: var(--brand-pink); }
+  .side-item.side-child { padding-left: 20px; font-weight: 500; font-size: 13px; }
+  .side-item.side-child svg { width: 15px; height: 15px; }
+  .side-group { margin-top: 14px; }
+  .side-group-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #9aa3b5;
+    padding: 6px 10px 4px;
+  }
+
+  /* ── COLUNA PRINCIPAL: header + conteúdo, deslocada da sidebar fixa ── */
+  .main-col {
+    margin-left: 240px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── CONTEÚDO ── */
+  .content {
+    flex: 1;
+    min-width: 0;
+  }
+  .content-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 40px;
+  }
+
+  @media (max-width: 860px) {
+    .menu-toggle { display: inline-flex; }
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.2s ease;
+      box-shadow: 0 0 24px rgba(0,0,0,0.2);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop.open {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(16,20,32,0.4);
+      z-index: 30;
+    }
+    .main-col { margin-left: 0; }
+    .content-inner { padding: 20px; }
   }
 
   /* ── HEADER ── */
   .card-header {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    padding: 28px 32px 24px;
+    padding: 18px 32px 16px;
     position: relative;
     overflow: hidden;
   }
@@ -49,7 +194,7 @@
     z-index: 1;
   }
   .tag {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -57,17 +202,10 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 6px;
-  }
-  .card-header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.2;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
   .card-header .subtitle {
-    font-size: 12.5px;
+    font-size: 13.5px;
     color: #8da4c4;
   }
   .header-meta {
@@ -76,74 +214,35 @@
   }
   .header-meta .owner-label {
     font-size: 9px;
-    color: #556680;
+    color: #93a0bd;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 3px;
   }
   .header-meta .owner-name {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #83C0F2;
   }
   .header-meta .report-date {
     font-size: 10.5px;
-    color: #556680;
+    color: #93a0bd;
     margin-top: 2px;
   }
 
-  /* ── TABS NAV ── */
-  .tabs-nav {
-    display: flex;
-    background: #f7f9fc;
-    border-bottom: 1px solid #eaecf2;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .tabs-nav::-webkit-scrollbar { display: none; }
-  .tab-btn {
-    padding: 12px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #8a94a8;
-    cursor: pointer;
-    border: none;
-    background: none;
-    border-bottom: 2px solid transparent;
-    white-space: nowrap;
-    transition: all 0.15s;
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-  }
-  .tab-btn:hover { color: #4a5568; }
-  .tab-btn.active {
-    color: #2d3748;
-    border-bottom: 2px solid #F482E7;
-    background: #fff;
-  }
-  .tab-dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    margin-right: 5px;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-  }
-
   /* ── TAB PANELS ── */
-  .tab-panel { display: none; padding: 24px; }
+  .tab-panel { display: none; padding: 0; }
   .tab-panel.active { display: block; }
 
   /* ── SECTION ── */
   .section { margin-bottom: 22px; }
   .section:last-child { margin-bottom: 0; }
   .section-label {
-    font-size: 9.5px;
+    font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 1.6px;
     text-transform: uppercase;
-    color: #aab0be;
+    color: #6b7280;
     margin-bottom: 10px;
   }
 
@@ -164,15 +263,15 @@
   .ov-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
   .ov-content { flex: 1; min-width: 0; }
   .ov-title {
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 600;
     color: #2d3748;
     margin-bottom: 2px;
     word-wrap: break-word;
   }
   .ov-sub {
-    font-size: 11px;
-    color: #8a94a8;
+    font-size: 12.5px;
+    color: #5c6577;
     line-height: 1.45;
     word-wrap: break-word;
   }
@@ -185,8 +284,8 @@
     min-width: 80px;
   }
   .deadline-tag {
-    font-size: 9.5px;
-    color: #9aa0b0;
+    font-size: 10.5px;
+    color: #6b7280;
     font-weight: 600;
     white-space: nowrap;
   }
@@ -195,7 +294,7 @@
   /* ── BADGES ── */
   .badge {
     display: inline-block;
-    font-size: 9.5px;
+    font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -228,12 +327,12 @@
     margin-bottom: 10px;
   }
   .detail-title {
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 700;
     color: #2d3748;
   }
   .detail-body {
-    font-size: 13px;
+    font-size: 14.5px;
     color: #4a5568;
     line-height: 1.65;
     word-wrap: break-word;
@@ -251,8 +350,8 @@
   .update-list li {
     display: block;
     position: relative;
-    padding-left: 14px;
-    font-size: 13px;
+    padding-left: 15px;
+    font-size: 14.5px;
     color: #4a5568;
     line-height: 1.6;
     word-wrap: break-word;
@@ -280,7 +379,7 @@
     border-radius: 8px;
     padding: 10px 14px;
     margin-top: 10px;
-    font-size: 12.5px;
+    font-size: 14px;
     color: #8b2519;
     line-height: 1.55;
     word-wrap: break-word;
@@ -305,7 +404,7 @@
     border-left: 3px solid #F482E7;
     border-radius: 0 8px 8px 0;
     padding: 10px 14px;
-    font-size: 12.5px;
+    font-size: 14px;
     color: #2d3748;
     line-height: 1.6;
     margin-top: 10px;
@@ -357,9 +456,9 @@
     50%      { box-shadow: 0 3px 20px rgba(131,192,242,0.7); }
   }
   .tl-info { text-align: center; padding: 0 4px; }
-  .tl-date  { font-size: 9.5px; font-weight: 700; color: #8a94a8; margin-bottom: 2px; }
-  .tl-label { font-size: 11.5px; font-weight: 600; color: #2d3748; line-height: 1.3; }
-  .tl-sub   { font-size: 10px; color: #9aa0b0; margin-top: 2px; }
+  .tl-date  { font-size: 10.5px; font-weight: 700; color: #5c6577; margin-bottom: 2px; }
+  .tl-label { font-size: 13px; font-weight: 600; color: #2d3748; line-height: 1.3; }
+  .tl-sub   { font-size: 11px; color: #6b7280; margin-top: 2px; }
 
   /* ── DELIVERABLES LIST ── */
   .deliv-list { display: flex; flex-direction: column; gap: 7px; }
@@ -373,7 +472,7 @@
     border-radius: 8px;
   }
   .deliv-icon { font-size: 14px; flex-shrink: 0; }
-  .deliv-text { font-size: 12.5px; font-weight: 500; color: #2d3748; flex: 1; min-width: 0; }
+  .deliv-text { font-size: 14px; font-weight: 500; color: #2d3748; flex: 1; min-width: 0; }
 
   /* ── INFOGRAPHIC ── */
   .infographic-wrap {
@@ -395,14 +494,14 @@
     gap: 12px;
   }
   .footer-brand {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     background: linear-gradient(90deg, #F482E7, #83C0F2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .footer-date { font-size: 10.5px; color: #9aa0b0; }
+  .footer-date { font-size: 11.5px; color: #6b7280; }
 
   /* ── KPI / BIG NUMBERS ── */
   .kpi-grid {
@@ -440,10 +539,10 @@
     padding: 16px 20px;
   }
   .org-top { width: 100%; max-width: 440px; }
-  .org-name { font-size: 15px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
+  .org-name { font-size: 16.5px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
   .org-role { color: #3355a8; font-weight: 800; }
-  .org-desc-italic { font-size: 12px; color: #6b7280; font-style: italic; line-height: 1.5; margin-bottom: 8px; }
-  .org-desc { font-size: 12.5px; color: #4a5568; line-height: 1.55; }
+  .org-desc-italic { font-size: 13px; color: #6b7280; font-style: italic; line-height: 1.5; margin-bottom: 8px; }
+  .org-desc { font-size: 14px; color: #4a5568; line-height: 1.55; }
   .org-connector { width: 2px; height: 24px; background: #c7ccd8; }
   .org-children {
     display: flex;
@@ -485,14 +584,14 @@
     .org-child { padding-top: 12px; }
   }
   .kpi-label {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #9aa0b0;
+    color: #6b7280;
   }
   .kpi-value {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
     background: linear-gradient(90deg, #F482E7, #83C0F2);
     -webkit-background-clip: text;
@@ -501,7 +600,7 @@
     line-height: 1.1;
   }
   .kpi-sub {
-    font-size: 10.5px;
+    font-size: 11.5px;
     color: #6b7280;
   }
   .company-block {
@@ -512,7 +611,7 @@
     margin-bottom: 12px;
   }
   .company-block-title {
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #1a1a2e;
     margin-bottom: 10px;
@@ -542,70 +641,194 @@
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #9aa0b0;
+    color: #6b7280;
     letter-spacing: 0.5px;
   }    /* ── ARCHIVE STYLES ── */
     .archived-section { opacity: 0.55; filter: grayscale(0.25); }
-    .archived-section .section-label { color: #9aa0b0; }
+    .archived-section .section-label { color: #6b7280; }
     .archived-section .detail-block { background: #f9fafb !important; border-color: #e5e7eb !important; }
     .archived-section .highlight-box { background: #f9fafb !important; border-left-color: #d1d5db !important; }
     .archive-tag { font-size:9px; padding:2px 8px; border-radius:8px; background:#e5e7eb; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-left:8px; vertical-align:middle; }
 
+  /* ── OVERVIEW ITEM COMO BOTÃO ACESSÍVEL ── */
+  button.ov-item {
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  button.ov-item.no-nav { cursor: default; }
+  button.ov-item.no-nav:hover { background: var(--surface-muted); }
+  .ov-arrow { font-size: 14px; color: #b6bcc9; flex-shrink: 0; align-self: center; }
+
+  /* ── ALERT CARD (componente único p/ blocos de atenção/impedimento/destaque) ── */
+  .alert-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--alert-cols, 2), 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .alert-card {
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--ac-border, #eaecf2);
+    background: var(--ac-bg, #f7f9fc);
+  }
+  .alert-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ac-fg, #4a5568);
+    margin-bottom: 8px;
+  }
+  .alert-card-title { font-size: 15px; font-weight: 700; color: #2d3748; margin-bottom: 6px; }
+  .alert-card-body { font-size: 14px; color: #4a5568; line-height: 1.55; }
+  .alert-card-foot { font-size: 12px; margin-top: 10px; color: #6b7280; }
+  .alert-card.success { --ac-bg:#f0fdf4; --ac-border:#86efac; --ac-fg:#166534; }
+  .alert-card.warning { --ac-bg:#fff8f0; --ac-border:#f4a250; --ac-fg:#854F0B; }
+  .alert-card.danger  { --ac-bg:#fef2f2; --ac-border:#fca5a5; --ac-fg:#991b1b; }
+  .alert-card.info    { --ac-bg:#eff6ff; --ac-border:#93c5fd; --ac-fg:#1e40af; }
+  .alert-card.neutral { --ac-bg:#faf5ff; --ac-border:#d8b4fe; --ac-fg:#6b21a8; }
+
+  /* ── TABELA DE CONFLITOS (semântica, no lugar do grid de divs) ── */
+  .conflict-table { width: 100%; border-collapse: collapse; font-size: 12.5px; color: #374151; margin-top: 8px; }
+  .conflict-table th {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+    color: #6b7280; text-align: left; padding: 5px 6px; border-bottom: 1px solid #e2e6ef;
+  }
+  .conflict-table td { padding: 6px; border-bottom: 1px solid #f0f0f0; }
+  .conflict-table tr:last-child td { border-bottom: none; }
+
+  /* ── RESPONSIVO: colapsa grids fixos em telas estreitas ── */
+  @media (max-width: 640px) {
+    .alert-grid { grid-template-columns: 1fr !important; }
+    .conflict-table, .conflict-table thead, .conflict-table tbody, .conflict-table th, .conflict-table td, .conflict-table tr { display: block; }
+    .conflict-table thead { display: none; }
+    .conflict-table tr { border-bottom: 1px solid #e2e6ef; padding: 6px 0; }
+    .conflict-table td { padding: 1px 0; }
+    .conflict-table td::before { content: attr(data-label) ": "; font-weight: 700; color: #6b7280; }
+  }
+
+  /* ── IMPRESSÃO: garante que todas as seções fiquem visíveis no PDF/impressão ── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { max-width: 100%; box-shadow: none; border-radius: 0; }
+    .sidebar, .sidebar-backdrop, .menu-toggle { display: none !important; }
+    .main-col { margin-left: 0; }
+    .content-inner { max-width: 100%; }
+    .tab-panel, .tab-panel.active { display: block !important; padding: 16px 0; }
+    .tab-panel { break-after: page; }
+    .tab-panel:last-of-type { break-after: auto; }
+    .ov-arrow { display: none; }
+  }
 
 </style>
 </head>
 <body>
 <div class="card">
 
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar-nav" aria-label="Navegação do relatório">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 100 100" class="sidebar-logo-mark" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#6EC3F4"/>
+            <stop offset="50%" stop-color="#B07CE0"/>
+            <stop offset="100%" stop-color="#F482E7"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="24" r="26" fill="url(#logoGrad)"/>
+        <circle cx="76" cy="50" r="26" fill="url(#logoGrad)"/>
+        <circle cx="50" cy="76" r="26" fill="url(#logoGrad)"/>
+        <circle cx="24" cy="50" r="26" fill="url(#logoGrad)"/>
+        <circle cx="38" cy="38" r="15" fill="#fff"/>
+        <circle cx="62" cy="62" r="15" fill="#fff"/>
+        <circle cx="38" cy="62" r="9" fill="url(#logoGrad)"/>
+        <circle cx="62" cy="38" r="9" fill="#fff"/>
+      </svg>
+      <span class="sidebar-logo-text">Smart <strong>Travel</strong></span>
+    </div>
+    <button type="button" class="side-item active" id="tabbtn-geral" data-tab="geral" aria-current="page" onclick="activateTab('geral')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      Visão Geral
+    </button>
+    <button type="button" class="side-item" id="tabbtn-orgchart" data-tab="orgchart" onclick="activateTab('orgchart')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.3"/><path d="M12 7.3V12M12 12H6.5M12 12h5.5M6.5 12v3M17.5 12v3"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg>
+      Organograma do Time
+    </button>
+
+    <div class="side-group">
+      <div class="side-group-label">Iniciativas</div>
+      <button type="button" class="side-item side-child" id="tabbtn-motor" data-tab="motor" onclick="activateTab('motor')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v4M15 2v4"/><path d="M7 8h10l-.8 4.6a4.2 4.2 0 0 1-4.2 3.4h0a4.2 4.2 0 0 1-4.2-3.4L7 8Z"/><path d="M12 16v4"/></svg>
+        Motor de Conexão
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-vtr" data-tab="vtr" onclick="activateTab('vtr')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="11" rx="2"/><path d="M3 12h18M7 17v2M17 17v2"/></svg>
+        VTR
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-osp" data-tab="osp" onclick="activateTab('osp')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 7l-3 3"/><path d="M20 17H7l3-3M4 17l3 3"/></svg>
+        OSP
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-reforma" data-tab="reforma" onclick="activateTab('reforma')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h6M9 9h2"/></svg>
+        Reforma Tributária
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-outras" data-tab="outras" onclick="activateTab('outras')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg>
+        Outras Frentes
+      </button>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-label">Post Mortem</div>
+      <button type="button" class="side-item side-child" id="tabbtn-postmortem-motor" data-tab="postmortem-motor" onclick="activateTab('postmortem-motor')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/></svg>
+        Motor de Conexão 07/2026
+      </button>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop" onclick="closeSidebar()"></div>
+
+  <div class="main-col">
+
   <!-- HEADER -->
   <div class="card-header">
     <div class="header-top">
-      <div>
-        <div class="tag">SmartBus · Grupo Guanabara</div>
-        <h1>PRODUTO Smart</h1>
-        <div class="subtitle">Status consolidado de iniciativas — semana 16 jul 2026</div>
+      <div style="display:flex; align-items:flex-start; gap:12px;">
+        <button type="button" class="menu-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="sidebar-nav" onclick="toggleSidebar()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div>
+          <div class="tag">SmartBus · Grupo Guanabara</div>
+          <div class="subtitle">Status consolidado de iniciativas — semana 16 jul 2026</div>
+        </div>
       </div>
       <div class="header-meta">
         <div class="owner-label">Owner</div>
         <div class="owner-name">Maurício</div>
-        <div class="report-date">30 jun 2026</div>
+        <div class="report-date">Atualizado 16 jul 2026</div>
       </div>
     </div>
   </div>
 
-  <!-- TABS NAV -->
-  <div class="tabs-nav">
-    <button class="tab-btn active" onclick="switchTab('geral',this)">
-      <span class="tab-dot" style="background:#83C0F2"></span>Visão Geral
-    </button>
-    <button class="tab-btn" onclick="switchTab('motor',this)">
-      <span class="tab-dot" style="background:#F482E7"></span>Motor de Conexões
-    </button>
-    <button class="tab-btn" onclick="switchTab('vtr',this)">
-      <span class="tab-dot" style="background:#f4a250"></span>VTR
-    </button>
-    <button class="tab-btn" onclick="switchTab('osp',this)">
-      <span class="tab-dot" style="background:#a78bfa"></span>OSP
-    </button>
-    <button class="tab-btn" onclick="switchTab('reforma',this)">
-      <span class="tab-dot" style="background:#f59e0b"></span>Reforma Tributária
-    </button>
-    <button class="tab-btn" onclick="switchTab('outras',this)">
-      <span class="tab-dot" style="background:#14b8a6"></span>Outras Frentes
-    </button>
-    <button class="tab-btn" onclick="switchTab('orgchart',this)">
-      <span class="tab-dot" style="background:#6366f1"></span>Novo Org Chart
-    </button>
-  </div>
+    <!-- CONTEÚDO -->
+    <div class="content">
+      <div class="content-inner">
 
   <!-- ══════════════ TAB: GERAL ══════════════ -->
-  <div id="tab-geral" class="tab-panel active">
+  <div id="tab-geral" class="tab-panel active" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
     <div class="section">
       <div class="section-label">Iniciativas da semana</div>
       <div class="overview-grid">
 
-        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
-          <div class="ov-icon">🔌</div>
+        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Motor V2, Validações em Campo">
+          <div class="ov-icon" aria-hidden="true">🔌</div>
           <div class="ov-content">
             <div class="ov-title">Motor V2 — Validações em Campo</div>
             <div class="ov-sub">Motor V2 em piloto (7 PDVs). Validações em Campo encerradas — 13 casos tratados (16/07). External Sale: aguarda diretoria.</div>
@@ -614,10 +837,11 @@
             <span class="deadline-tag">16/07</span>
             <span class="badge badge-done">Concluído</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
-          <div class="ov-icon">🖥️</div>
+        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Nova Tela Frontoffice">
+          <div class="ov-icon" aria-hidden="true">🖥️</div>
           <div class="ov-content">
             <div class="ov-title">Motor V2 — Nova Tela Frontoffice</div>
             <div class="ov-sub">Entregue em 15/07. Deploy realizado — validado pelo time de negócio, elogios do time de operações.</div>
@@ -626,10 +850,11 @@
             <span class="deadline-tag">15/07</span>
             <span class="badge badge-done">Entregue</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
-          <div class="ov-icon">📊</div>
+        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard de Acompanhamento">
+          <div class="ov-icon" aria-hidden="true">📊</div>
           <div class="ov-content">
             <div class="ov-title">Motor V2 — Dashboard de Acompanhamento</div>
             <div class="ov-sub">Duas rodadas de refinamento. Documentado no Linear. Próx.: GLPI para BI · Daniel + Morelo · até 17/07.</div>
@@ -638,10 +863,11 @@
             <span class="deadline-tag">30/06</span>
             <span class="badge badge-ongoing">Em andamento</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('vtr',document.querySelectorAll('.tab-btn')[2])">
-          <div class="ov-icon">🚌</div>
+        <button type="button" class="ov-item" onclick="activateTab('vtr')" aria-label="Ver detalhes em VTR: Inclusão da VTR no VG/Senna">
+          <div class="ov-icon" aria-hidden="true">🚌</div>
           <div class="ov-content">
             <div class="ov-title">Inclusão da VTR no VG/Senna</div>
             <div class="ov-sub">Reunião 01/07 realizada. Impedimentos para Senna identificados — alternativa via tenant Guanabara em avaliação. Próx.: 06/07 (Adones).</div>
@@ -650,10 +876,11 @@
             <span class="deadline-tag">30/06</span>
             <span class="badge badge-pending">A definir</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('osp',document.querySelectorAll('.tab-btn')[3])">
-          <div class="ov-icon">🔁</div>
+        <button type="button" class="ov-item" onclick="activateTab('osp')" aria-label="Ver detalhes em OSP: Simultâneas Parciais">
+          <div class="ov-icon" aria-hidden="true">🔁</div>
           <div class="ov-content">
             <div class="ov-title">Simultâneas Parciais (OSP)</div>
             <div class="ov-sub">Primeiro refinamento técnico realizado. Pausada por foco total no Motor V2. Retomada depende de estabilização.</div>
@@ -662,10 +889,11 @@
             <span class="deadline-tag">30/06</span>
             <span class="badge badge-pending">Pausado</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('reforma',document.querySelectorAll('.tab-btn')[4])">
-          <div class="ov-icon">📋</div>
+        <button type="button" class="ov-item" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: RTC + Pagamentos">
+          <div class="ov-icon" aria-hidden="true">📋</div>
           <div class="ov-content">
             <div class="ov-title">Reforma Tributária — RTC + Pagamentos</div>
             <div class="ov-sub">Produto apresentou riscos ao time técnico sobre tributos/pagamentos no monolito. Tech decidiu manter o modelo atual — Produto segue com discovery, refinamento e spec da RTC (NT 2026.001/002).</div>
@@ -674,10 +902,11 @@
             <span class="deadline-tag">30/06</span>
             <span class="badge badge-ongoing">Em andamento</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" style="cursor:default;">
-          <div class="ov-icon">🎫</div>
+        <div class="ov-item no-nav" style="cursor:default;">
+          <div class="ov-icon" aria-hidden="true">🎫</div>
           <div class="ov-content">
             <div class="ov-title">Riocard Totem RJ — Documentação Técnica</div>
             <div class="ov-sub">Reunião realizada com Riocard. VPN sendo habilitada para ambiente de testes. Pausado por foco no Motor V2 · Próx.: dados VPN · Daniel · até 21/07.</div>
@@ -688,8 +917,8 @@
           </div>
         </div>
 
-        <div class="ov-item" onclick="switchTab('outras',document.querySelectorAll('.tab-btn')[5])">
-          <div class="ov-icon">🧩</div>
+        <button type="button" class="ov-item" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Tickets, Comercial e Product Discovery">
+          <div class="ov-icon" aria-hidden="true">🧩</div>
           <div class="ov-content">
             <div class="ov-title">Outras Frentes — Tickets, Comercial e Product Discovery</div>
             <div class="ov-sub">Tickets Viações: 11 dos 14 mapeados no Linear (3 resolvidos direto). Comercial: portfólio em 8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Product Discovery: fluxo estruturado no Jira, +20 ideias captadas na Rodoviária Novo Rio.</div>
@@ -698,10 +927,11 @@
             <span class="deadline-tag">16/07</span>
             <span class="badge badge-ongoing">Em andamento</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('orgchart',document.querySelectorAll('.tab-btn')[6])">
-          <div class="ov-icon">🧭</div>
+        <button type="button" class="ov-item" onclick="activateTab('orgchart')" aria-label="Ver detalhes em Novo Org Chart: Time de Produto">
+          <div class="ov-icon" aria-hidden="true">🧭</div>
           <div class="ov-content">
             <div class="ov-title">Time de Produto — Novo Org Chart</div>
             <div class="ov-sub">Maurício (GPM) lidera o time de produto; Daniel (PM Pleno) e Ítalo (Associate PM) reportam diretamente a ele.</div>
@@ -710,52 +940,49 @@
             <span class="deadline-tag">16/07</span>
             <span class="badge badge-done">Definido</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
       </div>
     </div>
   </div>
 
     <!-- ══════════════ TAB: MOTOR DE CONEXÕES ══════════════ -->
-  <div id="tab-motor" class="tab-panel">
+  <div id="tab-motor" class="tab-panel" role="region" aria-labelledby="tabbtn-motor" tabindex="0">
 
     <!-- INITIATIVE HEADER -->
     <div style="margin-bottom:16px;">
-      <div style="font-size:12.5px; color:#8a94a8; margin-bottom:4px;">Meta: 15% da receita via conexões · Comitê semanal ativo desde 26/06</div>
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Meta: 15% da receita via conexões · Comitê semanal ativo desde 26/06</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Italo · Daniel · Guilherme</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 16 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Italo · Daniel · Guilherme</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 16 jul 2026</span>
       </div>
     </div>
 
     <!-- ALERT CARDS -->
     <div class="section-label">Requer atenção</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div class="alert-grid" style="--alert-cols:2;">
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #86efac;background:#f0fdf4;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:8px;">
-          🟢 Piloto em andamento
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">Motor V2 — 7 PDVs em piloto controlado</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Ativados em 15/07 às 14h — BSB · SP · RJ · BHZ · GYN · FOR Comercial · FOR Guichê IV. Confirmado por Rodrigo Adones (16/07): 24h+ sem impacto no banco, sem riscos identificados no volume atual. 1 issue em análise: conexão manual UDI (Rio ↔ Cuiabá) não aparecendo para agentes.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Comitê 10/07: motor não é causa raiz · ponto de atenção é carga multi-trecho · Daniel + Ítalo</div>
-        <div style="font-size:11px;margin-top:6px;color:#9aa0b0;">Próx. passo: Daniel levanta com negócio o roadmap dos próximos PDVs a ativar · em andamento (16/07)</div>
+      <div class="alert-card success">
+        <div class="alert-card-label">🟢 Piloto em andamento</div>
+        <div class="alert-card-title">Motor V2 — 7 PDVs em piloto controlado</div>
+        <div class="alert-card-body">Ativados em 15/07 às 14h — BSB · SP · RJ · BHZ · GYN · FOR Comercial · FOR Guichê IV. Confirmado por Rodrigo Adones (16/07): 24h+ sem impacto no banco, sem riscos identificados no volume atual. 1 issue em análise: conexão manual UDI (Rio ↔ Cuiabá) não aparecendo para agentes.</div>
+        <div class="alert-card-foot">Comitê 10/07: motor não é causa raiz · ponto de atenção é carga multi-trecho · Daniel + Ítalo</div>
+        <div class="alert-card-foot" style="margin-top:6px;">Próx. passo: Daniel levanta com negócio o roadmap dos próximos PDVs a ativar · em andamento (16/07)</div>
       </div>
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #f4a250;background:#fff8f0;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#854F0B;margin-bottom:8px;">
-          ⏳ Aguardando diretoria
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">External Sale — aprovação de infra</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Nova infraestrutura pré-prod com custo elevado. Integração ClickBus e Buson bloqueada até aprovação.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Responsável: Tomás + Adones</div>
+      <div class="alert-card warning">
+        <div class="alert-card-label">⏳ Aguardando diretoria</div>
+        <div class="alert-card-title">External Sale — aprovação de infra</div>
+        <div class="alert-card-body">Nova infraestrutura pré-prod com custo elevado. Integração ClickBus e Buson bloqueada até aprovação.</div>
+        <div class="alert-card-foot">Responsável: Tomás + Adones</div>
       </div>
 
     </div>
 
     <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:12px 16px;margin-bottom:20px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:6px;">📋 Estratégia · Comitê Executivo 10/07</div>
-      <div style="font-size:12.5px;color:#2d3748;line-height:1.6;">Decisão: reativação controlada e gradual em vez de esperar agosto. Tomás confirmou que o motor <strong>não é a causa raiz</strong> dos problemas do Smart — o ponto de atenção é a <strong>carga da precificação multi-trecho no banco</strong>. Agências do piloto foram escolhidas por operarem com terminais duplicados, permitindo comparar V1 x V2 lado a lado sem risco para as demais estações.</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:6px;">📋 Estratégia · Comitê Executivo 10/07</div>
+      <div style="font-size:14px;color:#2d3748;line-height:1.6;">Decisão: reativação controlada e gradual em vez de esperar agosto. Tomás confirmou que o motor <strong>não é a causa raiz</strong> dos problemas do Smart — o ponto de atenção é a <strong>carga da precificação multi-trecho no banco</strong>. Agências do piloto foram escolhidas por operarem com terminais duplicados, permitindo comparar V1 x V2 lado a lado sem risco para as demais estações.</div>
     </div>
 
     <div class="divider"></div>
@@ -764,39 +991,39 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
       <div class="section-label" style="margin-bottom:0;">Canais de venda</div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;">
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#1D9E75;display:inline-block;flex-shrink:0;"></span>Ativo</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block;flex-shrink:0;"></span>Em validação</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block;flex-shrink:0;"></span>Bloqueado</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#B4B2A9;display:inline-block;flex-shrink:0;"></span>Não iniciado</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#1D9E75;display:inline-block;flex-shrink:0;"></span>Ativo</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block;flex-shrink:0;"></span>Em validação</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block;flex-shrink:0;"></span>Bloqueado</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#B4B2A9;display:inline-block;flex-shrink:0;"></span>Não iniciado</span>
       </div>
     </div>
     <div style="border:1px solid #eaecf2;border-radius:12px;overflow:hidden;">
 
       <div style="display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid #eaecf2;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">Senna</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">Piloto iniciado nos guichês físicos — aguarda expansão para canal ecommerce + mobile</span>
-        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#faeeda;color:#633806;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">AGUARDANDO PILOTO</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">Senna</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">Piloto iniciado nos guichês físicos — aguarda expansão para canal ecommerce + mobile</span>
+        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fff3e0;color:#b06010;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">AGUARDANDO PILOTO</span>
       </div>
 
       <div style="display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid #eaecf2;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#E24B4A;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">External Sale</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">ClickBus + Buson — aguardando aprovação diretoria para infra pré-prod</span>
-        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fdecea;color:#791F1F;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">BLOQUEADO</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">External Sale</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">ClickBus + Buson — aguardando aprovação diretoria para infra pré-prod</span>
+        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fdecea;color:#c0392b;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">BLOQUEADO</span>
       </div>
 
       <div style="display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid #eaecf2;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">Europa</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">Hermes publicando ajustes hoje (01/07) — prazo DEV-Royal previsto 02/07</span>
-        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#faeeda;color:#633806;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">EM ANDAMENTO</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">Europa</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">Hermes publicando ajustes hoje (01/07) — prazo DEV-Royal previsto 02/07</span>
+        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fff3e0;color:#b06010;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">EM ANDAMENTO</span>
       </div>
 
       <div style="display:flex;align-items:center;padding:13px 16px;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#1D9E75;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">PDVs / Totens</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">7 guichês ativados 15/07: BSB · SP · RJ · GYN · BHZ · FOR Comercial · FOR Guichê IV — 24h+ sem impacto confirmado (Rodrigo, 16/07)</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">PDVs / Totens</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">7 guichês ativados 15/07: BSB · SP · RJ · GYN · BHZ · FOR Comercial · FOR Guichê IV — 24h+ sem impacto confirmado (Rodrigo, 16/07)</span>
         <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#dcfce7;color:#166534;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">EM PILOTO</span>
       </div>
 
@@ -812,25 +1039,25 @@
           <div class="detail-title">🏢 Gestores regionais Guanabara — rodoviárias</div>
           <span class="badge badge-done">Concluído ✓</span>
         </div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.6;margin-bottom:12px;">
+        <div style="font-size:14px;color:#4a5568;line-height:1.6;margin-bottom:12px;">
           Grupo de validação aberto em 29/06 com gestores regionais da Guanabara. Foco no operacional nas rodoviárias — frontoffice V2. Ciclo encerrado em 16/07: todos os casos reportados foram tratados e receberam o devido retorno (Ítalo, 08:33).
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
           <div style="background:#f7f9fc;border:1px solid #eaecf2;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;background:linear-gradient(90deg,#F482E7,#83C0F2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">13</div>
-            <div style="font-size:10px;color:#8a94a8;margin-top:2px;">reportados</div>
+            <div style="font-size:24px;font-weight:800;background:linear-gradient(90deg,#F482E7,#83C0F2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">13</div>
+            <div style="font-size:11px;color:#5c6577;margin-top:2px;">reportados</div>
           </div>
           <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#166534;line-height:1.1;">3</div>
-            <div style="font-size:10px;color:#166534;margin-top:2px;">resolvidos</div>
+            <div style="font-size:24px;font-weight:800;color:#166534;line-height:1.1;">3</div>
+            <div style="font-size:11px;color:#166534;margin-top:2px;">resolvidos</div>
           </div>
           <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#1e40af;line-height:1.1;">5</div>
-            <div style="font-size:10px;color:#1e40af;margin-top:2px;">desenquadrados</div>
+            <div style="font-size:24px;font-weight:800;color:#1e40af;line-height:1.1;">5</div>
+            <div style="font-size:11px;color:#1e40af;margin-top:2px;">desenquadrados</div>
           </div>
           <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#166534;line-height:1.1;">5</div>
-            <div style="font-size:10px;color:#166534;margin-top:2px;">retornados ✓</div>
+            <div style="font-size:24px;font-weight:800;color:#166534;line-height:1.1;">5</div>
+            <div style="font-size:11px;color:#166534;margin-top:2px;">retornados ✓</div>
           </div>
         </div>
         <ul class="update-list">
@@ -855,7 +1082,7 @@
           <div class="detail-title">📊 Dashboard de Acompanhamento V2</div>
           <span class="badge" style="background:#eff6ff;color:#1e40af;">Em refinamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Duas rodadas de refinamento realizadas. Documentado no Linear + mockup construído. Maior visibilidade do motor para diretoria, negócio e produto.
         </div>
         <div class="highlight-box blue">
@@ -868,7 +1095,7 @@
           <div class="detail-title">🖥️ Nova Tela Frontoffice — Agrupadores de oferta</div>
           <span class="badge badge-done">Entregue ✓</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Tela com 4 agrupadores: <strong>trecho direto, mesma linha, vira bandeira, cruzamento</strong>. Levantada em visita à rodoviária de Juiz de Fora + reunião semanal Motor (sextas, 9h). Deploy realizado e validado pelo time de negócio — elogios do time de operações.
         </div>
         <div class="highlight-box" style="border-left-color:#1D9E75;background:#f0fdf4;">
@@ -881,7 +1108,7 @@
           <div class="detail-title">💰 Preço Dinâmico — ThoughtWorks</div>
           <span class="badge badge-ongoing">Em andamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           SmartBus não está preparado para receber precificação de conexão (preço gerenciado por SKU). Desenvolvimento necessário do nosso lado.
         </div>
         <div class="highlight-box blue">
@@ -915,37 +1142,33 @@
   </div>
 
     <!-- ══════════════ TAB: VTR ══════════════ -->
-  <div id="tab-vtr" class="tab-panel">
+  <div id="tab-vtr" class="tab-panel" role="region" aria-labelledby="tabbtn-vtr" tabindex="0">
 
     <!-- INITIATIVE HEADER -->
     <div style="margin-bottom:16px;">
-      <div style="font-size:12.5px; color:#8a94a8; margin-bottom:4px;">Inclusão da VTR/VTR2 no canal de vendas Guanabara · 237k bilhetes · R$38,9M (Jan–Jun 2026)</div>
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Inclusão da VTR/VTR2 no canal de vendas Guanabara · 237k bilhetes · R$38,9M (Jan–Jun 2026)</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Maurício · Adones · Tomás</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 16 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Maurício · Adones · Tomás</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 16 jul 2026</span>
       </div>
     </div>
 
     <!-- ALERT CARDS -->
     <div class="section-label">Impedimentos</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div class="alert-grid" style="--alert-cols:2;">
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #fca5a5;background:#fef2f2;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#991b1b;margin-bottom:8px;">
-          🔴 Impedimento técnico
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">Inclusão via Senna — inviável</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Reunião 01/07 identificou impedimentos para inclusão direta via Senna. Estimativa de "1 dia" de Felipe não validada por Adones — informações adicionais necessárias para planejamento e desenho da solução.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Tomás precisa ser envolvido para avançar · Bia acionada com TI</div>
+      <div class="alert-card danger">
+        <div class="alert-card-label">🔴 Impedimento técnico</div>
+        <div class="alert-card-title">Inclusão via Senna — inviável</div>
+        <div class="alert-card-body">Reunião 01/07 identificou impedimentos para inclusão direta via Senna. Estimativa de "1 dia" de Felipe não validada por Adones — informações adicionais necessárias para planejamento e desenho da solução.</div>
+        <div class="alert-card-foot">Tomás precisa ser envolvido para avançar · Bia acionada com TI</div>
       </div>
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #f4a250;background:#fff8f0;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#854F0B;margin-bottom:8px;">
-          ⏳ Aguardando decisão
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">Estratégia de implementação — SmartBus ou Senna</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Alternativa proposta: incluir malha VTR/VTR2 no tenant Guanabara via SmartBus (menor complexidade). Avaliando impacto no projeto de redução do RTS antes de consolidar.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Decisão pendente · Responsável: Adones</div>
+      <div class="alert-card warning">
+        <div class="alert-card-label">⏳ Aguardando decisão</div>
+        <div class="alert-card-title">Estratégia de implementação — SmartBus ou Senna</div>
+        <div class="alert-card-body">Alternativa proposta: incluir malha VTR/VTR2 no tenant Guanabara via SmartBus (menor complexidade). Avaliando impacto no projeto de redução do RTS antes de consolidar.</div>
+        <div class="alert-card-foot">Decisão pendente · Responsável: Adones</div>
       </div>
 
     </div>
@@ -1007,7 +1230,7 @@
             <div class="kpi-sub">bilhetes · R$ 7,2M</div>
           </div>
         </div>
-        <div style="font-size:11.5px; color:#374151; margin-top:4px;">
+        <div style="font-size:13px; color:#374151; margin-top:4px;">
           <strong>Alta temporada:</strong> Dezembro e Janeiro — Dez/25 = R$ 9,7M · Jan/26 = R$ 9,8M (vs ~R$ 7,2M nos demais meses).<br>
           <strong>Top trechos:</strong> BSB↔CGR, GYN↔CGR, CGR↔CGB, CGR↔SJP, CGR↔SP — dominância do eixo Campo Grande.<br>
           <strong>Canais digitais:</strong> INTERNET J3 (21.596 blt), DISTRIBUSION (9.312), WHATSAPP/VOYON (8.647), BLABLACAR (5.264), BUSON (4.248).<br>
@@ -1038,7 +1261,7 @@
             <div class="kpi-sub">bilhetes · R$ 525k</div>
           </div>
         </div>
-        <div style="font-size:11.5px; color:#374151; margin-top:4px;">
+        <div style="font-size:13px; color:#374151; margin-top:4px;">
           <strong>Top trechos:</strong> REC↔JPA (5k–5.5k/mês em Jan) — operação totalmente concentrada no corredor Nordeste.<br>
           <strong>Dependência BlaBlacar:</strong> risco de concentração em canal externo que representa 63% do volume total da empresa.<br>
           <strong>Pagamento:</strong> Dinheiro 82% — base muito presencial.
@@ -1056,19 +1279,22 @@
           <div class="detail-title">Sobreposição de trechos — eixo PE/PB</div>
           <span class="badge badge-blocked">8 conflitos</span>
         </div>
-        <div style="margin-top:8px;">
-          <div class="conflict-row conflict-header">
-            <span>Origem</span><span>Destino</span><span>Empresas</span>
-          </div>
-          <div class="conflict-row"><span>João Pessoa - PB</span><span>Recife - PE</span><span>Guanabara × Total + Total2</span></div>
-          <div class="conflict-row"><span>Recife - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total + Total2</span></div>
-          <div class="conflict-row"><span>João Pessoa - PB</span><span>Goiana - PE</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Goiana - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Goiana - PE</span><span>Recife - PE</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Recife - PE</span><span>Goiana - PE</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Recife (Caxanga) - PE</span><span>Recife - PE</span><span>Guanabara × Total2</span></div>
-          <div class="conflict-row"><span>Recife (Caxanga) - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total2</span></div>
-        </div>
+        <table class="conflict-table">
+          <caption style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sobreposição de trechos entre Guanabara e VTR/VTR2</caption>
+          <thead>
+            <tr><th scope="col">Origem</th><th scope="col">Destino</th><th scope="col">Empresas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Origem">João Pessoa - PB</td><td data-label="Destino">Recife - PE</td><td data-label="Empresas">Guanabara × Total + Total2</td></tr>
+            <tr><td data-label="Origem">Recife - PE</td><td data-label="Destino">João Pessoa - PB</td><td data-label="Empresas">Guanabara × Total + Total2</td></tr>
+            <tr><td data-label="Origem">João Pessoa - PB</td><td data-label="Destino">Goiana - PE</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Goiana - PE</td><td data-label="Destino">João Pessoa - PB</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Goiana - PE</td><td data-label="Destino">Recife - PE</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Recife - PE</td><td data-label="Destino">Goiana - PE</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Recife (Caxanga) - PE</td><td data-label="Destino">Recife - PE</td><td data-label="Empresas">Guanabara × Total2</td></tr>
+            <tr><td data-label="Origem">Recife (Caxanga) - PE</td><td data-label="Destino">João Pessoa - PB</td><td data-label="Empresas">Guanabara × Total2</td></tr>
+          </tbody>
+        </table>
         <div class="highlight-box" style="margin-top:10px;">
           A Total2 opera <strong>exclusivamente</strong> nesse corredor — exposição total a conflitos com Guanabara. Total2 utiliza <strong>30 reais de ticket médio</strong> vs tarifas Guanabara, indicando competição por preço.
         </div>
@@ -1118,37 +1344,33 @@
   </div>
 
   <!-- ══════════════ TAB: OSP ══════════════ -->
-  <div id="tab-osp" class="tab-panel">
+  <div id="tab-osp" class="tab-panel" role="region" aria-labelledby="tabbtn-osp" tabindex="0">
 
     <!-- INITIATIVE HEADER -->
     <div style="margin-bottom:16px;">
-      <div style="font-size:12.5px; color:#8a94a8; margin-bottom:4px;">Simultâneas Parciais — dois serviços compartilhando um mesmo veículo em trecho comum · Discovery concluído</div>
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Simultâneas Parciais — dois serviços compartilhando um mesmo veículo em trecho comum · Discovery concluído</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Daniel · Maurício</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 15 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Daniel · Maurício</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 15 jul 2026</span>
       </div>
     </div>
 
     <!-- ALERT CARDS -->
     <div class="section-label">Requer atenção</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div class="alert-grid" style="--alert-cols:2;">
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #f4a250;background:#fff8f0;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#854F0B;margin-bottom:8px;">
-          ⏸️ Pausada
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">OSP pausada — foco total no Motor V2</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Daniel redirecionado para o Motor V2 em 15/07. Primeiro refinamento técnico já realizado; Maurício construiu simulador para clarificar o comportamento esperado.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Retomada depende da estabilização do Motor V2 · sem decisão de prazo</div>
+      <div class="alert-card warning">
+        <div class="alert-card-label">⏸️ Pausada</div>
+        <div class="alert-card-title">OSP pausada — foco total no Motor V2</div>
+        <div class="alert-card-body">Daniel redirecionado para o Motor V2 em 15/07. Primeiro refinamento técnico já realizado; Maurício construiu simulador para clarificar o comportamento esperado.</div>
+        <div class="alert-card-foot">Retomada depende da estabilização do Motor V2 · sem decisão de prazo</div>
       </div>
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #86efac;background:#f0fdf4;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:8px;">
-          ✅ Discovery pronto
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">4 de 5 entregáveis concluídos</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Simulador v3, infográfico AS-IS/TO-BE, referência regulatória (ANTT/OSI) e regras de negócio prontos. Falta apenas a spec técnica para refinamento — pausada junto com a iniciativa.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Pronto para retomada assim que houver capacidade do time</div>
+      <div class="alert-card success">
+        <div class="alert-card-label">✅ Discovery pronto</div>
+        <div class="alert-card-title">4 de 5 entregáveis concluídos</div>
+        <div class="alert-card-body">Simulador v3, infográfico AS-IS/TO-BE, referência regulatória (ANTT/OSI) e regras de negócio prontos. Falta apenas a spec técnica para refinamento — pausada junto com a iniciativa.</div>
+        <div class="alert-card-foot">Pronto para retomada assim que houver capacidade do time</div>
       </div>
 
     </div>
@@ -1235,7 +1457,9 @@
     <div class="section archived-section">
       <div class="section-label">Exemplo — BSBxSSZ × GYNxCWB <span class="archive-tag">Referência</span></div>
       <div class="infographic-wrap">
-        <svg viewBox="0 0 580 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:Calibri,Arial,sans-serif;">
+        <svg viewBox="0 0 580 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:Calibri,Arial,sans-serif;" role="img" aria-labelledby="osp-svg-title osp-svg-desc">
+          <title id="osp-svg-title">Sobreposição de rotas BSBxSSZ e GYNxCWB</title>
+          <desc id="osp-svg-desc">Diagrama mostrando os serviços BSB-SSZ e GYN-CWB compartilhando um único veículo físico no trecho comum entre Uberlândia (UDI) e São Paulo (SAO), com transbordo indicado entre as duas linhas.</desc>
           <defs>
             <linearGradient id="gPink2" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" style="stop-color:#F482E7"/><stop offset="100%" style="stop-color:#c06fd0"/>
@@ -1254,13 +1478,13 @@
           <line x1="36" y1="70" x2="540" y2="70" stroke="url(#gPink2)" stroke-width="4" stroke-linecap="round"/>
           <circle cx="36" cy="70" r="5" fill="#F482E7"/>
           <text x="36" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">BSB</text>
-          <text x="36" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">Brasília</text>
+          <text x="36" y="97" text-anchor="middle" font-size="7" fill="#5c6577">Brasília</text>
           <circle cx="115" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
           <text x="115" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CAT</text>
           <circle cx="258" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
           <circle cx="258" cy="70" r="2.5" fill="#F482E7"/>
           <text x="258" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">UDI</text>
-          <text x="258" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">Uberlândia</text>
+          <text x="258" y="97" text-anchor="middle" font-size="7" fill="#5c6577">Uberlândia</text>
           <circle cx="314" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
           <text x="314" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">UBA</text>
           <circle cx="370" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
@@ -1268,19 +1492,19 @@
           <circle cx="432" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
           <circle cx="432" cy="70" r="2.5" fill="#F482E7"/>
           <text x="432" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">SAO</text>
-          <text x="432" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">São Paulo</text>
+          <text x="432" y="97" text-anchor="middle" font-size="7" fill="#5c6577">São Paulo</text>
           <circle cx="490" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
           <text x="490" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SNS</text>
           <circle cx="540" cy="70" r="5" fill="#F482E7"/>
           <text x="540" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SVT</text>
-          <text x="540" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">S. Vicente</text>
+          <text x="540" y="97" text-anchor="middle" font-size="7" fill="#5c6577">S. Vicente</text>
           <text x="8" y="126" font-size="9" font-weight="700" fill="#83C0F2">GYNxCWB</text>
           <line x1="36" y1="138" x2="258" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
           <line x1="258" y1="138" x2="432" y2="138" stroke="#83C0F2" stroke-width="4" stroke-dasharray="7,4" opacity="0.7" stroke-linecap="round"/>
           <line x1="432" y1="138" x2="540" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
           <circle cx="36" cy="138" r="5" fill="#83C0F2"/>
           <text x="36" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">GYN</text>
-          <text x="36" y="164" text-anchor="middle" font-size="7" fill="#8a94a8">Goiânia</text>
+          <text x="36" y="164" text-anchor="middle" font-size="7" fill="#5c6577">Goiânia</text>
           <circle cx="147" cy="138" r="3.5" fill="#83C0F2" opacity="0.7"/>
           <text x="147" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">TPU</text>
           <circle cx="258" cy="138" r="6" fill="#fff" stroke="#83C0F2" stroke-width="2.5"/>
@@ -1291,7 +1515,7 @@
           <text x="490" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">REG</text>
           <circle cx="540" cy="138" r="5" fill="#83C0F2"/>
           <text x="540" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CWB</text>
-          <text x="540" y="164" text-anchor="middle" font-size="7" fill="#8a94a8">Curitiba</text>
+          <text x="540" y="164" text-anchor="middle" font-size="7" fill="#5c6577">Curitiba</text>
           <line x1="258" y1="75" x2="258" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
           <line x1="432" y1="75" x2="432" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
           <rect x="269" y="96" width="152" height="16" rx="4" fill="#1a1a2e" opacity="0.8"/>
@@ -1320,19 +1544,19 @@
   </div>
 
   <!-- ══════════════ TAB: REFORMA TRIBUTÁRIA ══════════════ -->
-  <div id="tab-reforma" class="tab-panel">
+  <div id="tab-reforma" class="tab-panel" role="region" aria-labelledby="tabbtn-reforma" tabindex="0">
     <div class="section" style="margin-bottom:0;">
       <div class="section-label">Destaques da semana</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;">
-        <div style="border-radius:10px;padding:12px;border:1px solid #d8b4fe;background:#faf5ff;">
-          <div style="font-size:10px;font-weight:700;color:#6b21a8;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">✅ Aprovado — Diretoria</div>
-          <div style="font-size:13px;font-weight:700;color:#2d3748;">Consultoria Técnica-Fiscal</div>
-          <div style="font-size:11.5px;color:#4a5568;margin-top:4px;">Bia aprovou. Brief + Protocolo formalizados. Seleção iniciando até 31/07.</div>
+      <div class="alert-grid" style="--alert-cols:2; margin-bottom:4px;">
+        <div class="alert-card neutral">
+          <div class="alert-card-label">✅ Aprovado — Diretoria</div>
+          <div class="alert-card-title" style="margin-bottom:0;">Consultoria Técnica-Fiscal</div>
+          <div class="alert-card-body">Bia aprovou. Brief + Protocolo formalizados. Seleção iniciando até 31/07.</div>
         </div>
-        <div style="border-radius:10px;padding:12px;border:1px solid #fca5a5;background:#fef2f2;">
-          <div style="font-size:10px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">⚠️ Risco — Discovery aberto</div>
-          <div style="font-size:13px;font-weight:700;color:#2d3748;">Motor Tributário + Domínio de Pagamentos</div>
-          <div style="font-size:11.5px;color:#4a5568;margin-top:4px;">Produto apresentou ao time técnico os riscos de seguir com tributos e pagamentos no monolito. Tech optou por seguir com os ajustes no modelo atual. Produto segue com discovery, refinamento e spec do que já está definido na RTC.</div>
+        <div class="alert-card danger">
+          <div class="alert-card-label">⚠️ Risco — Discovery aberto</div>
+          <div class="alert-card-title" style="margin-bottom:0;">Motor Tributário + Domínio de Pagamentos</div>
+          <div class="alert-card-body">Produto apresentou ao time técnico os riscos de seguir com tributos e pagamentos no monolito. Tech optou por seguir com os ajustes no modelo atual. Produto segue com discovery, refinamento e spec do que já está definido na RTC.</div>
         </div>
       </div>
     </div>
@@ -1346,7 +1570,7 @@
           <div class="detail-title">📄 BPEs cancelados de períodos anteriores — Relatório exportação Protheus</div>
           <span class="badge badge-ongoing">Em homologação</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Implementação concluída e validada em QA interno. Demonstração realizada com equipes fiscais do Nordeste e Sudeste do Grupo Guanabara e equipe Protheus — comportamento do retorno dos BPEs no arquivo confirmado como conforme.
         </div>
         <div class="highlight-box blue">
@@ -1364,10 +1588,10 @@
           <div class="detail-title">🔍 Consultoria Técnica-Fiscal — Seleção em andamento</div>
           <span class="badge badge-ongoing">Em seleção</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Lacuna identificada: o time de produto não tem capacidade interna para traduzir NTs BPe em requisito sem apoio especializado. O incidente da API BPe (endpoint documentado sem validação fiscal) materializou o risco. Proposta levada à diretoria — <strong>Bia aprovou a contratação</strong>. Angélica (Guanabara) validou a necessidade em Comitê de 14/07.
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6; margin-top:8px;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
           Escopo definido: a consultoria precisa dominar BPe + RTC e atuar desde a leitura da norma até a validação do requisito. Brief de Escopo, Protocolo de Envolvimento Fiscal e Matriz de Responsabilidades formalizados.
         </div>
         <div class="highlight-box blue">
@@ -1385,7 +1609,7 @@
           <div class="detail-title">🔗 CORE-004 · Integrações Smartbus e ERPs (NT v1.14 + Leiaute v200)</div>
           <span class="badge badge-ongoing">Em andamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           <strong>Discovery e especificação concluídos — spec fechada com 16 regras de negócio mapeadas.</strong> Escopo delimitado em reunião de 09/07 com Prevatto, Victor, Flávia, Cristiane e Benício. A integração atual (NT v1.10 + Leiaute v193) não cobre as evoluções exigidas pela NT v1.14 e Leiaute v200 — novos campos no BPE (45, 46, 47), IBE (13, 14, 15) e dois novos registros (RDD e IRD).
         </div>
         <ul class="update-list" style="margin-top:8px;">
@@ -1408,7 +1632,7 @@
           <div class="detail-title">🏛️ CORE-002 · Compras Governamentais — suporte ao grupo gCompraGov</div>
           <span class="badge badge-ongoing">Em andamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           <strong>Spec v13 fechada — em desenvolvimento.</strong> Decisões consolidadas em reuniões de 30/06 e 08/07 com André Rocha e Paulo Balbino: modelo 1:N de Entidade Governamental com vigências, pRedutor e zeragem de alíquota por tpEnteGov (Art. 472/473). Menu Administração > Fiscal confirmado com Paulo Balbino.
         </div>
         <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
@@ -1429,7 +1653,7 @@
           <div class="detail-title">🧮 Motor Tributário + Domínio de Pagamentos — 1 frente de discovery</div>
           <span class="badge" style="background:#f3e8ff;color:#6b21a8;">Em discovery</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           <strong>Produto apresentou ao time técnico os riscos de seguir tratando tributos e pagamentos dentro do monolito atual.</strong> Tech avaliou e <strong>optou por seguir com os ajustes no modelo atual</strong> — sem extrair um motor/domínio separado neste momento. Domínio de Pagamentos <strong>não está em desenvolvimento</strong> como frente isolada.
         </div>
         <ul class="update-list" style="margin-top:8px;">
@@ -1512,11 +1736,11 @@
   </div>
 
   <!-- ══════════════ TAB: OUTRAS FRENTES ══════════════ -->
-  <div id="tab-outras" class="tab-panel">
+  <div id="tab-outras" class="tab-panel" role="region" aria-labelledby="tabbtn-outras" tabindex="0">
 
     <div class="section">
       <div class="section-label">Time de Produto — Outras Frentes</div>
-      <div style="font-size:12.5px;color:#6b7280;margin-bottom:14px;font-style:italic;">Quatro iniciativas do time de produto e seu status atual</div>
+      <div style="font-size:14px;color:#6b7280;margin-bottom:14px;font-style:italic;">Quatro iniciativas do time de produto e seu status atual</div>
 
       <div class="detail-block">
         <div class="detail-header">
@@ -1634,11 +1858,11 @@
   </div>
 
   <!-- ══════════════ TAB: NOVO ORG CHART ══════════════ -->
-  <div id="tab-orgchart" class="tab-panel">
+  <div id="tab-orgchart" class="tab-panel" role="region" aria-labelledby="tabbtn-orgchart" tabindex="0">
 
     <div class="section">
       <div class="section-label">Time de Produto — Novo Org Chart</div>
-      <div style="font-size:12.5px;color:#6b7280;margin-bottom:18px;font-style:italic;">Papéis, responsabilidades e estrutura de reporte</div>
+      <div style="font-size:14px;color:#6b7280;margin-bottom:18px;font-style:italic;">Papéis, responsabilidades e estrutura de reporte</div>
 
       <div class="org-chart">
         <div class="org-card org-top">
@@ -1668,25 +1892,94 @@
 
   </div>
 
-  <!-- FOOTER -->
-  <div class="card-footer">
-    <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 16 jul 2026 · 13:35</div>
+  <!-- ══════════════ POST MORTEM: MOTOR DE CONEXÃO 07/2026 ══════════════ -->
+  <div id="tab-postmortem-motor" class="tab-panel" role="region" aria-labelledby="tabbtn-postmortem-motor" tabindex="0">
+    <div class="section">
+      <div class="section-label">Post Mortem — Motor de Conexão · 07/2026</div>
+      <div class="detail-block">
+        <div class="detail-body">
+          Conteúdo deste post mortem ainda não foi adicionado. Espaço reservado para registrar, quando o time definir: o que aconteceu, causa raiz, impacto, o que funcionou, e ações de acompanhamento.
+        </div>
+      </div>
+    </div>
   </div>
 
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+      <div class="footer-brand">Smart Travel IT · Arara Tech</div>
+      <div class="footer-date">Atualizado em 16 jul 2026 · 13:35</div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-  function toggleSennaDetail() {
-    var el = document.getElementById('senna-incident');
-    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  var TAB_IDS = ['geral', 'orgchart', 'motor', 'vtr', 'osp', 'reforma', 'outras', 'postmortem-motor'];
+
+  function activateTab(id) {
+    if (TAB_IDS.indexOf(id) === -1) id = 'geral';
+
+    document.querySelectorAll('.tab-panel').forEach(function (p) {
+      p.classList.toggle('active', p.id === 'tab-' + id);
+    });
+
+    document.querySelectorAll('.side-item').forEach(function (b) {
+      var active = b.dataset.tab === id;
+      b.classList.toggle('active', active);
+      if (active) {
+        b.setAttribute('aria-current', 'page');
+      } else {
+        b.removeAttribute('aria-current');
+      }
+    });
+
+    if (location.hash !== '#' + id) {
+      history.replaceState(null, '', '#' + id);
+    }
+
+    closeSidebar();
   }
-  function switchTab(id, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + id).classList.add('active');
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+
+  // Navegação por setas entre os itens do menu lateral
+  document.addEventListener('keydown', function (e) {
+    if (!e.target.classList || !e.target.classList.contains('side-item')) return;
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    var current = TAB_IDS.indexOf(e.target.dataset.tab);
+    var next = e.key === 'ArrowDown'
+      ? (current + 1) % TAB_IDS.length
+      : (current - 1 + TAB_IDS.length) % TAB_IDS.length;
+    var nextBtn = document.getElementById('tabbtn-' + TAB_IDS[next]);
+    activateTab(TAB_IDS[next]);
+    nextBtn.focus();
+  });
+
+  function toggleSidebar() {
+    var sb = document.getElementById('sidebar-nav');
+    var open = sb.classList.toggle('open');
+    document.querySelector('.sidebar-backdrop').classList.toggle('open', open);
+    document.querySelector('.menu-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
   }
+
+  function closeSidebar() {
+    var sb = document.getElementById('sidebar-nav');
+    if (sb) sb.classList.remove('open');
+    var bd = document.querySelector('.sidebar-backdrop');
+    if (bd) bd.classList.remove('open');
+    var mt = document.querySelector('.menu-toggle');
+    if (mt) mt.setAttribute('aria-expanded', 'false');
+  }
+
+  function initTabFromHash() {
+    var id = (location.hash || '#geral').replace('#', '');
+    activateTab(id);
+  }
+
+  window.addEventListener('hashchange', initTabFromHash);
+  document.addEventListener('DOMContentLoaded', initTabFromHash);
 </script>
 </body>
 </html>
