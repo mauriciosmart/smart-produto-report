@@ -870,11 +870,11 @@
           <div class="ov-icon" aria-hidden="true">🚌</div>
           <div class="ov-content">
             <div class="ov-title">Inclusão da VTR no VG/Senna</div>
-            <div class="ov-sub">Reunião 01/07 realizada. Impedimentos para Senna identificados — alternativa via tenant Guanabara em avaliação. Próx.: 06/07 (Adones).</div>
+            <div class="ov-sub">Blocked (16/07): risco de latência e falta de fonte única de verdade expôs a real questão — mudar o escopo do VG de white label para marketplace/multi-tenant. Decisão de negócio pendente.</div>
           </div>
           <div class="ov-right">
-            <span class="deadline-tag">30/06</span>
-            <span class="badge badge-pending">A definir</span>
+            <span class="deadline-tag">16/07</span>
+            <span class="badge badge-blocked">Blocked</span>
           </div>
           <span class="ov-arrow" aria-hidden="true">›</span>
         </button>
@@ -1158,17 +1158,17 @@
     <div class="alert-grid" style="--alert-cols:2;">
 
       <div class="alert-card danger">
-        <div class="alert-card-label">🔴 Impedimento técnico</div>
-        <div class="alert-card-title">Inclusão via Senna — inviável</div>
-        <div class="alert-card-body">Reunião 01/07 identificou impedimentos para inclusão direta via Senna. Estimativa de "1 dia" de Felipe não validada por Adones — informações adicionais necessárias para planejamento e desenho da solução.</div>
-        <div class="alert-card-foot">Tomás precisa ser envolvido para avançar · Bia acionada com TI</div>
+        <div class="alert-card-label">🔴 Blocked</div>
+        <div class="alert-card-title">Inclusão VTR no VG/Senna — escopo do VG em xeque</div>
+        <div class="alert-card-body">Reunião 16/07: time técnico apontou riscos de latência e ausência de fonte única de verdade nas duas consultas (Guanabara + VTR agregadas pelo Senna). Causa raiz: a demanda muda o escopo do VG — hoje white label — para algo próximo de marketplace ou multi-tenant.</div>
+        <div class="alert-card-foot">Sem esse modelo definido, não há como fechar desenho técnico, esforço ou prazo · iniciativa parada em discovery</div>
       </div>
 
       <div class="alert-card warning">
-        <div class="alert-card-label">⏳ Aguardando decisão</div>
-        <div class="alert-card-title">Estratégia de implementação — SmartBus ou Senna</div>
-        <div class="alert-card-body">Alternativa proposta: incluir malha VTR/VTR2 no tenant Guanabara via SmartBus (menor complexidade). Avaliando impacto no projeto de redução do RTS antes de consolidar.</div>
-        <div class="alert-card-foot">Decisão pendente · Responsável: Adones</div>
+        <div class="alert-card-label">⏳ Aguardando decisão de negócio</div>
+        <div class="alert-card-title">Modelo-alvo do VG — white label × marketplace/multi-tenant</div>
+        <div class="alert-card-body">Alinhamento marcado entre Produto Smart (Maurício, Ítalo), Michel e Negócio (Rafael) para definir o modelo-alvo do VG. Decisão é de negócio, não técnica.</div>
+        <div class="alert-card-foot">Responsável: Ítalo · Data: a definir</div>
       </div>
 
     </div>
@@ -1307,19 +1307,20 @@
       <div class="section-label">Integração Técnica VTR</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">Inclusão no sistema</div>
-          <span class="badge badge-pending">Em definição</span>
+          <div class="detail-title">Inclusão VTR no VG/Senna — desenho técnico</div>
+          <span class="badge badge-blocked">Blocked</span>
         </div>
-        <ul class="update-list">
-          <li>Felipe indicou que a inclusão seria <strong>trabalho de 1 dia</strong> — porém Adones sinalizou que <strong>sua estimativa não foi validada por ele</strong> e que há necessidade de informações adicionais para o planejamento e desenho da solução.</li>
-          <li>Tomás precisa estar envolvido para o avanço da iniciativa.</li>
-          <li>Bia acionada para priorizar com TI.</li>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+          Desenho inicial: duas consultas (Guanabara + VTR) agregadas pelo Senna, checkout mantido no Mercado Pago da Guanabara, VTR tratada como parceiro externo.
+        </div>
+        <ul class="update-list" style="margin-top:8px;">
+          <li>Reunião 16/07 — time técnico apontou <strong>riscos de latência</strong> e <strong>ausência de fonte única de verdade</strong> nas duas consultas.</li>
+          <li>Causa raiz exposta: a demanda muda o escopo do VG (hoje <strong>white label</strong>) para algo próximo de <strong>marketplace ou multi-tenant</strong> — decisão ainda pendente do lado de negócio.</li>
+          <li>Sem esse modelo definido, não há como fechar o desenho técnico, o esforço ou o prazo.</li>
+          <li>Histórico: impedimentos via Senna confirmados em 01/07; alternativa (tenant Guanabara via SmartBus) avaliada, mas discussão evoluiu para a questão de escopo do VG.</li>
         </ul>
-        <div class="highlight-box" style="margin-top:10px;">
-          <strong>Reunião 01/07:</strong> Impedimentos confirmados via Senna. Alternativa avaliada — tenant Guanabara via SmartBus. Impacto no projeto RTS ainda em análise antes de consolidar decisão.
-        </div>
         <div class="highlight-box blue" style="margin-top:8px;">
-          <strong>Próx. passo:</strong> Consolidar decisão de estratégia (SmartBus vs Senna) · Adones + Tomás · sem prazo definido
+          <strong>Próx. passo:</strong> Articulação da reunião entre Produto e Negócio para definir o modelo-alvo do VG · Ítalo · data a definir
         </div>
       </div>
     </div>
@@ -1330,13 +1331,12 @@
       <div class="section-label">Próximos passos</div>
       <div class="detail-block">
         <ul class="update-list">
-          <li>📋 <strong>Definir estratégia de implementação</strong> — SmartBus (tenant Guanabara) vs Senna · Adones + Tomás · sem prazo definido</li>
-          <li>📋 <strong>Avaliar impacto no RTS</strong> antes de optar pela rota SmartBus · Adones</li>
-          <li>📋 <strong>Envolver Tomás</strong> formalmente na decisão técnica de implementação</li>
+          <li>📋 <strong>Definir modelo-alvo do VG</strong> — white label × marketplace/multi-tenant · decisão de negócio · Ítalo articula · sem prazo definido</li>
+          <li>📋 <strong>Alinhamento Produto + Negócio</strong> — Maurício, Ítalo, Michel e Rafael</li>
           <li>📋 <strong>Resolver conflitos PE/PB</strong> — 8 sobreposições com Guanabara precisam de estratégia comercial antes da ativação</li>
         </ul>
         <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
-          <strong>Bloqueante principal:</strong> enquanto a estratégia de implementação não for definida por Adones + Tomás, nenhum desenvolvimento pode ser iniciado. Decisão pendente desde 01/07.
+          <strong>Bloqueante principal:</strong> sem o modelo-alvo do VG definido pelo lado de negócio, não há como fechar desenho técnico, esforço ou prazo. Iniciativa parada em discovery desde 16/07.
         </div>
       </div>
     </div>
@@ -1910,7 +1910,7 @@
     <!-- FOOTER -->
     <div class="card-footer">
       <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-      <div class="footer-date">Atualizado em 16 jul 2026 · 13:35</div>
+      <div class="footer-date">Atualizado em 16 jul 2026 · 15:25</div>
     </div>
 
   </div>
