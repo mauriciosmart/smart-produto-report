@@ -429,6 +429,61 @@
   .kpi-card.accent-blue { border-top: 3px solid #83C0F2; }
   .kpi-card.accent-warn { border-top: 3px solid #f59e0b; }
   .kpi-card.accent-teal { border-top: 3px solid #14b8a6; }
+
+  /* ── ORG CHART ── */
+  .org-chart { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+  .org-card {
+    background: #fff;
+    border: 1px solid #eaecf2;
+    border-top: 3px solid #3355a8;
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .org-top { width: 100%; max-width: 440px; }
+  .org-name { font-size: 15px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
+  .org-role { color: #3355a8; font-weight: 800; }
+  .org-desc-italic { font-size: 12px; color: #6b7280; font-style: italic; line-height: 1.5; margin-bottom: 8px; }
+  .org-desc { font-size: 12.5px; color: #4a5568; line-height: 1.55; }
+  .org-connector { width: 2px; height: 24px; background: #c7ccd8; }
+  .org-children {
+    display: flex;
+    gap: 0;
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+  }
+  .org-children::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 2px;
+    background: #c7ccd8;
+  }
+  .org-child {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+    padding: 24px 12px 0;
+  }
+  .org-child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 24px;
+    background: #c7ccd8;
+  }
+  @media (max-width: 600px) {
+    .org-children { flex-direction: column; max-width: 100%; }
+    .org-children::before { display: none; }
+    .org-child::before { display: none; }
+    .org-child { padding-top: 12px; }
+  }
   .kpi-label {
     font-size: 10px;
     font-weight: 600;
@@ -537,6 +592,9 @@
     </button>
     <button class="tab-btn" onclick="switchTab('outras',this)">
       <span class="tab-dot" style="background:#14b8a6"></span>Outras Frentes
+    </button>
+    <button class="tab-btn" onclick="switchTab('orgchart',this)">
+      <span class="tab-dot" style="background:#6366f1"></span>Novo Org Chart
     </button>
   </div>
 
@@ -1462,10 +1520,45 @@
 
   </div>
 
+  <!-- ══════════════ TAB: NOVO ORG CHART ══════════════ -->
+  <div id="tab-orgchart" class="tab-panel">
+
+    <div class="section">
+      <div class="section-label">Time de Produto — Novo Org Chart</div>
+      <div style="font-size:12.5px;color:#6b7280;margin-bottom:18px;font-style:italic;">Papéis, responsabilidades e estrutura de reporte</div>
+
+      <div class="org-chart">
+        <div class="org-card org-top">
+          <div class="org-name">MAURÍCIO · <span class="org-role">GPM</span></div>
+          <div class="org-desc-italic">Group Product Manager: lidera múltiplos squads e conecta estratégia à entrega.</div>
+          <div class="org-desc">Responsável pela Reforma Tributária e apoio às demais frentes; gerencia Ítalo e Daniel.</div>
+        </div>
+        <div class="org-connector"></div>
+        <div class="org-children">
+          <div class="org-child">
+            <div class="org-card">
+              <div class="org-name">DANIEL · <span class="org-role">PM Pleno</span></div>
+              <div class="org-desc-italic">Product Manager: dono do produto ponta a ponta — prioriza, especifica e entrega.</div>
+              <div class="org-desc">Responsável por Motor de Conexões, Riocard, Operações Simultâneas Parciais e viações.</div>
+            </div>
+          </div>
+          <div class="org-child">
+            <div class="org-card">
+              <div class="org-name">ÍTALO · <span class="org-role">Associate PM</span></div>
+              <div class="org-desc-italic">Associate Product Manager: apoia a gestão do produto no dia a dia e ganha autonomia.</div>
+              <div class="org-desc">Apoia Maurício na Reforma Tributária e lidera o relacionamento com as viações.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <!-- FOOTER -->
   <div class="card-footer">
     <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 16 jul 2026 · 12:15</div>
+    <div class="footer-date">Atualizado em 16 jul 2026 · 12:30</div>
   </div>
 
 </div>
