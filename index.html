@@ -688,6 +688,30 @@
           </div>
         </div>
 
+        <div class="ov-item" onclick="switchTab('outras',document.querySelectorAll('.tab-btn')[5])">
+          <div class="ov-icon">🧩</div>
+          <div class="ov-content">
+            <div class="ov-title">Outras Frentes — Tickets, Comercial e Product Discovery</div>
+            <div class="ov-sub">Tickets Viações: 11 dos 14 mapeados no Linear (3 resolvidos direto). Comercial: portfólio em 8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Product Discovery: fluxo estruturado no Jira, +20 ideias captadas na Rodoviária Novo Rio.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">16/07</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+        </div>
+
+        <div class="ov-item" onclick="switchTab('orgchart',document.querySelectorAll('.tab-btn')[6])">
+          <div class="ov-icon">🧭</div>
+          <div class="ov-content">
+            <div class="ov-title">Time de Produto — Novo Org Chart</div>
+            <div class="ov-sub">Maurício (GPM) lidera o time de produto; Daniel (PM Pleno) e Ítalo (Associate PM) reportam diretamente a ele.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">16/07</span>
+            <span class="badge badge-done">Definido</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1494,28 +1518,117 @@
       <div class="section-label">Time de Produto — Outras Frentes</div>
       <div style="font-size:12.5px;color:#6b7280;margin-bottom:14px;font-style:italic;">Quatro iniciativas do time de produto e seu status atual</div>
 
-      <div class="kpi-grid">
-        <div class="kpi-card accent-teal">
-          <div style="font-size:15px;font-weight:800;color:#14b8a6;">01</div>
-          <div style="font-size:11px;font-weight:700;color:#2d3748;letter-spacing:0.4px;text-transform:uppercase;margin-top:2px;">Apoio ao Viva</div>
-          <div style="font-size:11.5px;color:#4a5568;line-height:1.55;margin-top:4px;">Daniel apoia a Bidinha para o desenvolvimento de venda com pontos Viva no frontoffice.</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">01 · Apoio ao Viva</div>
         </div>
-        <div class="kpi-card accent-teal">
-          <div style="font-size:15px;font-weight:800;color:#14b8a6;">02</div>
-          <div style="font-size:11px;font-weight:700;color:#2d3748;letter-spacing:0.4px;text-transform:uppercase;margin-top:2px;">Tickets Viações</div>
-          <div style="font-size:11.5px;color:#4a5568;line-height:1.55;margin-top:4px;">Tickets organizados, contato feito com clientes e fluxo passado ao time tech.</div>
-        </div>
-        <div class="kpi-card accent-teal">
-          <div style="font-size:15px;font-weight:800;color:#14b8a6;">03</div>
-          <div style="font-size:11px;font-weight:700;color:#2d3748;letter-spacing:0.4px;text-transform:uppercase;margin-top:2px;">Comercial</div>
-          <div style="font-size:11.5px;color:#4a5568;line-height:1.55;margin-top:4px;">Portfólio pronto e plataforma organizada em módulos. Precificação não avançou.</div>
-        </div>
-        <div class="kpi-card accent-teal">
-          <div style="font-size:15px;font-weight:800;color:#14b8a6;">04</div>
-          <div style="font-size:11px;font-weight:700;color:#2d3748;letter-spacing:0.4px;text-transform:uppercase;margin-top:2px;">Product Discovery</div>
-          <div style="font-size:11.5px;color:#4a5568;line-height:1.55;margin-top:4px;">Fluxo da ideia à entrega estruturado no Jira Product Discovery, com backlog priorizado e roadmap.</div>
+        <div class="detail-body">
+          Daniel apoia a Bidinha para o desenvolvimento de venda com pontos Viva no frontoffice.
         </div>
       </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">02 · Tickets Viações — Backlog histórico resolvido</div>
+      <div class="kpi-grid col3">
+        <div class="kpi-card accent-warn">
+          <div class="kpi-label">Tickets em aberto</div>
+          <div class="kpi-value">14</div>
+          <div class="kpi-sub">Alguns com mais de 1 ano sem tratativa</div>
+        </div>
+        <div class="kpi-card accent">
+          <div class="kpi-label">Resolvidos direto</div>
+          <div class="kpi-value">3</div>
+          <div class="kpi-sub">Eram demandas de produto</div>
+        </div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Mapeados p/ Linear</div>
+          <div class="kpi-value">11</div>
+          <div class="kpi-sub">Discovery feito, prontos para o time tech</div>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Contexto</div>
+        </div>
+        <div class="detail-body">
+          Levantamos os 14 tickets de viações em aberto há mais de um ano, sem resposta. Do total, <strong>3 foram resolvidos diretamente</strong> por serem, na prática, demandas de produto. Os <strong>outros 11 passaram por discovery</strong> completo e foram criados no Linear, já mapeados e prontos para o time tech incluir no fluxo de desenvolvimento.
+        </div>
+      </div>
+      <div class="highlight-box">
+        <strong>Zeramos um backlog de reclamações parado há mais de 1 ano</strong> e transformamos em itens rastreáveis e priorizáveis para o time tech — sem depender mais de memória ou planilha solta.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">03 · Comercial — Portfólio estruturado</div>
+      <div class="kpi-grid col3">
+        <div class="kpi-card accent">
+          <div class="kpi-label">Módulos do portfólio</div>
+          <div class="kpi-value">8</div>
+          <div class="kpi-sub">Estrutura pronta para venda</div>
+        </div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Canais de venda mapeados</div>
+          <div class="kpi-value">5</div>
+          <div class="kpi-sub">Guichê, app do motorista, totem, site/app, parceiros</div>
+        </div>
+        <div class="kpi-card accent-teal">
+          <div class="kpi-label">Dores de mercado eliminadas</div>
+          <div class="kpi-value">6</div>
+          <div class="kpi-sub">Identificadas e resolvidas pela Smart</div>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">O que foi construído</div>
+        </div>
+        <div class="detail-body">
+          Estruturamos o portfólio comercial em <strong>8 módulos</strong> e mapeamos os <strong>5 canais de venda</strong> hoje existentes: guichê, app do motorista, totem, site e aplicativo, e parceiros de venda. Em paralelo, fizemos um mapeamento de mercado com os principais concorrentes, comparando funcionalidades ponto a ponto, e identificamos <strong>6 dores que o mercado convive e que a Smart já elimina</strong>.
+        </div>
+      </div>
+      <div class="highlight-box blue">
+        Com portfólio, canais e concorrência mapeados, o time comercial passa a vender com clareza de onde a Smart resolve dores reais do mercado.
+      </div>
+      <div class="blocker-box">
+        Precificação ainda não avançou — é o próximo passo para destravar a operação comercial completa.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">04 · Product Discovery — Fluxo e priorização de produto</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Contexto</div>
+        </div>
+        <div class="detail-body">
+          Não existia um fluxo de produto estruturado em nenhuma ferramenta. Construímos todo o fluxo — da ideia à entrega — dentro do <strong>Jira Product Discovery</strong>: backlog de produto, roadmap, e, principalmente, variáveis para priorização baseadas em uma fórmula de <strong>impacto x esforço</strong>.
+        </div>
+      </div>
+      <div class="kpi-grid col2">
+        <div class="kpi-card accent-teal">
+          <div class="kpi-label">Ideias levantadas</div>
+          <div class="kpi-value">+20</div>
+          <div class="kpi-sub">Rodoviária Novo Rio, em uma única visita</div>
+        </div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Origem da iniciativa</div>
+          <div class="kpi-value" style="font-size:16px;">Visita de campo</div>
+          <div class="kpi-sub">Conexão direta com o time da rodoviária</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        A iniciativa nasceu de uma visita à rodoviária Novo Rio: só ali levantamos mais de 20 ideias para o produto Smart. Isso evidenciou o valor de estar perto do time de campo para captar dores e oportunidades reais.
+      </div>
+      <ul class="update-list">
+        <li>📅 <strong>Recorrência mensal</strong> — visitas às rodoviárias, para manter a conexão com o time de campo e levantar continuamente dores e ideias de evolução do produto Smart.</li>
+      </ul>
     </div>
 
   </div>
@@ -1558,7 +1671,7 @@
   <!-- FOOTER -->
   <div class="card-footer">
     <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 16 jul 2026 · 13:15</div>
+    <div class="footer-date">Atualizado em 16 jul 2026 · 13:35</div>
   </div>
 
 </div>
