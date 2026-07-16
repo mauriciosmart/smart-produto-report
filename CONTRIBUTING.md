@@ -9,8 +9,12 @@ mais enviadas diretamente para `main`. Toda mudança passa por Pull Request.
    - Convenção de nome: `update/DD-MM-descricao-curta` (ex.: `update/16-07-aba-outras-frentes`)
 2. Commitar a alteração em `index.html` (ou outros arquivos do repo).
 3. Push da branch para o GitHub.
-4. Abrir o Pull Request contra `main` (via UI do GitHub, usando o link de
-   compare que a branch gera automaticamente).
+4. Abrir o Pull Request contra `main`. O link de compare fornecido no chat
+   já vem com **título e descrição pré-preenchidos** via query params
+   (`?title=...&body=...`) — ao clicar, o GitHub abre o formulário de PR
+   com o template abaixo pronto; só falta clicar em "Create pull request".
+   Se por algum motivo o pré-preenchimento não aparecer, o texto da
+   descrição também é enviado no chat para copiar e colar manualmente.
 5. Aguardar aprovação de **qualquer um dos 4 autorizados**:
    - italo.gomes@smarttravelit.com.br
    - daniel.silva@smarttravelit.com.br
@@ -20,6 +24,27 @@ mais enviadas diretamente para `main`. Toda mudança passa por Pull Request.
    fixa) via GitHub.
 7. Cloudflare Pages faz o deploy automático assim que `main` é atualizado —
    nenhuma ação extra é necessária depois do merge.
+
+## Template de descrição do PR
+
+Toda branch enviada por Claude inclui uma descrição de PR com esta estrutura,
+para facilitar a revisão de quem for aprovar:
+
+```
+## O que mudou
+- (resumo objetivo da mudança)
+
+## Por que
+- (motivo/contexto da mudança)
+
+## Validação
+- (checagens automáticas feitas: divs balanceados, html fecha corretamente,
+  contagem de abas, etc.)
+
+## Aprovação
+Qualquer um dos 4 autorizados (Ítalo, Daniel, Rafael, Maurício) pode aprovar
+e mesclar.
+```
 
 ## Proteção de branch (configurar uma vez no GitHub)
 
