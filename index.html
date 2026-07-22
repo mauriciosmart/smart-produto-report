@@ -782,6 +782,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg>
         Outras Frentes
       </button>
+      <button type="button" class="side-item side-child" id="tabbtn-fraudes" data-tab="fraudes" onclick="activateTab('fraudes')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg>
+        Fraudes (Gratuidade)
+      </button>
     </div>
 
     <div class="side-group">
@@ -917,14 +921,27 @@
           </div>
         </div>
 
-        <button type="button" class="ov-item" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Tickets, Comercial, Product Discovery e Fraudes">
+        <button type="button" class="ov-item" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Tickets, Comercial e Product Discovery">
           <div class="ov-icon" aria-hidden="true">🧩</div>
           <div class="ov-content">
-            <div class="ov-title">Outras Frentes — Tickets, Comercial, Product Discovery e Fraudes</div>
-            <div class="ov-sub">Tickets Viações: 11 dos 14 mapeados no Linear. Comercial: portfólio em 8 módulos e 5 canais. Product Discovery: fluxo completo no Jira, 20 iniciativas cadastradas. Fraudes: discovery iniciado, ~30-40% de gratuidades indevidas (amostragem jun/26).</div>
+            <div class="ov-title">Outras Frentes — Tickets, Comercial e Product Discovery</div>
+            <div class="ov-sub">Tickets Viações: 11 dos 14 mapeados no Linear. Comercial: portfólio em 8 módulos e 5 canais. Product Discovery: fluxo completo no Jira, 20 iniciativas cadastradas.</div>
           </div>
           <div class="ov-right">
             <span class="deadline-tag">22/07</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
+
+        <button type="button" class="ov-item" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): discovery de gratuidades indevidas">
+          <div class="ov-icon" aria-hidden="true">🚨</div>
+          <div class="ov-content">
+            <div class="ov-title">Fraudes (Gratuidade) — Reservas Indevidas</div>
+            <div class="ov-sub">Discovery iniciado em 21/07 com Produto, e-commerce Viaje Guanabara e operacional Nordeste/Sudeste. Amostragem de jun/26 estima 30-40% de gratuidades emitidas indevidamente.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">21/07</span>
             <span class="badge badge-ongoing">Em andamento</span>
           </div>
           <span class="ov-arrow" aria-hidden="true">›</span>
@@ -1757,7 +1774,7 @@
 
     <div class="section">
       <div class="section-label">Time de Produto — Outras Frentes</div>
-      <div style="font-size:14px;color:#6b7280;margin-bottom:14px;font-style:italic;">Cinco iniciativas do time de produto e seu status atual</div>
+      <div style="font-size:14px;color:#6b7280;margin-bottom:14px;font-style:italic;">Quatro iniciativas do time de produto e seu status atual</div>
 
       <div class="detail-block">
         <div class="detail-header">
@@ -1876,22 +1893,49 @@
       </ul>
     </div>
 
+  </div>
+
+  <!-- ══════════════ TAB: FRAUDES (GRATUIDADE) ══════════════ -->
+  <div id="tab-fraudes" class="tab-panel" role="region" aria-labelledby="tabbtn-fraudes" tabindex="0">
+
+    <!-- INITIATIVE HEADER -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Reservas de Gratuidades Indevidas — Canais Online e Offline · Discovery em andamento</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Ítalo · Maurício · Daniel</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 22 jul 2026</span>
+      </div>
+    </div>
+
+    <!-- ALERT CARD -->
+    <div class="section-label">Requer atenção</div>
+    <div class="alert-grid" style="--alert-cols:1;">
+      <div class="alert-card warning">
+        <div class="alert-card-label">🟡 Discovery em andamento</div>
+        <div class="alert-card-title">Amostragem indica 30–40% de gratuidades emitidas de forma indevida</div>
+        <div class="alert-card-body">Fraudes detectadas apenas no momento do embarque das viagens — impacto duplo: o cliente com direito legítimo enfrenta a poltrona já ocupada, e a companhia perde receita. Os canais digitais (Internet, App, Voyon) concentram a maior parte das emissões de gratuidade, com índices disparando após a implementação do marco regulatório da ANTT — pela facilidade da reserva online e ausência de validações documentais.</div>
+        <div class="alert-card-foot">Responsável: Ítalo · Plano de combate a fraudes: sem data confirmada</div>
+      </div>
+    </div>
+
     <div class="divider"></div>
 
+    <!-- CONTEXTO -->
     <div class="section">
-      <div class="section-label">05 · Fraudes — Reservas de Gratuidades Indevidas (Canais Online e Offline)</div>
-
+      <div class="section-label">Contexto</div>
       <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">Contexto</div>
-          <span class="badge badge-ongoing">Em andamento</span>
-        </div>
         <div class="detail-body">
           Equipes comerciais e operacionais do Grupo Guanabara nos blocos Nordeste e Sudeste compartilham a mesma dor: fraudes detectadas apenas no momento do embarque das viagens. Isso gera impacto duplo — para o cliente que detém o direito legítimo, que muitas vezes enfrenta a poltrona já ocupada, e para a companhia, que perde receita.
         </div>
       </div>
+    </div>
 
-      <div class="kpi-grid" style="margin-top:12px;">
+    <div class="divider"></div>
+
+    <!-- BIG NUMBERS -->
+    <div class="section">
+      <div class="section-label">Big Numbers — Amostragem de Gratuidades (Junho/2026)</div>
+      <div class="kpi-grid">
         <div class="kpi-card accent-warn">
           <div class="kpi-label">Gratuidades emitidas (grupo)</div>
           <div class="kpi-value">39.893</div>
@@ -1913,20 +1957,21 @@
           <div class="kpi-sub">20,5% do volume digital (Internet/App/Voyon)</div>
         </div>
       </div>
+      <div class="blocker-box">
+        Sem validação na reserva, o volume de emissões indevidas segue crescendo proporcionalmente aos canais digitais. Estimativa por amostragem/fiscalização in loco: <strong>30–40% de gratuidades emitidas de forma indevida</strong>.
+      </div>
+    </div>
 
-      <div class="detail-block" style="margin-top:12px;">
-        <div class="detail-header">
-          <div class="detail-title">Update — Discovery 21/07</div>
-        </div>
+    <div class="divider"></div>
+
+    <!-- UPDATE / DISCOVERY -->
+    <div class="section">
+      <div class="section-label">Update — Discovery 21/07</div>
+      <div class="detail-block">
         <div class="detail-body">
           Primeira reunião de discovery realizada em 21/07 entre Produto (Maurício, Ítalo e Daniel), o PM do e-commerce Viaje Guanabara (Guilherme) e o operacional/comercial do Grupo Guanabara Nordeste e Sudeste. Validado com dados que os canais digitais (Internet, App, Voyon) concentram a maior parte das emissões de gratuidade. Com a implementação do marco regulatório da ANTT, os índices de fraude dispararam nesses canais, pela facilidade da reserva online e pela ausência das validações documentais.
         </div>
       </div>
-
-      <div class="blocker-box">
-        Sem validação na reserva, o volume de emissões indevidas segue crescendo proporcionalmente aos canais digitais. Estimativa por amostragem/fiscalização in loco: <strong>30–40% de gratuidades emitidas de forma indevida</strong>.
-      </div>
-
       <div class="highlight-box blue" style="margin-top:10px;">
         <strong>Decisão:</strong> dar continuidade ao levantamento do volume de suspeitas de fraude e ao mapeamento das vulnerabilidades do processo e das falhas nas validações existentes. Com base nos dados coletados, estruturar o desenvolvimento de ações de prevenção e combate a fraudes.<br>
         <strong>Próx. passo:</strong> concluir o levantamento de dados, consolidar discovery e agendar nova reunião com todos os envolvidos para apresentar plano de combate a fraudes · Ítalo · sem data confirmada
@@ -2244,7 +2289,7 @@
 </div>
 
 <script>
-  var TAB_IDS = ['geral', 'orgchart', 'motor', 'vtr', 'osp', 'reforma', 'outras', 'postmortem-motor'];
+  var TAB_IDS = ['geral', 'orgchart', 'motor', 'vtr', 'osp', 'reforma', 'outras', 'fraudes', 'postmortem-motor'];
 
   function activateTab(id) {
     if (TAB_IDS.indexOf(id) === -1) id = 'geral';
