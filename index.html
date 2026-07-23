@@ -528,6 +528,7 @@
   .kpi-card.accent-blue { border-top: 3px solid #83C0F2; }
   .kpi-card.accent-warn { border-top: 3px solid #f59e0b; }
   .kpi-card.accent-teal { border-top: 3px solid #14b8a6; }
+  .kpi-card.accent-danger { border-top: 3px solid #dc2626; }
 
   /* ── ORG CHART ── */
   .org-chart { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
@@ -816,7 +817,7 @@
       <div class="header-meta">
         <div class="owner-label">Owner</div>
         <div class="owner-name">Maurício</div>
-        <div class="report-date">Atualizado 22 jul 2026</div>
+        <div class="report-date">Atualizado 23 jul 2026</div>
       </div>
     </div>
   </div>
@@ -934,15 +935,15 @@
           <span class="ov-arrow" aria-hidden="true">›</span>
         </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): discovery de gratuidades indevidas">
+        <button type="button" class="ov-item" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): discovery ANTT com prazo crítico 31/07">
           <div class="ov-icon" aria-hidden="true">🚨</div>
           <div class="ov-content">
-            <div class="ov-title">Fraudes (Gratuidade) — Reservas Indevidas</div>
-            <div class="ov-sub">Discovery iniciado em 21/07 com Produto, e-commerce Viaje Guanabara e operacional Nordeste/Sudeste. Amostragem de jun/26 estima 30-40% de gratuidades emitidas indevidamente.</div>
+            <div class="ov-title">Fraudes (Gratuidade) — Discovery ANTT, prazo crítico 31/07</div>
+            <div class="ov-sub">Perda por fraude confirmada de R$ 2,28mi/ano + exposição de R$ 11,6 a 92,6mi em multas (art. 313, só Guanabara-Nordeste). SUFIS fiscaliza a partir de 01/08 — falta aval de Bia para ação emergencial.</div>
           </div>
           <div class="ov-right">
-            <span class="deadline-tag">21/07</span>
-            <span class="badge badge-ongoing">Em andamento</span>
+            <span class="deadline-tag urgent">31/07</span>
+            <span class="badge badge-blocked">Urgente</span>
           </div>
           <span class="ov-arrow" aria-hidden="true">›</span>
         </button>
@@ -1900,21 +1901,26 @@
 
     <!-- INITIATIVE HEADER -->
     <div style="margin-bottom:16px;">
-      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Reservas de Gratuidades Indevidas — Canais Online e Offline · Discovery em andamento</div>
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Discovery Fraudes de Gratuidades ANTT — reservas indevidas em canais online e offline</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Ítalo · Maurício · Daniel</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 22 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Maurício · Ítalo · Daniel · Guilherme</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 23 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:3px 9px;color:#dc2626;font-weight:700;">⏰ Prazo SUFIS: 31/07/2026</span>
       </div>
     </div>
 
-    <!-- ALERT CARD -->
+    <!-- ALERT CARDS -->
     <div class="section-label">Requer atenção</div>
-    <div class="alert-grid" style="--alert-cols:1;">
+    <div class="alert-grid" style="--alert-cols:2;">
+      <div class="alert-card danger">
+        <div class="alert-card-label">⚠️ Prazo crítico</div>
+        <div class="alert-card-title">31/07/2026 — janela para adequação SUFIS</div>
+        <div class="alert-card-body">SUFIS deu prazo para as empresas adequarem os portais — faltam 8 dias. Desativar a gratuidade digital antes desta data elimina o risco de multa. A partir de 01/08, risco pleno de autuação.</div>
+      </div>
       <div class="alert-card warning">
-        <div class="alert-card-label">🟡 Discovery em andamento</div>
-        <div class="alert-card-title">Amostragem indica 30–40% de gratuidades emitidas de forma indevida</div>
-        <div class="alert-card-body">Fraudes detectadas apenas no momento do embarque das viagens — impacto duplo: o cliente com direito legítimo enfrenta a poltrona já ocupada, e a companhia perde receita. Os canais digitais (Internet, App, Voyon) concentram a maior parte das emissões de gratuidade, com índices disparando após a implementação do marco regulatório da ANTT — pela facilidade da reserva online e ausência de validações documentais.</div>
-        <div class="alert-card-foot">Responsável: Ítalo · Plano de combate a fraudes: sem data confirmada</div>
+        <div class="alert-card-label">💰 Exposição ANTT</div>
+        <div class="alert-card-title">900+ mercados só na Guanabara-Nordeste</div>
+        <div class="alert-card-body">Multa do art. 313: R$ 8.769 a R$ 70.153 por mercado. Demais empresas do grupo ainda sem mapeamento. Aval de Bia pendente para ação emergencial.</div>
       </div>
     </div>
 
@@ -1922,59 +1928,246 @@
 
     <!-- CONTEXTO -->
     <div class="section">
-      <div class="section-label">Contexto</div>
+      <div class="section-label">Contexto — origem da iniciativa</div>
       <div class="detail-block">
         <div class="detail-body">
-          Equipes comerciais e operacionais do Grupo Guanabara nos blocos Nordeste e Sudeste compartilham a mesma dor: fraudes detectadas apenas no momento do embarque das viagens. Isso gera impacto duplo — para o cliente que detém o direito legítimo, que muitas vezes enfrenta a poltrona já ocupada, e para a companhia, que perde receita.
+          Equipes comerciais e operacionais do Grupo Guanabara nos blocos Nordeste e Sudeste compartilham a mesma dor: fraudes detectadas apenas no momento do embarque das viagens. Isso gera impacto duplo — para o cliente que detém o direito legítimo, que muitas vezes enfrenta a poltrona já ocupada, e para a companhia, que perde receita. Primeira reunião de discovery em 21/07 entre Produto (Maurício, Ítalo e Daniel), o PM do e-commerce Viaje Guanabara (Guilherme) e o operacional/comercial do Grupo Guanabara Nordeste e Sudeste.
         </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
-    <!-- BIG NUMBERS -->
+    <!-- ESTIMATIVA DE IMPACTO -->
     <div class="section">
-      <div class="section-label">Big Numbers — Amostragem de Gratuidades (Junho/2026)</div>
-      <div class="kpi-grid">
-        <div class="kpi-card accent-warn">
-          <div class="kpi-label">Gratuidades emitidas (grupo)</div>
-          <div class="kpi-value">39.893</div>
-          <div class="kpi-sub">UTIL, Sampaio, Rápido Federal, Real Expresso · jun/26</div>
-        </div>
-        <div class="kpi-card accent-blue">
-          <div class="kpi-label">Acompanhante — Passe Livre</div>
-          <div class="kpi-value">1.583</div>
-          <div class="kpi-sub">Registros no grupo</div>
+      <div class="section-label">Estimativa de Impacto · 23/07</div>
+      <div class="kpi-grid col3">
+        <div class="kpi-card accent-danger">
+          <div class="kpi-label">Perda por fraude confirmada</div>
+          <div class="kpi-value">R$ 2,28mi</div>
+          <div class="kpi-sub">A1+A2+A3+B1 · ano 2026</div>
         </div>
         <div class="kpi-card accent-warn">
-          <div class="kpi-label">Acompanhante sem Passe Livre</div>
-          <div class="kpi-value">199</div>
-          <div class="kpi-sub">12,6% sem localizador correspondente</div>
+          <div class="kpi-label">Receita não auferida (total)</div>
+          <div class="kpi-value">R$ 55,84mi</div>
+          <div class="kpi-sub">Programa inteiro (legítimo + fraude) / ano</div>
         </div>
-        <div class="kpi-card accent-warn">
-          <div class="kpi-label">Canais digitais sem checagem</div>
-          <div class="kpi-value">8.181</div>
-          <div class="kpi-sub">20,5% do volume digital (Internet/App/Voyon)</div>
+        <div class="kpi-card accent">
+          <div class="kpi-label">Perda já realizada (cat. 1)</div>
+          <div class="kpi-value">R$ 634k</div>
+          <div class="kpi-sub">Duplicidade jan–23/jul/26 · +R$ 64k ainda evitáveis</div>
         </div>
       </div>
-      <div class="blocker-box">
-        Sem validação na reserva, o volume de emissões indevidas segue crescendo proporcionalmente aos canais digitais. Estimativa por amostragem/fiscalização in loco: <strong>30–40% de gratuidades emitidas de forma indevida</strong>.
+
+      <div class="detail-block" style="margin-top:12px;">
+        <div class="detail-header">
+          <div class="detail-title">Categorias mensuradas</div>
+        </div>
+        <div class="kpi-grid col3" style="margin-top:8px;">
+          <div class="kpi-card accent-danger">
+            <div class="kpi-label">A1 · Duplicidade mesma viagem</div>
+            <div class="kpi-value" style="font-size:19px;">4.929</div>
+            <div class="kpi-sub">bilhetes excedentes · 4.513 grupos duplicados, alta confiança On</div>
+          </div>
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">A2 · Viagens incompatíveis</div>
+            <div class="kpi-value" style="font-size:19px;">4.785</div>
+            <div class="kpi-sub">pares · 1.173 nível 1, alta confiança</div>
+          </div>
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">A3 · Acompanhante sem par</div>
+            <div class="kpi-value" style="font-size:19px;">3.351</div>
+            <div class="kpi-sub">acompanhantes em 2.669 localizadores</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">B1 · Idade incompatível</div>
+            <div class="kpi-value" style="font-size:19px;">3.053</div>
+            <div class="kpi-sub">bilhetes · 100% verificável via data de nascimento</div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-label">B2 · Lista negra (proxy atípico)</div>
+            <div class="kpi-value" style="font-size:19px;">3.419</div>
+            <div class="kpi-sub">beneficiários · 12+ bilhetes/ano, 78.682 bilhetes no total</div>
+          </div>
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">C · Agentes/PDV suspeitos</div>
+            <div class="kpi-value" style="font-size:19px;">73</div>
+            <div class="kpi-sub">agentes · 239 ocorrências (cancela normal, reemite gratuidade)</div>
+          </div>
+        </div>
+        <div class="kpi-grid col2" style="margin-top:8px;">
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">Canal da fraude · duplicidade</div>
+            <div class="kpi-value" style="font-size:19px;">64% On · 36% Off</div>
+            <div class="kpi-sub">Canais digitais são só 23,7% do volume total → sobrerrepresentação de 2,7×</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">Volume mensal (meses fechados)</div>
+            <div class="kpi-value" style="font-size:19px;">~2.211 bilhetes</div>
+            <div class="kpi-sub">R$ 314k/mês · pico em julho: 2.656 bilhetes, R$ 377k</div>
+          </div>
+        </div>
+        <div class="blocker-box">
+          Categoria 3 (uso indevido) e Bloco C (agentes suspeitos) ainda sem estimativa de R$. A estimativa de "30–40% indevida" do time operacional ainda não foi reconciliada com as queries. Gap crítico: nenhum material traz prazo ou custo da solução estrutural.
+        </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
-    <!-- UPDATE / DISCOVERY -->
+    <!-- TAXONOMIA -->
     <div class="section">
-      <div class="section-label">Update — Discovery 21/07</div>
+      <div class="section-label">Taxonomia de Fraude · Bruno Ferro · 21/07</div>
       <div class="detail-block">
-        <div class="detail-body">
-          Primeira reunião de discovery realizada em 21/07 entre Produto (Maurício, Ítalo e Daniel), o PM do e-commerce Viaje Guanabara (Guilherme) e o operacional/comercial do Grupo Guanabara Nordeste e Sudeste. Validado com dados que os canais digitais (Internet, App, Voyon) concentram a maior parte das emissões de gratuidade. Com a implementação do marco regulatório da ANTT, os índices de fraude dispararam nesses canais, pela facilidade da reserva online e pela ausência das validações documentais.
+        <div class="detail-header">
+          <div class="detail-title">3 categorias identificadas — canais digitais são o vetor principal</div>
+          <span class="badge badge-ongoing">Em mapeamento</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>1 · Marcações em duplicidade</strong> — mesmo passageiro, 2+ bilhetes para o mesmo trecho/data/hora. <span style="color:#1D9E75;font-weight:600;">Mapeada.</span> Cancelamento manual semanal (Bergson/Roberto).</li>
+          <li><strong>2 · Viagens incompatíveis</strong> — combinações fisicamente impossíveis. <span style="color:#d97706;font-weight:600;">Em levantamento.</span> Query entregue.</li>
+          <li><strong>3 · Utilização indevida</strong> — pessoa sem direito ao benefício. <span style="color:#dc2626;font-weight:600;">Mais complexa.</span> Proxy de idade disponível via data de nascimento; renda não verificável via banco.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Vetor digital — duas métricas distintas:</strong> canais online têm taxa de duplicidade de <strong>4 a 11×</strong> maior que canais presenciais (ex.: Mobile 5,50% vs. Prestação de Serviço 0,51%). Além disso, o online responde por 64% da fraude mas é só 23,7% do volume — <strong>2,7×</strong> de sobrerrepresentação do share de fraude vs. share de volume. CPF/ID do cliente só é confiável em Internet e Mobile; nos demais canais a chave cai para nome (confiança baixa) — é exatamente nesse vetor que a solução estrutural precisa agir.
         </div>
       </div>
-      <div class="highlight-box blue" style="margin-top:10px;">
-        <strong>Decisão:</strong> dar continuidade ao levantamento do volume de suspeitas de fraude e ao mapeamento das vulnerabilidades do processo e das falhas nas validações existentes. Com base nos dados coletados, estruturar o desenvolvimento de ações de prevenção e combate a fraudes.<br>
-        <strong>Próx. passo:</strong> concluir o levantamento de dados, consolidar discovery e agendar nova reunião com todos os envolvidos para apresentar plano de combate a fraudes · Ítalo · sem data confirmada
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- EXPOSIÇÃO ANTT -->
+    <div class="section">
+      <div class="section-label">Exposição ANTT · Art. 313 · Resolução 6.033/2023</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">📋 Risco regulatório — Infração 313</div>
+          <span class="badge badge-blocked">Risco crítico</span>
+        </div>
+        <ul class="update-list">
+          <li>Multa do art. 313: <strong>R$ 8.769 a R$ 70.153 por mercado</strong> (30.000 UMRP × 0,292308 — por viagem convencional, por semana, por sentido).</li>
+          <li>Guanabara-Nordeste: <strong>900+ mercados</strong> (só essa empresa). REX, RAF, UTIL, BRISA e SAMPAIO: mapeamento ainda pendente.</li>
+          <li>SUFIS inicia fiscalização online a partir de <strong>01/08/2026</strong>. Janela de adequação sem risco: até <strong>31/07</strong>.</li>
+          <li>Roberto Vasconcelos: a aplicação por mercado tem discricionariedade do fiscal — o teto teórico é a exposição máxima, não uma previsão realista.</li>
+        </ul>
+        <div class="highlight-box" style="margin-top:8px;">
+          <strong>Teto teórico consolidado:</strong> R$ 11,6 a R$ 92,6 milhões (900 mercados × R$ 8.769–70.153/mercado, só Guanabara-Nordeste). Manual de fiscalização da ANTT solicitado por Roberto (pendente de recebimento).
+        </div>
+        <div class="highlight-box blue" style="margin-top:8px;">
+          <strong>Ação emergencial:</strong> desativar a gratuidade em canais digitais antes de 31/07 via backoffice — simples de executar, neutraliza o risco de nova autuação a partir de 01/08. <strong>Pendente: aval de Bia.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DECISÃO RECOMENDADA -->
+    <div class="section">
+      <div class="section-label">Decisão recomendada ao board · 23/07</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🛑 Solução temporária + solução definitiva</div>
+          <span class="badge badge-pending">Decisão pendente</span>
+        </div>
+        <div style="overflow-x:auto;margin-top:10px;">
+          <table class="conflict-table">
+            <thead>
+              <tr>
+                <th>Ação</th>
+                <th style="text-align:center;">Prazo</th>
+                <th style="text-align:center;">Impacto</th>
+                <th style="text-align:center;">Risco de não agir</th>
+                <th style="text-align:center;">Custo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Suspender gratuidade nos canais digitais</strong></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">8 dias (até 31/07)</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
+              </tr>
+              <tr>
+                <td>Pedir nº de mercados das outras 5 empresas</td>
+                <td style="text-align:center;">1 semana</td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
+              </tr>
+              <tr>
+                <td>Auditar top 10 agentes/PDV e top 5 lista negra</td>
+                <td style="text-align:center;">2–4 semanas</td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
+              </tr>
+              <tr>
+                <td>T-shirt sizing da solução estrutural (Ítalo + Engenharia)</td>
+                <td style="text-align:center;">2 semanas</td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
+                <td style="text-align:center;"><span class="badge" style="background:#f1f5f9;color:#64748b;">A definir</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kpi-grid col2" style="margin-top:10px;">
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">Temporária — janela de 8 dias</div>
+            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Pausar gratuidade nos canais digitais via backoffice. Simples de executar. Neutraliza risco de nova autuação a partir de 01/08. Não resolve a causa raiz.</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">Definitiva — sem T-shirt size</div>
+            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Bloquear gratuidades simultâneas por CPF/ID do cliente na mesma rota/dia + validação documental na reserva. Maior gap do discovery — sem estimativa de prazo ou custo.</div>
+          </div>
+        </div>
+        <div class="blocker-box">
+          <strong>Próx. passo urgente:</strong> aval de Bia para pausar canais digitais antes de 31/07 · Maurício · URGENTE
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ENTREGÁVEIS -->
+    <div class="section">
+      <div class="section-label">Discovery — Entregáveis · 22–23/07</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">📦 Pacote de discovery produzido</div>
+          <span class="badge badge-done">Entregue</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>Dashboard executivo HTML</strong> — 10 abas, 18.512 linhas de dados completos, com busca via JS e links diretos para o frontoffice/backoffice por bilhete.</li>
+          <li><strong>6 queries SQL vigentes</strong> (TblBilhete/BI) — A1 duplicidade, A2 viagens incompatíveis, A3 acompanhante sem par, B elegibilidade/lista negra, C agente suspeito, D perda de tarifa real + LoadFactor, E mercados digitais/multa.</li>
+          <li><strong>Workbook Excel multi-aba</strong> (~3,4MB) — export por categoria para uso do time comercial e BI.</li>
+          <li><strong>Benchmark de mercado</strong> — 6 viações + 4 marketplaces. Viaje Guanabara conforme. ClickBus e QueroPassagem revendem inventário próprio — ação via contrato.</li>
+        </ul>
+        <div class="blocker-box">
+          <strong>Gap crítico em aberto:</strong> nenhum material traz prazo ou custo da solução estrutural. Recomendação: pedir estimativa T-shirt (P/M/G) a Ítalo + Engenharia como próximo passo imediato.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PRÓXIMOS PASSOS -->
+    <div class="section">
+      <div class="section-label">Próximos passos</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Ações priorizadas</div>
+        </div>
+        <ul class="update-list">
+          <li>✅ <strong>Concluído · 23/07</strong> — Dashboard executivo HTML + planilha de dados como base única do discovery · Maurício</li>
+          <li>📅 <strong>Antes de 31/07 — URGENTE</strong> — Decisão de Bia: desativar gratuidade em canais digitais · Maurício</li>
+          <li>📅 <strong>Até 31/07</strong> — Pedir a REX, RAF, UTIL, BRISA, SAMPAIO o nº de mercados (dimensionar exposição total do grupo) · Maurício</li>
+          <li>📅 <strong>Até 31/07</strong> — Acompanhar recebimento do manual de fiscalização ANTT (solicitado por Roberto) · Maurício</li>
+          <li>📅 <strong>A agendar</strong> — Reunião com Ítalo/Daniel para reconciliar estimativa 30–40% (campo) com volumes por categoria (queries) — definir conceito comum de "indevida" antes de levar ao board · Maurício + Ítalo</li>
+          <li>📅 <strong>A combinar</strong> — Plano de combate a fraudes + estimativa T-shirt da solução estrutural · Ítalo + Engenharia</li>
+          <li>📅 <strong>Aberto</strong> — Confirmar com Roberto o descredenciamento de ~20 agentes suspeitos (Guanabara Nordeste)</li>
+        </ul>
       </div>
     </div>
 
@@ -2282,7 +2475,7 @@
     <!-- FOOTER -->
     <div class="card-footer">
       <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-      <div class="footer-date">Atualizado em 22 jul 2026 · 17:00</div>
+      <div class="footer-date">Atualizado em 23 jul 2026 · 19:00</div>
     </div>
 
   </div>
