@@ -5,28 +5,173 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRODUTO Smart — Status Report</title>
 <style>
+  :root {
+    --brand-pink: #F482E7;
+    --brand-blue: #83C0F2;
+    --brand-gradient: linear-gradient(90deg, var(--brand-pink), var(--brand-blue));
+    --ink-900: #1a1a2e;
+    --ink-800: #2d3748;
+    --ink-700: #4a5568;
+    --ink-muted: #5c6577;
+    --ink-muted-2: #6b7280;
+    --surface: #fff;
+    --surface-muted: #f7f9fc;
+    --surface-body: #f0f2f5;
+    --border: #eaecf2;
+    --success-bg: #e4f5e9; --success-fg: #2e7d4f;
+    --warning-bg: #fff3e0; --warning-fg: #b06010;
+    --danger-bg: #fdecea;  --danger-fg: #c0392b;
+  }
+
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    background: #f0f2f5;
+    background: var(--surface-body);
     min-height: 100vh;
     padding: 0;
     margin: 0;
   }
 
+  a, button { font-family: inherit; }
+
+  /* focus visível para navegação por teclado em todos os elementos interativos */
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--brand-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
   .card {
     width: 100%;
-    background: #fff;
+    background: var(--surface);
     min-height: 100vh;
-    box-shadow: none;
-    border-radius: 0;
+  }
+
+  /* ── SIDEBAR: fixa na viewport, não acompanha o scroll do conteúdo ── */
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--surface-muted);
+    border-right: 1px solid var(--border);
+    padding: 18px 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 20;
+  }
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-logo-mark { width: 26px; height: 26px; flex-shrink: 0; }
+  .sidebar-logo-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #5c6577;
+    letter-spacing: 0.2px;
+  }
+  .sidebar-logo-text strong { font-weight: 800; color: #2d3748; }
+
+  .menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .menu-toggle svg { width: 18px; height: 18px; }
+  .sidebar-backdrop { display: none; }
+
+  .side-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    padding: 9px 10px;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    color: var(--ink-700);
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 2px;
+  }
+  .side-item svg { width: 17px; height: 17px; flex-shrink: 0; color: #8a94ab; }
+  .side-item:hover { background: #eef1f7; }
+  .side-item.active { background: #fff; color: var(--ink-900); box-shadow: 0 1px 3px rgba(26,26,46,0.08); }
+  .side-item.active svg { color: var(--brand-pink); }
+  .side-item.side-child { padding-left: 20px; font-weight: 500; font-size: 13px; }
+  .side-item.side-child svg { width: 15px; height: 15px; }
+  .side-group { margin-top: 14px; }
+  .side-group-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #9aa3b5;
+    padding: 6px 10px 4px;
+  }
+
+  /* ── COLUNA PRINCIPAL: header + conteúdo, deslocada da sidebar fixa ── */
+  .main-col {
+    margin-left: 240px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── CONTEÚDO ── */
+  .content {
+    flex: 1;
+    min-width: 0;
+  }
+  .content-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 40px;
+  }
+
+  @media (max-width: 860px) {
+    .menu-toggle { display: inline-flex; }
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.2s ease;
+      box-shadow: 0 0 24px rgba(0,0,0,0.2);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop.open {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(16,20,32,0.4);
+      z-index: 30;
+    }
+    .main-col { margin-left: 0; }
+    .content-inner { padding: 20px; }
   }
 
   /* ── HEADER ── */
   .card-header {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    padding: 28px 32px 24px;
+    padding: 18px 32px 16px;
     position: relative;
     overflow: hidden;
   }
@@ -49,7 +194,7 @@
     z-index: 1;
   }
   .tag {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -57,17 +202,10 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 6px;
-  }
-  .card-header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.2;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
   .card-header .subtitle {
-    font-size: 12.5px;
+    font-size: 13.5px;
     color: #8da4c4;
   }
   .header-meta {
@@ -76,74 +214,35 @@
   }
   .header-meta .owner-label {
     font-size: 9px;
-    color: #556680;
+    color: #93a0bd;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 3px;
   }
   .header-meta .owner-name {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #83C0F2;
   }
   .header-meta .report-date {
     font-size: 10.5px;
-    color: #556680;
+    color: #93a0bd;
     margin-top: 2px;
   }
 
-  /* ── TABS NAV ── */
-  .tabs-nav {
-    display: flex;
-    background: #f7f9fc;
-    border-bottom: 1px solid #eaecf2;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .tabs-nav::-webkit-scrollbar { display: none; }
-  .tab-btn {
-    padding: 12px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #8a94a8;
-    cursor: pointer;
-    border: none;
-    background: none;
-    border-bottom: 2px solid transparent;
-    white-space: nowrap;
-    transition: all 0.15s;
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-  }
-  .tab-btn:hover { color: #4a5568; }
-  .tab-btn.active {
-    color: #2d3748;
-    border-bottom: 2px solid #F482E7;
-    background: #fff;
-  }
-  .tab-dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    margin-right: 5px;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-  }
-
   /* ── TAB PANELS ── */
-  .tab-panel { display: none; padding: 24px; }
+  .tab-panel { display: none; padding: 0; }
   .tab-panel.active { display: block; }
 
   /* ── SECTION ── */
   .section { margin-bottom: 22px; }
   .section:last-child { margin-bottom: 0; }
   .section-label {
-    font-size: 9.5px;
+    font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 1.6px;
     text-transform: uppercase;
-    color: #aab0be;
+    color: #6b7280;
     margin-bottom: 10px;
   }
 
@@ -164,15 +263,15 @@
   .ov-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
   .ov-content { flex: 1; min-width: 0; }
   .ov-title {
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 600;
     color: #2d3748;
     margin-bottom: 2px;
     word-wrap: break-word;
   }
   .ov-sub {
-    font-size: 11px;
-    color: #8a94a8;
+    font-size: 12.5px;
+    color: #5c6577;
     line-height: 1.45;
     word-wrap: break-word;
   }
@@ -185,8 +284,8 @@
     min-width: 80px;
   }
   .deadline-tag {
-    font-size: 9.5px;
-    color: #9aa0b0;
+    font-size: 10.5px;
+    color: #6b7280;
     font-weight: 600;
     white-space: nowrap;
   }
@@ -195,7 +294,7 @@
   /* ── BADGES ── */
   .badge {
     display: inline-block;
-    font-size: 9.5px;
+    font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -228,12 +327,12 @@
     margin-bottom: 10px;
   }
   .detail-title {
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 700;
     color: #2d3748;
   }
   .detail-body {
-    font-size: 13px;
+    font-size: 14.5px;
     color: #4a5568;
     line-height: 1.65;
     word-wrap: break-word;
@@ -251,8 +350,8 @@
   .update-list li {
     display: block;
     position: relative;
-    padding-left: 14px;
-    font-size: 13px;
+    padding-left: 15px;
+    font-size: 14.5px;
     color: #4a5568;
     line-height: 1.6;
     word-wrap: break-word;
@@ -280,7 +379,7 @@
     border-radius: 8px;
     padding: 10px 14px;
     margin-top: 10px;
-    font-size: 12.5px;
+    font-size: 14px;
     color: #8b2519;
     line-height: 1.55;
     word-wrap: break-word;
@@ -305,7 +404,7 @@
     border-left: 3px solid #F482E7;
     border-radius: 0 8px 8px 0;
     padding: 10px 14px;
-    font-size: 12.5px;
+    font-size: 14px;
     color: #2d3748;
     line-height: 1.6;
     margin-top: 10px;
@@ -357,9 +456,9 @@
     50%      { box-shadow: 0 3px 20px rgba(131,192,242,0.7); }
   }
   .tl-info { text-align: center; padding: 0 4px; }
-  .tl-date  { font-size: 9.5px; font-weight: 700; color: #8a94a8; margin-bottom: 2px; }
-  .tl-label { font-size: 11.5px; font-weight: 600; color: #2d3748; line-height: 1.3; }
-  .tl-sub   { font-size: 10px; color: #9aa0b0; margin-top: 2px; }
+  .tl-date  { font-size: 10.5px; font-weight: 700; color: #5c6577; margin-bottom: 2px; }
+  .tl-label { font-size: 13px; font-weight: 600; color: #2d3748; line-height: 1.3; }
+  .tl-sub   { font-size: 11px; color: #6b7280; margin-top: 2px; }
 
   /* ── DELIVERABLES LIST ── */
   .deliv-list { display: flex; flex-direction: column; gap: 7px; }
@@ -373,7 +472,7 @@
     border-radius: 8px;
   }
   .deliv-icon { font-size: 14px; flex-shrink: 0; }
-  .deliv-text { font-size: 12.5px; font-weight: 500; color: #2d3748; flex: 1; min-width: 0; }
+  .deliv-text { font-size: 14px; font-weight: 500; color: #2d3748; flex: 1; min-width: 0; }
 
   /* ── INFOGRAPHIC ── */
   .infographic-wrap {
@@ -395,14 +494,14 @@
     gap: 12px;
   }
   .footer-brand {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     background: linear-gradient(90deg, #F482E7, #83C0F2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  .footer-date { font-size: 10.5px; color: #9aa0b0; }
+  .footer-date { font-size: 11.5px; color: #6b7280; }
 
   /* ── KPI / BIG NUMBERS ── */
   .kpi-grid {
@@ -428,15 +527,72 @@
   .kpi-card.accent { border-top: 3px solid #F482E7; }
   .kpi-card.accent-blue { border-top: 3px solid #83C0F2; }
   .kpi-card.accent-warn { border-top: 3px solid #f59e0b; }
+  .kpi-card.accent-teal { border-top: 3px solid #14b8a6; }
+  .kpi-card.accent-danger { border-top: 3px solid #dc2626; }
+
+  /* ── ORG CHART ── */
+  .org-chart { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+  .org-card {
+    background: #fff;
+    border: 1px solid #eaecf2;
+    border-top: 3px solid #3355a8;
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .org-top { width: 100%; max-width: 440px; }
+  .org-name { font-size: 16.5px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
+  .org-role { color: #3355a8; font-weight: 800; }
+  .org-desc-italic { font-size: 13px; color: #6b7280; font-style: italic; line-height: 1.5; margin-bottom: 8px; }
+  .org-desc { font-size: 14px; color: #4a5568; line-height: 1.55; }
+  .org-connector { width: 2px; height: 24px; background: #c7ccd8; }
+  .org-children {
+    display: flex;
+    gap: 0;
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+  }
+  .org-children::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 2px;
+    background: #c7ccd8;
+  }
+  .org-child {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+    padding: 24px 12px 0;
+  }
+  .org-child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 24px;
+    background: #c7ccd8;
+  }
+  @media (max-width: 600px) {
+    .org-children { flex-direction: column; max-width: 100%; }
+    .org-children::before { display: none; }
+    .org-child::before { display: none; }
+    .org-child { padding-top: 12px; }
+  }
   .kpi-label {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #9aa0b0;
+    color: #6b7280;
   }
   .kpi-value {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
     background: linear-gradient(90deg, #F482E7, #83C0F2);
     -webkit-background-clip: text;
@@ -445,7 +601,7 @@
     line-height: 1.1;
   }
   .kpi-sub {
-    font-size: 10.5px;
+    font-size: 11.5px;
     color: #6b7280;
   }
   .company-block {
@@ -456,7 +612,7 @@
     margin-bottom: 12px;
   }
   .company-block-title {
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #1a1a2e;
     margin-bottom: 10px;
@@ -486,79 +642,211 @@
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #9aa0b0;
+    color: #6b7280;
     letter-spacing: 0.5px;
   }    /* ── ARCHIVE STYLES ── */
     .archived-section { opacity: 0.55; filter: grayscale(0.25); }
-    .archived-section .section-label { color: #9aa0b0; }
+    .archived-section .section-label { color: #6b7280; }
     .archived-section .detail-block { background: #f9fafb !important; border-color: #e5e7eb !important; }
     .archived-section .highlight-box { background: #f9fafb !important; border-left-color: #d1d5db !important; }
     .archive-tag { font-size:9px; padding:2px 8px; border-radius:8px; background:#e5e7eb; color:#6b7280; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-left:8px; vertical-align:middle; }
 
+  /* ── OVERVIEW ITEM COMO BOTÃO ACESSÍVEL ── */
+  button.ov-item {
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  button.ov-item.no-nav { cursor: default; }
+  button.ov-item.no-nav:hover { background: var(--surface-muted); }
+  .ov-arrow { font-size: 14px; color: #b6bcc9; flex-shrink: 0; align-self: center; }
+
+  /* ── ALERT CARD (componente único p/ blocos de atenção/impedimento/destaque) ── */
+  .alert-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--alert-cols, 2), 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .alert-card {
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--ac-border, #eaecf2);
+    background: var(--ac-bg, #f7f9fc);
+  }
+  .alert-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--ac-fg, #4a5568);
+    margin-bottom: 8px;
+  }
+  .alert-card-title { font-size: 15px; font-weight: 700; color: #2d3748; margin-bottom: 6px; }
+  .alert-card-body { font-size: 14px; color: #4a5568; line-height: 1.55; }
+  .alert-card-foot { font-size: 12px; margin-top: 10px; color: #6b7280; }
+  .alert-card.success { --ac-bg:#f0fdf4; --ac-border:#86efac; --ac-fg:#166534; }
+  .alert-card.warning { --ac-bg:#fff8f0; --ac-border:#f4a250; --ac-fg:#854F0B; }
+  .alert-card.danger  { --ac-bg:#fef2f2; --ac-border:#fca5a5; --ac-fg:#991b1b; }
+  .alert-card.info    { --ac-bg:#eff6ff; --ac-border:#93c5fd; --ac-fg:#1e40af; }
+  .alert-card.neutral { --ac-bg:#faf5ff; --ac-border:#d8b4fe; --ac-fg:#6b21a8; }
+
+  /* ── TABELA DE CONFLITOS (semântica, no lugar do grid de divs) ── */
+  .conflict-table { width: 100%; border-collapse: collapse; font-size: 12.5px; color: #374151; margin-top: 8px; }
+  .conflict-table th {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+    color: #6b7280; text-align: left; padding: 5px 6px; border-bottom: 1px solid #e2e6ef;
+  }
+  .conflict-table td { padding: 6px; border-bottom: 1px solid #f0f0f0; }
+  .conflict-table tr:last-child td { border-bottom: none; }
+
+  /* ── RESPONSIVO: colapsa grids fixos em telas estreitas ── */
+  @media (max-width: 640px) {
+    .alert-grid { grid-template-columns: 1fr !important; }
+    .conflict-table, .conflict-table thead, .conflict-table tbody, .conflict-table th, .conflict-table td, .conflict-table tr { display: block; }
+    .conflict-table thead { display: none; }
+    .conflict-table tr { border-bottom: 1px solid #e2e6ef; padding: 6px 0; }
+    .conflict-table td { padding: 1px 0; }
+    .conflict-table td::before { content: attr(data-label) ": "; font-weight: 700; color: #6b7280; }
+  }
+
+  /* ── IMPRESSÃO: garante que todas as seções fiquem visíveis no PDF/impressão ── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { max-width: 100%; box-shadow: none; border-radius: 0; }
+    .sidebar, .sidebar-backdrop, .menu-toggle { display: none !important; }
+    .main-col { margin-left: 0; }
+    .content-inner { max-width: 100%; }
+    .tab-panel, .tab-panel.active { display: block !important; padding: 16px 0; }
+    .tab-panel { break-after: page; }
+    .tab-panel:last-of-type { break-after: auto; }
+    .ov-arrow { display: none; }
+  }
 
 </style>
 </head>
 <body>
 <div class="card">
 
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar-nav" aria-label="Navegação do relatório">
+    <div class="sidebar-logo">
+      <svg viewBox="0 0 100 100" class="sidebar-logo-mark" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#6EC3F4"/>
+            <stop offset="50%" stop-color="#B07CE0"/>
+            <stop offset="100%" stop-color="#F482E7"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="24" r="26" fill="url(#logoGrad)"/>
+        <circle cx="76" cy="50" r="26" fill="url(#logoGrad)"/>
+        <circle cx="50" cy="76" r="26" fill="url(#logoGrad)"/>
+        <circle cx="24" cy="50" r="26" fill="url(#logoGrad)"/>
+        <circle cx="38" cy="38" r="15" fill="#fff"/>
+        <circle cx="62" cy="62" r="15" fill="#fff"/>
+        <circle cx="38" cy="62" r="9" fill="url(#logoGrad)"/>
+        <circle cx="62" cy="38" r="9" fill="#fff"/>
+      </svg>
+      <span class="sidebar-logo-text">Smart <strong>Travel</strong></span>
+    </div>
+    <button type="button" class="side-item active" id="tabbtn-geral" data-tab="geral" aria-current="page" onclick="activateTab('geral')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      Visão Geral
+    </button>
+    <button type="button" class="side-item" id="tabbtn-orgchart" data-tab="orgchart" onclick="activateTab('orgchart')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.3"/><path d="M12 7.3V12M12 12H6.5M12 12h5.5M6.5 12v3M17.5 12v3"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg>
+      Organograma do Time
+    </button>
+
+    <div class="side-group">
+      <div class="side-group-label">Iniciativas</div>
+      <button type="button" class="side-item side-child" id="tabbtn-motor" data-tab="motor" onclick="activateTab('motor')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v4M15 2v4"/><path d="M7 8h10l-.8 4.6a4.2 4.2 0 0 1-4.2 3.4h0a4.2 4.2 0 0 1-4.2-3.4L7 8Z"/><path d="M12 16v4"/></svg>
+        Motor de Conexão
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-vtr" data-tab="vtr" onclick="activateTab('vtr')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="11" rx="2"/><path d="M3 12h18M7 17v2M17 17v2"/></svg>
+        VTR
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-osp" data-tab="osp" onclick="activateTab('osp')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h13l-3-3M20 7l-3 3"/><path d="M20 17H7l3-3M4 17l3 3"/></svg>
+        OSP
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-reforma" data-tab="reforma" onclick="activateTab('reforma')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h6M9 9h2"/></svg>
+        Reforma Tributária
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-outras" data-tab="outras" onclick="activateTab('outras')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg>
+        Outras Frentes
+      </button>
+      <button type="button" class="side-item side-child" id="tabbtn-fraudes" data-tab="fraudes" onclick="activateTab('fraudes')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg>
+        Fraudes (Gratuidade)
+      </button>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-label">Post Mortem</div>
+      <button type="button" class="side-item side-child" id="tabbtn-postmortem-motor" data-tab="postmortem-motor" onclick="activateTab('postmortem-motor')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/></svg>
+        Motor de Conexão 07/2026
+      </button>
+    </div>
+  </nav>
+
+  <div class="sidebar-backdrop" onclick="closeSidebar()"></div>
+
+  <div class="main-col">
+
   <!-- HEADER -->
   <div class="card-header">
     <div class="header-top">
-      <div>
-        <div class="tag">SmartBus · Grupo Guanabara</div>
-        <h1>PRODUTO Smart</h1>
-        <div class="subtitle">Status consolidado de iniciativas — semana 23 jul 2026</div>
+      <div style="display:flex; align-items:flex-start; gap:12px;">
+        <button type="button" class="menu-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="sidebar-nav" onclick="toggleSidebar()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div>
+          <div class="tag">SmartBus · Grupo Guanabara</div>
+          <div class="subtitle">Status consolidado de iniciativas — semana 16 jul 2026</div>
+        </div>
       </div>
       <div class="header-meta">
         <div class="owner-label">Owner</div>
         <div class="owner-name">Maurício</div>
-        <div class="report-date">30 jun 2026</div>
+        <div class="report-date">Atualizado 23 jul 2026</div>
       </div>
     </div>
   </div>
 
-  <!-- TABS NAV -->
-  <div class="tabs-nav">
-    <button class="tab-btn active" onclick="switchTab('geral',this)">
-      <span class="tab-dot" style="background:#83C0F2"></span>Visão Geral
-    </button>
-    <button class="tab-btn" onclick="switchTab('motor',this)">
-      <span class="tab-dot" style="background:#F482E7"></span>Motor de Conexões
-    </button>
-    <button class="tab-btn" onclick="switchTab('vtr',this)">
-      <span class="tab-dot" style="background:#f4a250"></span>VTR
-    </button>
-    <button class="tab-btn" onclick="switchTab('osp',this)">
-      <span class="tab-dot" style="background:#a78bfa"></span>OSP
-    </button>
-    <button class="tab-btn" onclick="switchTab('reforma',this)">
-      <span class="tab-dot" style="background:#f59e0b"></span>Reforma Tributária
-    </button>
-    <button class="tab-btn" onclick="switchTab('fraudes',this)">
-      <span class="tab-dot" style="background:#ef4444"></span>Fraudes — Gratuidades
-    </button>
-  </div>
+    <!-- CONTEÚDO -->
+    <div class="content">
+      <div class="content-inner">
 
   <!-- ══════════════ TAB: GERAL ══════════════ -->
-  <div id="tab-geral" class="tab-panel active">
+  <div id="tab-geral" class="tab-panel active" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
     <div class="section">
       <div class="section-label">Iniciativas da semana</div>
       <div class="overview-grid">
 
-        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
-          <div class="ov-icon">🔌</div>
+        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: expansão para mais de 300 PDVs">
+          <div class="ov-icon" aria-hidden="true">🔌</div>
           <div class="ov-content">
-            <div class="ov-title">Motor V2 — Validações em Campo</div>
-            <div class="ov-sub">Motor V2 em piloto (7 PDVs). Validações em Campo encerradas — 13 casos tratados (16/07). External Sale: aguarda diretoria.</div>
+            <div class="ov-title">Motor V2 — mais de 300 PDVs ativos</div>
+            <div class="ov-sub">Ativação em lotes de 100 PDVs (offline, sem Senna) desde 20/07 — sem impacto identificado no banco. 100% da base prevista para 23/07. Validações em Campo encerradas (16/07). External Sale: aguarda diretoria.</div>
           </div>
           <div class="ov-right">
-            <span class="deadline-tag">16/07</span>
-            <span class="badge badge-done">Concluído</span>
+            <span class="deadline-tag">22/07</span>
+            <span class="badge badge-ongoing">Em expansão</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
-          <div class="ov-icon">🖥️</div>
+        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Nova Tela Frontoffice">
+          <div class="ov-icon" aria-hidden="true">🖥️</div>
           <div class="ov-content">
             <div class="ov-title">Motor V2 — Nova Tela Frontoffice</div>
             <div class="ov-sub">Entregue em 15/07. Deploy realizado — validado pelo time de negócio, elogios do time de operações.</div>
@@ -567,70 +855,63 @@
             <span class="deadline-tag">15/07</span>
             <span class="badge badge-done">Entregue</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('motor',document.querySelectorAll('.tab-btn')[1])">
-          <div class="ov-icon">📊</div>
+        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard de Acompanhamento">
+          <div class="ov-icon" aria-hidden="true">📊</div>
           <div class="ov-content">
             <div class="ov-title">Motor V2 — Dashboard de Acompanhamento</div>
-            <div class="ov-sub">Duas rodadas de refinamento. Documentado no Linear. Próx.: GLPI para BI · Daniel + Morelo · até 17/07.</div>
+            <div class="ov-sub">Duas rodadas de refinamento. Documentado no Linear. Reunião de 17/07 não ocorreu — remarcada para 22/07 às 16h. Próx.: GLPI para BI · Daniel + Morelo.</div>
           </div>
           <div class="ov-right">
-            <span class="deadline-tag">30/06</span>
+            <span class="deadline-tag">22/07</span>
             <span class="badge badge-ongoing">Em andamento</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('vtr',document.querySelectorAll('.tab-btn')[2])">
-          <div class="ov-icon">🚌</div>
+        <button type="button" class="ov-item" onclick="activateTab('vtr')" aria-label="Ver detalhes em VTR: Inclusão da VTR no VG/Senna">
+          <div class="ov-icon" aria-hidden="true">🚌</div>
           <div class="ov-content">
             <div class="ov-title">Inclusão da VTR no VG/Senna</div>
-            <div class="ov-sub">Reunião 01/07 realizada. Impedimentos para Senna identificados — alternativa via tenant Guanabara em avaliação. Próx.: 06/07 (Adones).</div>
+            <div class="ov-sub">Blocked (16/07): risco de latência e falta de fonte única de verdade expôs a real questão — mudar o escopo do VG de white label para marketplace/multi-tenant. Decisão de negócio pendente.</div>
           </div>
           <div class="ov-right">
-            <span class="deadline-tag">30/06</span>
-            <span class="badge badge-pending">A definir</span>
+            <span class="deadline-tag">16/07</span>
+            <span class="badge badge-blocked">Blocked</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('osp',document.querySelectorAll('.tab-btn')[3])">
-          <div class="ov-icon">🔁</div>
+        <button type="button" class="ov-item" onclick="activateTab('osp')" aria-label="Ver detalhes em OSP: Simultâneas Parciais">
+          <div class="ov-icon" aria-hidden="true">🔁</div>
           <div class="ov-content">
             <div class="ov-title">Simultâneas Parciais (OSP)</div>
-            <div class="ov-sub">Primeiro refinamento técnico realizado. Pausada por foco total no Motor V2. Retomada depende de estabilização.</div>
+            <div class="ov-sub">Retomada em 22/07: documentação e simulador atualizados com as dúvidas do último refinamento. Novo refinamento técnico agendado para a próxima semana.</div>
           </div>
           <div class="ov-right">
-            <span class="deadline-tag">30/06</span>
-            <span class="badge badge-pending">Pausado</span>
+            <span class="deadline-tag">22/07</span>
+            <span class="badge badge-ongoing">Em refinamento</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('reforma',document.querySelectorAll('.tab-btn')[4])">
-          <div class="ov-icon">📋</div>
+        <button type="button" class="ov-item" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: RTC + Pagamentos">
+          <div class="ov-icon" aria-hidden="true">📋</div>
           <div class="ov-content">
             <div class="ov-title">Reforma Tributária — RTC + Pagamentos</div>
-            <div class="ov-sub">Proposta estratégica: Motor Tributário + Domínio de Pagamentos. Papo técnico com Felipe Moimaz semana 30/06.</div>
+            <div class="ov-sub">Produto apresentou riscos ao time técnico sobre tributos/pagamentos no monolito. Tech decidiu manter o modelo atual — Produto segue com discovery, refinamento e spec da RTC (NT 2026.001/002).</div>
           </div>
           <div class="ov-right">
             <span class="deadline-tag">30/06</span>
             <span class="badge badge-ongoing">Em andamento</span>
           </div>
-        </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
 
-        <div class="ov-item" onclick="switchTab('fraudes',document.querySelectorAll('.tab-btn')[5])">
-          <div class="ov-icon">🚨</div>
-          <div class="ov-content">
-            <div class="ov-title">Fraudes — Gratuidades ANTT · Discovery</div>
-            <div class="ov-sub"><strong>Prazo: 31/07.</strong> Perda por fraude confirmada: R$ 2,28mi/ano. 900+ mercados Guanabara expostos à multa ANTT. Decisão emergencial pendente (Bia).</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag" style="background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;">⚠️ 31/07</span>
-            <span class="badge" style="background:#fef2f2;color:#dc2626;">Urgente</span>
-          </div>
-        </div>
-
-        <div class="ov-item" style="cursor:default;">
-          <div class="ov-icon">🎫</div>
+        <div class="ov-item no-nav" style="cursor:default;">
+          <div class="ov-icon" aria-hidden="true">🎫</div>
           <div class="ov-content">
             <div class="ov-title">Riocard Totem RJ — Documentação Técnica</div>
             <div class="ov-sub">Reunião realizada com Riocard. VPN sendo habilitada para ambiente de testes. Pausado por foco no Motor V2 · Próx.: dados VPN · Daniel · até 21/07.</div>
@@ -641,49 +922,85 @@
           </div>
         </div>
 
+        <button type="button" class="ov-item" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Tickets, Comercial e Product Discovery">
+          <div class="ov-icon" aria-hidden="true">🧩</div>
+          <div class="ov-content">
+            <div class="ov-title">Outras Frentes — Tickets, Comercial e Product Discovery</div>
+            <div class="ov-sub">Tickets Viações: 11 dos 14 mapeados no Linear. Comercial: portfólio em 8 módulos e 5 canais. Product Discovery: fluxo completo no Jira, 20 iniciativas cadastradas.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">22/07</span>
+            <span class="badge badge-ongoing">Em andamento</span>
+          </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
+
+        <button type="button" class="ov-item" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): discovery ANTT com prazo crítico 31/07">
+          <div class="ov-icon" aria-hidden="true">🚨</div>
+          <div class="ov-content">
+            <div class="ov-title">Fraudes (Gratuidade) — Discovery ANTT, prazo crítico 31/07</div>
+            <div class="ov-sub">Perda por fraude confirmada de R$ 2,28mi/ano + exposição de R$ 11,6 a 92,6mi em multas (art. 313, só Guanabara-Nordeste). SUFIS fiscaliza a partir de 01/08 — falta aval de Bia para ação emergencial.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag urgent">31/07</span>
+            <span class="badge badge-blocked">Urgente</span>
+          </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
+
+        <button type="button" class="ov-item" onclick="activateTab('orgchart')" aria-label="Ver detalhes em Novo Org Chart: Time de Produto">
+          <div class="ov-icon" aria-hidden="true">🧭</div>
+          <div class="ov-content">
+            <div class="ov-title">Time de Produto — Novo Org Chart</div>
+            <div class="ov-sub">Maurício (GPM) lidera o time de produto; Daniel (PM Pleno) e Ítalo (Associate PM) reportam diretamente a ele.</div>
+          </div>
+          <div class="ov-right">
+            <span class="deadline-tag">16/07</span>
+            <span class="badge badge-done">Definido</span>
+          </div>
+          <span class="ov-arrow" aria-hidden="true">›</span>
+        </button>
+
       </div>
     </div>
   </div>
 
     <!-- ══════════════ TAB: MOTOR DE CONEXÕES ══════════════ -->
-  <div id="tab-motor" class="tab-panel">
+  <div id="tab-motor" class="tab-panel" role="region" aria-labelledby="tabbtn-motor" tabindex="0">
 
     <!-- INITIATIVE HEADER -->
     <div style="margin-bottom:16px;">
-      <div style="font-size:12.5px; color:#8a94a8; margin-bottom:4px;">Meta: 15% da receita via conexões · Comitê semanal ativo desde 26/06</div>
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Meta: 15% da receita via conexões · Comitê semanal ativo desde 26/06</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Italo · Daniel · Guilherme</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 16 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Italo · Daniel · Guilherme</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 22 jul 2026</span>
       </div>
     </div>
 
     <!-- ALERT CARDS -->
     <div class="section-label">Requer atenção</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div class="alert-grid" style="--alert-cols:2;">
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #86efac;background:#f0fdf4;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:8px;">
-          🟢 Piloto em andamento
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">Motor V2 — 7 PDVs em piloto controlado</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Ativados em 15/07 às 14h — BSB · SP · RJ · BHZ · GYN · FOR Comercial · FOR Guichê IV. Primeiras horas sem impacto identificado. 1 issue em análise: conexão manual UDI (Rio ↔ Cuiabá) não aparecendo para agentes.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Comitê 10/07: motor não é causa raiz · ponto de atenção é carga multi-trecho · Daniel + Ítalo</div>
+      <div class="alert-card success">
+        <div class="alert-card-label">🟢 Expansão acelerada</div>
+        <div class="alert-card-title">Motor V2 — mais de 300 PDVs ativos · 100% previsto para 23/07</div>
+        <div class="alert-card-body">Após o piloto inicial (18 PDVs, 15–17/07, sem impacto), reunião de 20/07 com o time de negócio definiu ativação em <strong>lotes de 100 PDVs</strong>, sem ordem de prioridade, somente base <strong>offline</strong> (Senna segue de fora por enquanto). Lotes de +100 ativados ao longo de 20 e 21/07 (André Rocha). Em 22/07, Daniel confirma: <strong>motor ativado em mais de 300 PDVs</strong>, de forma controlada e gradativa para isolar e medir o impacto real no banco de dados — sem impactos identificados até o momento. Ativação completa (100%) prevista para amanhã, 23/07.</div>
+        <div class="alert-card-foot">Decisão: reativação gradativa dos PDVs para minimizar risco de indisponibilidade durante a alta temporada</div>
+        <div class="alert-card-foot" style="margin-top:6px;">Próx. passo: Daniel organiza as melhorias necessárias para concluir a entrega do Motor V2</div>
       </div>
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #f4a250;background:#fff8f0;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#854F0B;margin-bottom:8px;">
-          ⏳ Aguardando diretoria
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">External Sale — aprovação de infra</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Nova infraestrutura pré-prod com custo elevado. Integração ClickBus e Buson bloqueada até aprovação.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Responsável: Tomás + Adones</div>
+      <div class="alert-card warning">
+        <div class="alert-card-label">⏳ Aguardando diretoria</div>
+        <div class="alert-card-title">External Sale — aprovação de infra</div>
+        <div class="alert-card-body">Nova infraestrutura pré-prod com custo elevado. Integração ClickBus e Buson bloqueada até aprovação.</div>
+        <div class="alert-card-foot">Responsável: Tomás + Adones</div>
       </div>
 
     </div>
 
     <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:12px 16px;margin-bottom:20px;">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:6px;">📋 Estratégia · Comitê Executivo 10/07</div>
-      <div style="font-size:12.5px;color:#2d3748;line-height:1.6;">Decisão: reativação controlada e gradual em vez de esperar agosto. Tomás confirmou que o motor <strong>não é a causa raiz</strong> dos problemas do Smart — o ponto de atenção é a <strong>carga da precificação multi-trecho no banco</strong>. Agências do piloto foram escolhidas por operarem com terminais duplicados, permitindo comparar V1 x V2 lado a lado sem risco para as demais estações.</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#166534;margin-bottom:6px;">📋 Estratégia · Comitê Executivo 10/07</div>
+      <div style="font-size:14px;color:#2d3748;line-height:1.6;">Decisão: reativação controlada e gradual em vez de esperar agosto. Tomás confirmou que o motor <strong>não é a causa raiz</strong> dos problemas do Smart — o ponto de atenção é a <strong>carga da precificação multi-trecho no banco</strong>. Agências do piloto foram escolhidas por operarem com terminais duplicados, permitindo comparar V1 x V2 lado a lado sem risco para as demais estações.</div>
     </div>
 
     <div class="divider"></div>
@@ -692,39 +1009,39 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
       <div class="section-label" style="margin-bottom:0;">Canais de venda</div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;">
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#1D9E75;display:inline-block;flex-shrink:0;"></span>Ativo</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block;flex-shrink:0;"></span>Em validação</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block;flex-shrink:0;"></span>Bloqueado</span>
-        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#8a94a8;"><span style="width:8px;height:8px;border-radius:50%;background:#B4B2A9;display:inline-block;flex-shrink:0;"></span>Não iniciado</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#1D9E75;display:inline-block;flex-shrink:0;"></span>Ativo</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#EF9F27;display:inline-block;flex-shrink:0;"></span>Em validação</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#E24B4A;display:inline-block;flex-shrink:0;"></span>Bloqueado</span>
+        <span style="display:flex;align-items:center;gap:5px;font-size:10.5px;color:#5c6577;"><span style="width:8px;height:8px;border-radius:50%;background:#B4B2A9;display:inline-block;flex-shrink:0;"></span>Não iniciado</span>
       </div>
     </div>
     <div style="border:1px solid #eaecf2;border-radius:12px;overflow:hidden;">
 
       <div style="display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid #eaecf2;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">Senna</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">Piloto iniciado nos guichês físicos — aguarda expansão para canal ecommerce + mobile</span>
-        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#faeeda;color:#633806;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">AGUARDANDO PILOTO</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">Senna</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">Piloto iniciado nos guichês físicos — aguarda expansão para canal ecommerce + mobile</span>
+        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fff3e0;color:#b06010;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">AGUARDANDO PILOTO</span>
       </div>
 
       <div style="display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid #eaecf2;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#E24B4A;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">External Sale</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">ClickBus + Buson — aguardando aprovação diretoria para infra pré-prod</span>
-        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fdecea;color:#791F1F;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">BLOQUEADO</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">External Sale</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">ClickBus + Buson — aguardando aprovação diretoria para infra pré-prod</span>
+        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fdecea;color:#c0392b;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">BLOQUEADO</span>
       </div>
 
       <div style="display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid #eaecf2;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#EF9F27;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">Europa</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">Hermes publicando ajustes hoje (01/07) — prazo DEV-Royal previsto 02/07</span>
-        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#faeeda;color:#633806;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">EM ANDAMENTO</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">Europa</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">Hermes publicando ajustes hoje (01/07) — prazo DEV-Royal previsto 02/07</span>
+        <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fff3e0;color:#b06010;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">EM ANDAMENTO</span>
       </div>
 
       <div style="display:flex;align-items:center;padding:13px 16px;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#1D9E75;flex-shrink:0;margin-right:14px;"></span>
-        <span style="font-size:13px;color:#2d3748;font-weight:700;min-width:130px;">PDVs / Totens</span>
-        <span style="font-size:12.5px;color:#4a5568;flex:1;">7 guichês ativados 15/07: BSB · SP · RJ · GYN · BHZ · FOR Comercial · FOR Guichê IV — 1ªs horas sem impacto</span>
+        <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">PDVs / Totens</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">Mais de 300 PDVs ativos (offline) — ativação em lotes de 100, sem prioridade, desde 20/07. Sem impacto identificado. Ativação completa (100%) prevista para 23/07</span>
         <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#dcfce7;color:#166534;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">EM PILOTO</span>
       </div>
 
@@ -740,25 +1057,25 @@
           <div class="detail-title">🏢 Gestores regionais Guanabara — rodoviárias</div>
           <span class="badge badge-done">Concluído ✓</span>
         </div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.6;margin-bottom:12px;">
+        <div style="font-size:14px;color:#4a5568;line-height:1.6;margin-bottom:12px;">
           Grupo de validação aberto em 29/06 com gestores regionais da Guanabara. Foco no operacional nas rodoviárias — frontoffice V2. Ciclo encerrado em 16/07: todos os casos reportados foram tratados e receberam o devido retorno (Ítalo, 08:33).
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
           <div style="background:#f7f9fc;border:1px solid #eaecf2;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;background:linear-gradient(90deg,#F482E7,#83C0F2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">13</div>
-            <div style="font-size:10px;color:#8a94a8;margin-top:2px;">reportados</div>
+            <div style="font-size:24px;font-weight:800;background:linear-gradient(90deg,#F482E7,#83C0F2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;">13</div>
+            <div style="font-size:11px;color:#5c6577;margin-top:2px;">reportados</div>
           </div>
           <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#166534;line-height:1.1;">3</div>
-            <div style="font-size:10px;color:#166534;margin-top:2px;">resolvidos</div>
+            <div style="font-size:24px;font-weight:800;color:#166534;line-height:1.1;">3</div>
+            <div style="font-size:11px;color:#166534;margin-top:2px;">resolvidos</div>
           </div>
           <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#1e40af;line-height:1.1;">5</div>
-            <div style="font-size:10px;color:#1e40af;margin-top:2px;">desenquadrados</div>
+            <div style="font-size:24px;font-weight:800;color:#1e40af;line-height:1.1;">5</div>
+            <div style="font-size:11px;color:#1e40af;margin-top:2px;">desenquadrados</div>
           </div>
           <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:8px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#166534;line-height:1.1;">5</div>
-            <div style="font-size:10px;color:#166534;margin-top:2px;">retornados ✓</div>
+            <div style="font-size:24px;font-weight:800;color:#166534;line-height:1.1;">5</div>
+            <div style="font-size:11px;color:#166534;margin-top:2px;">retornados ✓</div>
           </div>
         </div>
         <ul class="update-list">
@@ -783,11 +1100,14 @@
           <div class="detail-title">📊 Dashboard de Acompanhamento V2</div>
           <span class="badge" style="background:#eff6ff;color:#1e40af;">Em refinamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Duas rodadas de refinamento realizadas. Documentado no Linear + mockup construído. Maior visibilidade do motor para diretoria, negócio e produto.
         </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:6px;">
+          <strong>22/07 — Daniel:</strong> reunião de 17/07 não ocorreu — remarcada para hoje, 22/07 às 16h.
+        </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Abrir chamado no GLPI para BI enfileirar desenvolvimento · Daniel fala com Rafael Morelo para prioridade · até 17/07
+          <strong>Próx. passo:</strong> Abrir chamado no GLPI para BI enfileirar desenvolvimento · Daniel fala com Rafael Morelo para prioridade · alinhamento 22/07 às 16h
         </div>
       </div>
 
@@ -796,7 +1116,7 @@
           <div class="detail-title">🖥️ Nova Tela Frontoffice — Agrupadores de oferta</div>
           <span class="badge badge-done">Entregue ✓</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Tela com 4 agrupadores: <strong>trecho direto, mesma linha, vira bandeira, cruzamento</strong>. Levantada em visita à rodoviária de Juiz de Fora + reunião semanal Motor (sextas, 9h). Deploy realizado e validado pelo time de negócio — elogios do time de operações.
         </div>
         <div class="highlight-box" style="border-left-color:#1D9E75;background:#f0fdf4;">
@@ -809,11 +1129,24 @@
           <div class="detail-title">💰 Preço Dinâmico — ThoughtWorks</div>
           <span class="badge badge-ongoing">Em andamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           SmartBus não está preparado para receber precificação de conexão (preço gerenciado por SKU). Desenvolvimento necessário do nosso lado.
         </div>
         <div class="highlight-box blue">
           <strong>Próx. passo:</strong> Daniel marca reunião com Morelo — levar Roberto e José Carlos
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">🖥️ Tótem — Melhoria de UX (busca + excesso de conexões)</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          Senna ajustou a experiência de busca no totem — melhoria funcional já disponível em ambientes inferiores para teste; falta validar se precisa de ajuste de design. Ponto ainda pendente (item 6): excesso de conexões apresentadas dificulta a escolha do usuário — sem solução proposta até o momento. Projeto pertence ao Senna; acompanhamento do lado Smart é feito por Daniel.
+        </div>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Daniel retoma a conversa esta semana (20/07) com a equipe do Senna para alinhar a melhoria de UX
         </div>
       </div>
     </div>
@@ -843,37 +1176,33 @@
   </div>
 
     <!-- ══════════════ TAB: VTR ══════════════ -->
-  <div id="tab-vtr" class="tab-panel">
+  <div id="tab-vtr" class="tab-panel" role="region" aria-labelledby="tabbtn-vtr" tabindex="0">
 
     <!-- INITIATIVE HEADER -->
     <div style="margin-bottom:16px;">
-      <div style="font-size:12.5px; color:#8a94a8; margin-bottom:4px;">Inclusão da VTR/VTR2 no canal de vendas Guanabara · 237k bilhetes · R$38,9M (Jan–Jun 2026)</div>
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Inclusão da VTR/VTR2 no canal de vendas Guanabara · 237k bilhetes · R$38,9M (Jan–Jun 2026)</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Maurício · Adones · Tomás</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 16 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Maurício · Adones · Tomás</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 16 jul 2026</span>
       </div>
     </div>
 
     <!-- ALERT CARDS -->
     <div class="section-label">Impedimentos</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div class="alert-grid" style="--alert-cols:2;">
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #fca5a5;background:#fef2f2;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#991b1b;margin-bottom:8px;">
-          🔴 Impedimento técnico
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">Inclusão via Senna — inviável</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Reunião 01/07 identificou impedimentos para inclusão direta via Senna. Estimativa de "1 dia" de Felipe não validada por Adones — informações adicionais necessárias para planejamento e desenho da solução.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Tomás precisa ser envolvido para avançar · Bia acionada com TI</div>
+      <div class="alert-card danger">
+        <div class="alert-card-label">🔴 Blocked</div>
+        <div class="alert-card-title">Inclusão VTR no VG/Senna — escopo do VG em xeque</div>
+        <div class="alert-card-body">Reunião 16/07: time técnico apontou riscos de latência e ausência de fonte única de verdade nas duas consultas (Guanabara + VTR agregadas pelo Senna). Causa raiz: a demanda muda o escopo do VG — hoje white label — para algo próximo de marketplace ou multi-tenant.</div>
+        <div class="alert-card-foot">Sem esse modelo definido, não há como fechar desenho técnico, esforço ou prazo · iniciativa parada em discovery</div>
       </div>
 
-      <div style="border-radius:12px;padding:14px 16px;border:1px solid #f4a250;background:#fff8f0;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#854F0B;margin-bottom:8px;">
-          ⏳ Aguardando decisão
-        </div>
-        <div style="font-size:13.5px;font-weight:700;color:#2d3748;margin-bottom:6px;">Estratégia de implementação — SmartBus ou Senna</div>
-        <div style="font-size:12.5px;color:#4a5568;line-height:1.55;">Alternativa proposta: incluir malha VTR/VTR2 no tenant Guanabara via SmartBus (menor complexidade). Avaliando impacto no projeto de redução do RTS antes de consolidar.</div>
-        <div style="font-size:11px;margin-top:10px;color:#9aa0b0;">Decisão pendente · Responsável: Adones</div>
+      <div class="alert-card warning">
+        <div class="alert-card-label">⏳ Aguardando decisão de negócio</div>
+        <div class="alert-card-title">Modelo-alvo do VG — white label × marketplace/multi-tenant</div>
+        <div class="alert-card-body">Alinhamento marcado entre Produto Smart (Maurício, Ítalo), Michel e Negócio (Rafael) para definir o modelo-alvo do VG. Decisão é de negócio, não técnica.</div>
+        <div class="alert-card-foot">Responsável: Ítalo · Data: a definir</div>
       </div>
 
     </div>
@@ -935,7 +1264,7 @@
             <div class="kpi-sub">bilhetes · R$ 7,2M</div>
           </div>
         </div>
-        <div style="font-size:11.5px; color:#374151; margin-top:4px;">
+        <div style="font-size:13px; color:#374151; margin-top:4px;">
           <strong>Alta temporada:</strong> Dezembro e Janeiro — Dez/25 = R$ 9,7M · Jan/26 = R$ 9,8M (vs ~R$ 7,2M nos demais meses).<br>
           <strong>Top trechos:</strong> BSB↔CGR, GYN↔CGR, CGR↔CGB, CGR↔SJP, CGR↔SP — dominância do eixo Campo Grande.<br>
           <strong>Canais digitais:</strong> INTERNET J3 (21.596 blt), DISTRIBUSION (9.312), WHATSAPP/VOYON (8.647), BLABLACAR (5.264), BUSON (4.248).<br>
@@ -966,7 +1295,7 @@
             <div class="kpi-sub">bilhetes · R$ 525k</div>
           </div>
         </div>
-        <div style="font-size:11.5px; color:#374151; margin-top:4px;">
+        <div style="font-size:13px; color:#374151; margin-top:4px;">
           <strong>Top trechos:</strong> REC↔JPA (5k–5.5k/mês em Jan) — operação totalmente concentrada no corredor Nordeste.<br>
           <strong>Dependência BlaBlacar:</strong> risco de concentração em canal externo que representa 63% do volume total da empresa.<br>
           <strong>Pagamento:</strong> Dinheiro 82% — base muito presencial.
@@ -984,19 +1313,22 @@
           <div class="detail-title">Sobreposição de trechos — eixo PE/PB</div>
           <span class="badge badge-blocked">8 conflitos</span>
         </div>
-        <div style="margin-top:8px;">
-          <div class="conflict-row conflict-header">
-            <span>Origem</span><span>Destino</span><span>Empresas</span>
-          </div>
-          <div class="conflict-row"><span>João Pessoa - PB</span><span>Recife - PE</span><span>Guanabara × Total + Total2</span></div>
-          <div class="conflict-row"><span>Recife - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total + Total2</span></div>
-          <div class="conflict-row"><span>João Pessoa - PB</span><span>Goiana - PE</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Goiana - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Goiana - PE</span><span>Recife - PE</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Recife - PE</span><span>Goiana - PE</span><span>Guanabara × Total</span></div>
-          <div class="conflict-row"><span>Recife (Caxanga) - PE</span><span>Recife - PE</span><span>Guanabara × Total2</span></div>
-          <div class="conflict-row"><span>Recife (Caxanga) - PE</span><span>João Pessoa - PB</span><span>Guanabara × Total2</span></div>
-        </div>
+        <table class="conflict-table">
+          <caption style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Sobreposição de trechos entre Guanabara e VTR/VTR2</caption>
+          <thead>
+            <tr><th scope="col">Origem</th><th scope="col">Destino</th><th scope="col">Empresas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Origem">João Pessoa - PB</td><td data-label="Destino">Recife - PE</td><td data-label="Empresas">Guanabara × Total + Total2</td></tr>
+            <tr><td data-label="Origem">Recife - PE</td><td data-label="Destino">João Pessoa - PB</td><td data-label="Empresas">Guanabara × Total + Total2</td></tr>
+            <tr><td data-label="Origem">João Pessoa - PB</td><td data-label="Destino">Goiana - PE</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Goiana - PE</td><td data-label="Destino">João Pessoa - PB</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Goiana - PE</td><td data-label="Destino">Recife - PE</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Recife - PE</td><td data-label="Destino">Goiana - PE</td><td data-label="Empresas">Guanabara × Total</td></tr>
+            <tr><td data-label="Origem">Recife (Caxanga) - PE</td><td data-label="Destino">Recife - PE</td><td data-label="Empresas">Guanabara × Total2</td></tr>
+            <tr><td data-label="Origem">Recife (Caxanga) - PE</td><td data-label="Destino">João Pessoa - PB</td><td data-label="Empresas">Guanabara × Total2</td></tr>
+          </tbody>
+        </table>
         <div class="highlight-box" style="margin-top:10px;">
           A Total2 opera <strong>exclusivamente</strong> nesse corredor — exposição total a conflitos com Guanabara. Total2 utiliza <strong>30 reais de ticket médio</strong> vs tarifas Guanabara, indicando competição por preço.
         </div>
@@ -1009,19 +1341,20 @@
       <div class="section-label">Integração Técnica VTR</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">Inclusão no sistema</div>
-          <span class="badge badge-pending">Em definição</span>
+          <div class="detail-title">Inclusão VTR no VG/Senna — desenho técnico</div>
+          <span class="badge badge-blocked">Blocked</span>
         </div>
-        <ul class="update-list">
-          <li>Felipe indicou que a inclusão seria <strong>trabalho de 1 dia</strong> — porém Adones sinalizou que <strong>sua estimativa não foi validada por ele</strong> e que há necessidade de informações adicionais para o planejamento e desenho da solução.</li>
-          <li>Tomás precisa estar envolvido para o avanço da iniciativa.</li>
-          <li>Bia acionada para priorizar com TI.</li>
+        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+          Desenho inicial: duas consultas (Guanabara + VTR) agregadas pelo Senna, checkout mantido no Mercado Pago da Guanabara, VTR tratada como parceiro externo.
+        </div>
+        <ul class="update-list" style="margin-top:8px;">
+          <li>Reunião 16/07 — time técnico apontou <strong>riscos de latência</strong> e <strong>ausência de fonte única de verdade</strong> nas duas consultas.</li>
+          <li>Causa raiz exposta: a demanda muda o escopo do VG (hoje <strong>white label</strong>) para algo próximo de <strong>marketplace ou multi-tenant</strong> — decisão ainda pendente do lado de negócio.</li>
+          <li>Sem esse modelo definido, não há como fechar o desenho técnico, o esforço ou o prazo.</li>
+          <li>Histórico: impedimentos via Senna confirmados em 01/07; alternativa (tenant Guanabara via SmartBus) avaliada, mas discussão evoluiu para a questão de escopo do VG.</li>
         </ul>
-        <div class="highlight-box" style="margin-top:10px;">
-          <strong>Reunião 01/07:</strong> Impedimentos confirmados via Senna. Alternativa avaliada — tenant Guanabara via SmartBus. Impacto no projeto RTS ainda em análise antes de consolidar decisão.
-        </div>
         <div class="highlight-box blue" style="margin-top:8px;">
-          <strong>Próx. passo:</strong> Consolidar decisão de estratégia (SmartBus vs Senna) · Adones + Tomás · sem prazo definido
+          <strong>Próx. passo:</strong> Articulação da reunião entre Produto e Negócio para definir o modelo-alvo do VG · Ítalo · data a definir
         </div>
       </div>
     </div>
@@ -1032,13 +1365,12 @@
       <div class="section-label">Próximos passos</div>
       <div class="detail-block">
         <ul class="update-list">
-          <li>📋 <strong>Definir estratégia de implementação</strong> — SmartBus (tenant Guanabara) vs Senna · Adones + Tomás · sem prazo definido</li>
-          <li>📋 <strong>Avaliar impacto no RTS</strong> antes de optar pela rota SmartBus · Adones</li>
-          <li>📋 <strong>Envolver Tomás</strong> formalmente na decisão técnica de implementação</li>
+          <li>📋 <strong>Definir modelo-alvo do VG</strong> — white label × marketplace/multi-tenant · decisão de negócio · Ítalo articula · sem prazo definido</li>
+          <li>📋 <strong>Alinhamento Produto + Negócio</strong> — Maurício, Ítalo, Michel e Rafael</li>
           <li>📋 <strong>Resolver conflitos PE/PB</strong> — 8 sobreposições com Guanabara precisam de estratégia comercial antes da ativação</li>
         </ul>
         <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
-          <strong>Bloqueante principal:</strong> enquanto a estratégia de implementação não for definida por Adones + Tomás, nenhum desenvolvimento pode ser iniciado. Decisão pendente desde 01/07.
+          <strong>Bloqueante principal:</strong> sem o modelo-alvo do VG definido pelo lado de negócio, não há como fechar desenho técnico, esforço ou prazo. Iniciativa parada em discovery desde 16/07.
         </div>
       </div>
     </div>
@@ -1046,92 +1378,72 @@
   </div>
 
   <!-- ══════════════ TAB: OSP ══════════════ -->
-  <div id="tab-osp" class="tab-panel">
+  <div id="tab-osp" class="tab-panel" role="region" aria-labelledby="tabbtn-osp" tabindex="0">
 
-    <div class="section">
-      <div class="section-label">Simultâneas Parciais (OSP) — SmartBus</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">Contexto</div>
-        </div>
-        <div class="detail-body">
-          O OSP permite que dois serviços de ônibus distintos compartilhem fisicamente um único veículo em um trecho comum às duas rotas. Cada serviço mantém sua identidade, vende passagens de forma independente e possui seu próprio inventário — porém ambos competem pelas mesmas poltronas físicas dentro da zona de sobreposição.
-        </div>
+    <!-- INITIATIVE HEADER -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Simultâneas Parciais — dois serviços compartilhando um mesmo veículo em trecho comum · Discovery concluído · Refinamento retomado 22/07</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Daniel · Maurício</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 22 jul 2026</span>
       </div>
+    </div>
+
+    <!-- ALERT CARDS -->
+    <div class="section-label">Requer atenção</div>
+    <div class="alert-grid" style="--alert-cols:2;">
+
+      <div class="alert-card success">
+        <div class="alert-card-label">🔄 Retomada — Em refinamento</div>
+        <div class="alert-card-title">OSP volta a andar — refinamentos retomados em 22/07</div>
+        <div class="alert-card-body">Após pausa desde 15/07 (foco total no Motor V2), Daniel atualizou em 22/07: documentação revisada com o simulador da OSP e as dúvidas levantadas no último refinamento. Novo refinamento técnico com o time tech agendado para a próxima semana.</div>
+        <div class="alert-card-foot">Decisão: dar continuidade aos refinamentos da OSP</div>
+        <div class="alert-card-foot" style="margin-top:6px;">Próx. passo: agendar a próxima reunião de refinamento com o time tech · Daniel</div>
+      </div>
+
+      <div class="alert-card success">
+        <div class="alert-card-label">✅ Discovery pronto</div>
+        <div class="alert-card-title">4 de 5 entregáveis concluídos</div>
+        <div class="alert-card-body">Simulador v3, infográfico AS-IS/TO-BE, referência regulatória (ANTT/OSI) e regras de negócio prontos. Falta apenas a spec técnica, que volta a ser refinada com o time tech a partir da próxima semana.</div>
+        <div class="alert-card-foot">Refinamento técnico retomado em 22/07</div>
+      </div>
+
     </div>
 
     <div class="divider"></div>
 
-    <div class="section archived-section">
-      <div class="section-label">Exemplo — BSBxSSZ × GYNxCWB <span class="archive-tag">Referência</span></div>
-      <div class="infographic-wrap">
-        <svg viewBox="0 0 580 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:Calibri,Arial,sans-serif;">
-          <defs>
-            <linearGradient id="gPink2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#F482E7"/><stop offset="100%" style="stop-color:#c06fd0"/>
-            </linearGradient>
-            <linearGradient id="gBlue2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#4a9fd4"/><stop offset="100%" style="stop-color:#83C0F2"/>
-            </linearGradient>
-            <linearGradient id="gOvl2" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#F482E7;stop-opacity:0.1"/>
-              <stop offset="100%" style="stop-color:#83C0F2;stop-opacity:0.1"/>
-            </linearGradient>
-          </defs>
-          <rect x="255" y="14" width="178" height="138" rx="6" fill="url(#gOvl2)" stroke="#d0a8e8" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="344" y="10" text-anchor="middle" font-size="8" font-weight="700" fill="#a06abd" letter-spacing="0.5">SOBREPOSIÇÃO</text>
-          <text x="8" y="58" font-size="9" font-weight="700" fill="#F482E7">BSBxSSZ</text>
-          <line x1="36" y1="70" x2="540" y2="70" stroke="url(#gPink2)" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="36" cy="70" r="5" fill="#F482E7"/>
-          <text x="36" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">BSB</text>
-          <text x="36" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">Brasília</text>
-          <circle cx="115" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
-          <text x="115" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CAT</text>
-          <circle cx="258" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
-          <circle cx="258" cy="70" r="2.5" fill="#F482E7"/>
-          <text x="258" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">UDI</text>
-          <text x="258" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">Uberlândia</text>
-          <circle cx="314" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
-          <text x="314" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">UBA</text>
-          <circle cx="370" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
-          <text x="370" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CPQ</text>
-          <circle cx="432" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
-          <circle cx="432" cy="70" r="2.5" fill="#F482E7"/>
-          <text x="432" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">SAO</text>
-          <text x="432" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">São Paulo</text>
-          <circle cx="490" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
-          <text x="490" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SNS</text>
-          <circle cx="540" cy="70" r="5" fill="#F482E7"/>
-          <text x="540" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SVT</text>
-          <text x="540" y="97" text-anchor="middle" font-size="7" fill="#8a94a8">S. Vicente</text>
-          <text x="8" y="126" font-size="9" font-weight="700" fill="#83C0F2">GYNxCWB</text>
-          <line x1="36" y1="138" x2="258" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
-          <line x1="258" y1="138" x2="432" y2="138" stroke="#83C0F2" stroke-width="4" stroke-dasharray="7,4" opacity="0.7" stroke-linecap="round"/>
-          <line x1="432" y1="138" x2="540" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="36" cy="138" r="5" fill="#83C0F2"/>
-          <text x="36" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">GYN</text>
-          <text x="36" y="164" text-anchor="middle" font-size="7" fill="#8a94a8">Goiânia</text>
-          <circle cx="147" cy="138" r="3.5" fill="#83C0F2" opacity="0.7"/>
-          <text x="147" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">TPU</text>
-          <circle cx="258" cy="138" r="6" fill="#fff" stroke="#83C0F2" stroke-width="2.5"/>
-          <circle cx="258" cy="138" r="2.5" fill="#83C0F2"/>
-          <circle cx="432" cy="138" r="6" fill="#fff" stroke="#83C0F2" stroke-width="2.5"/>
-          <circle cx="432" cy="138" r="2.5" fill="#83C0F2"/>
-          <circle cx="490" cy="138" r="3.5" fill="#83C0F2" opacity="0.7"/>
-          <text x="490" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">REG</text>
-          <circle cx="540" cy="138" r="5" fill="#83C0F2"/>
-          <text x="540" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CWB</text>
-          <text x="540" y="164" text-anchor="middle" font-size="7" fill="#8a94a8">Curitiba</text>
-          <line x1="258" y1="75" x2="258" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
-          <line x1="432" y1="75" x2="432" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
-          <rect x="269" y="96" width="152" height="16" rx="4" fill="#1a1a2e" opacity="0.8"/>
-          <text x="345" y="107" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">🚌 1 veículo físico compartilhado</text>
-          <circle cx="258" cy="182" r="4" fill="#fff" stroke="#888" stroke-width="1.5"/>
-          <circle cx="258" cy="182" r="1.5" fill="#888"/>
-          <text x="266" y="185" font-size="7.5" fill="#6a7080">Transbordo</text>
-          <line x1="336" y1="182" x2="354" y2="182" stroke="#83C0F2" stroke-width="2.5" stroke-dasharray="5,3"/>
-          <text x="358" y="185" font-size="7.5" fill="#6a7080">Usa veículo BSBxSSZ</text>
-        </svg>
+    <!-- ENTREGÁVEIS DO DISCOVERY -->
+    <div class="section">
+      <div class="section-label">Entregáveis do Discovery</div>
+      <div class="deliv-list">
+        <div class="deliv-item">
+          <span class="deliv-icon">🖥️</span>
+          <span class="deliv-text">Simulador interativo de inventário OSP (v3)</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📊</span>
+          <span class="deliv-text">Infográfico AS-IS / TO-BE</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📋</span>
+          <span class="deliv-text">Referência regulatória e operacional (ANTT / OSI)</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📌</span>
+          <span class="deliv-text">Regras de Negócio Consolidadas</span>
+          <span class="badge badge-done">Pronto</span>
+        </div>
+        <div class="deliv-item">
+          <span class="deliv-icon">📝</span>
+          <span class="deliv-text">Especificação técnica para refinamento com o time</span>
+          <span class="badge badge-ongoing">Em refinamento</span>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top:12px;">
+        <strong>22/07 — Daniel:</strong> Documentação atualizada com o simulador da OSP e as dúvidas levantadas no último refinamento técnico. Novo refinamento agendado para a próxima semana, dando continuidade ao trabalho iniciado em 15/07 (quando a iniciativa havia sido pausada por foco total no Motor V2).
       </div>
     </div>
 
@@ -1177,61 +1489,109 @@
 
     <div class="divider"></div>
 
-    <div class="section">
-      <div class="section-label">Entregáveis do Discovery</div>
-      <div class="deliv-list">
-        <div class="deliv-item">
-          <span class="deliv-icon">🖥️</span>
-          <span class="deliv-text">Simulador interativo de inventário OSP (v3)</span>
-          <span class="badge badge-done">Pronto</span>
-        </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📊</span>
-          <span class="deliv-text">Infográfico AS-IS / TO-BE</span>
-          <span class="badge badge-done">Pronto</span>
-        </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📋</span>
-          <span class="deliv-text">Referência regulatória e operacional (ANTT / OSI)</span>
-          <span class="badge badge-done">Pronto</span>
-        </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📌</span>
-          <span class="deliv-text">Regras de Negócio Consolidadas</span>
-          <span class="badge badge-done">Pronto</span>
-        </div>
-        <div class="deliv-item">
-          <span class="deliv-icon">📝</span>
-          <span class="deliv-text">Especificação técnica para refinamento com o time</span>
-          <span class="badge badge-pending">Pausado</span>
-        </div>
+    <div class="section archived-section">
+      <div class="section-label">Exemplo — BSBxSSZ × GYNxCWB <span class="archive-tag">Referência</span></div>
+      <div class="infographic-wrap">
+        <svg viewBox="0 0 580 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;font-family:Calibri,Arial,sans-serif;" role="img" aria-labelledby="osp-svg-title osp-svg-desc">
+          <title id="osp-svg-title">Sobreposição de rotas BSBxSSZ e GYNxCWB</title>
+          <desc id="osp-svg-desc">Diagrama mostrando os serviços BSB-SSZ e GYN-CWB compartilhando um único veículo físico no trecho comum entre Uberlândia (UDI) e São Paulo (SAO), com transbordo indicado entre as duas linhas.</desc>
+          <defs>
+            <linearGradient id="gPink2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#F482E7"/><stop offset="100%" style="stop-color:#c06fd0"/>
+            </linearGradient>
+            <linearGradient id="gBlue2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#4a9fd4"/><stop offset="100%" style="stop-color:#83C0F2"/>
+            </linearGradient>
+            <linearGradient id="gOvl2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#F482E7;stop-opacity:0.1"/>
+              <stop offset="100%" style="stop-color:#83C0F2;stop-opacity:0.1"/>
+            </linearGradient>
+          </defs>
+          <rect x="255" y="14" width="178" height="138" rx="6" fill="url(#gOvl2)" stroke="#d0a8e8" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="344" y="10" text-anchor="middle" font-size="8" font-weight="700" fill="#a06abd" letter-spacing="0.5">SOBREPOSIÇÃO</text>
+          <text x="8" y="58" font-size="9" font-weight="700" fill="#F482E7">BSBxSSZ</text>
+          <line x1="36" y1="70" x2="540" y2="70" stroke="url(#gPink2)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="36" cy="70" r="5" fill="#F482E7"/>
+          <text x="36" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">BSB</text>
+          <text x="36" y="97" text-anchor="middle" font-size="7" fill="#5c6577">Brasília</text>
+          <circle cx="115" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="115" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CAT</text>
+          <circle cx="258" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
+          <circle cx="258" cy="70" r="2.5" fill="#F482E7"/>
+          <text x="258" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">UDI</text>
+          <text x="258" y="97" text-anchor="middle" font-size="7" fill="#5c6577">Uberlândia</text>
+          <circle cx="314" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="314" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">UBA</text>
+          <circle cx="370" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="370" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CPQ</text>
+          <circle cx="432" cy="70" r="6" fill="#fff" stroke="#F482E7" stroke-width="2.5"/>
+          <circle cx="432" cy="70" r="2.5" fill="#F482E7"/>
+          <text x="432" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#3a3a5c">SAO</text>
+          <text x="432" y="97" text-anchor="middle" font-size="7" fill="#5c6577">São Paulo</text>
+          <circle cx="490" cy="70" r="3.5" fill="#F482E7" opacity="0.7"/>
+          <text x="490" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SNS</text>
+          <circle cx="540" cy="70" r="5" fill="#F482E7"/>
+          <text x="540" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">SVT</text>
+          <text x="540" y="97" text-anchor="middle" font-size="7" fill="#5c6577">S. Vicente</text>
+          <text x="8" y="126" font-size="9" font-weight="700" fill="#83C0F2">GYNxCWB</text>
+          <line x1="36" y1="138" x2="258" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="258" y1="138" x2="432" y2="138" stroke="#83C0F2" stroke-width="4" stroke-dasharray="7,4" opacity="0.7" stroke-linecap="round"/>
+          <line x1="432" y1="138" x2="540" y2="138" stroke="url(#gBlue2)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="36" cy="138" r="5" fill="#83C0F2"/>
+          <text x="36" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">GYN</text>
+          <text x="36" y="164" text-anchor="middle" font-size="7" fill="#5c6577">Goiânia</text>
+          <circle cx="147" cy="138" r="3.5" fill="#83C0F2" opacity="0.7"/>
+          <text x="147" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">TPU</text>
+          <circle cx="258" cy="138" r="6" fill="#fff" stroke="#83C0F2" stroke-width="2.5"/>
+          <circle cx="258" cy="138" r="2.5" fill="#83C0F2"/>
+          <circle cx="432" cy="138" r="6" fill="#fff" stroke="#83C0F2" stroke-width="2.5"/>
+          <circle cx="432" cy="138" r="2.5" fill="#83C0F2"/>
+          <circle cx="490" cy="138" r="3.5" fill="#83C0F2" opacity="0.7"/>
+          <text x="490" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">REG</text>
+          <circle cx="540" cy="138" r="5" fill="#83C0F2"/>
+          <text x="540" y="155" text-anchor="middle" font-size="8.5" font-weight="600" fill="#3a3a5c">CWB</text>
+          <text x="540" y="164" text-anchor="middle" font-size="7" fill="#5c6577">Curitiba</text>
+          <line x1="258" y1="75" x2="258" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
+          <line x1="432" y1="75" x2="432" y2="133" stroke="#888" stroke-width="1" stroke-dasharray="3,2" opacity="0.45"/>
+          <rect x="269" y="96" width="152" height="16" rx="4" fill="#1a1a2e" opacity="0.8"/>
+          <text x="345" y="107" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">🚌 1 veículo físico compartilhado</text>
+          <circle cx="258" cy="182" r="4" fill="#fff" stroke="#888" stroke-width="1.5"/>
+          <circle cx="258" cy="182" r="1.5" fill="#888"/>
+          <text x="266" y="185" font-size="7.5" fill="#6a7080">Transbordo</text>
+          <line x1="336" y1="182" x2="354" y2="182" stroke="#83C0F2" stroke-width="2.5" stroke-dasharray="5,3"/>
+          <text x="358" y="185" font-size="7.5" fill="#6a7080">Usa veículo BSBxSSZ</text>
+        </svg>
       </div>
-      <div class="highlight-box" style="margin-top:12px;">
-        <strong>15/07 — Daniel:</strong> Iniciativa pausada por foco total da equipe no Motor V2. Primeiro refinamento técnico realizado. Maurício construiu simulador para clarificar o comportamento esperado. Retomada depende da estabilização do Motor V2.
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CONTEXTO -->
+    <div class="section">
+      <div class="section-label">Contexto — o que é o OSP</div>
+      <div class="detail-block">
+        <div class="detail-body">
+          O OSP permite que dois serviços de ônibus distintos compartilhem fisicamente um único veículo em um trecho comum às duas rotas. Cada serviço mantém sua identidade, vende passagens de forma independente e possui seu próprio inventário — porém ambos competem pelas mesmas poltronas físicas dentro da zona de sobreposição.
+        </div>
       </div>
     </div>
 
   </div>
 
   <!-- ══════════════ TAB: REFORMA TRIBUTÁRIA ══════════════ -->
-  <div id="tab-reforma" class="tab-panel">
+  <div id="tab-reforma" class="tab-panel" role="region" aria-labelledby="tabbtn-reforma" tabindex="0">
     <div class="section" style="margin-bottom:0;">
       <div class="section-label">Destaques da semana</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:4px;">
-        <div style="border-radius:10px;padding:12px;border:1px solid #d8b4fe;background:#faf5ff;">
-          <div style="font-size:10px;font-weight:700;color:#6b21a8;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">✅ Aprovado — Diretoria</div>
-          <div style="font-size:13px;font-weight:700;color:#2d3748;">Consultoria Técnica-Fiscal</div>
-          <div style="font-size:11.5px;color:#4a5568;margin-top:4px;">Bia aprovou. Brief + Protocolo formalizados. Seleção iniciando até 31/07.</div>
+      <div class="alert-grid" style="--alert-cols:2; margin-bottom:4px;">
+        <div class="alert-card neutral">
+          <div class="alert-card-label">✅ Aprovado — Diretoria</div>
+          <div class="alert-card-title" style="margin-bottom:0;">Consultoria Técnica-Fiscal</div>
+          <div class="alert-card-body">Bia aprovou. Brief + Protocolo formalizados. Seleção iniciando até 31/07.</div>
         </div>
-        <div style="border-radius:10px;padding:12px;border:1px solid #fca5a5;background:#fef2f2;">
-          <div style="font-size:10px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">⚠️ Risco — Discovery aberto</div>
-          <div style="font-size:13px;font-weight:700;color:#2d3748;">Motor Tributário</div>
-          <div style="font-size:11.5px;color:#4a5568;margin-top:4px;">Calculadora RF (V0038) não viável. Arquitetura indefinida. Consultoria responderá até 31/07.</div>
-        </div>
-        <div style="border-radius:10px;padding:12px;border:1px solid #93c5fd;background:#eff6ff;">
-          <div style="font-size:10px;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">🔵 Em desenvolvimento</div>
-          <div style="font-size:13px;font-weight:700;color:#2d3748;">Domínio de Pagamentos</div>
-          <div style="font-size:11.5px;color:#4a5568;margin-top:4px;">Multi-acquirer + Split Payment. Economia estimada: R$1M–2,5M/ano.</div>
+        <div class="alert-card danger">
+          <div class="alert-card-label">⚠️ Risco — Discovery aberto</div>
+          <div class="alert-card-title" style="margin-bottom:0;">Motor Tributário + Domínio de Pagamentos</div>
+          <div class="alert-card-body">Produto apresentou ao time técnico os riscos de seguir com tributos e pagamentos no monolito. Tech optou por seguir com os ajustes no modelo atual. Produto segue com discovery, refinamento e spec do que já está definido na RTC.</div>
         </div>
       </div>
     </div>
@@ -1245,7 +1605,7 @@
           <div class="detail-title">📄 BPEs cancelados de períodos anteriores — Relatório exportação Protheus</div>
           <span class="badge badge-ongoing">Em homologação</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Implementação concluída e validada em QA interno. Demonstração realizada com equipes fiscais do Nordeste e Sudeste do Grupo Guanabara e equipe Protheus — comportamento do retorno dos BPEs no arquivo confirmado como conforme.
         </div>
         <div class="highlight-box blue">
@@ -1263,10 +1623,10 @@
           <div class="detail-title">🔍 Consultoria Técnica-Fiscal — Seleção em andamento</div>
           <span class="badge badge-ongoing">Em seleção</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Lacuna identificada: o time de produto não tem capacidade interna para traduzir NTs BPe em requisito sem apoio especializado. O incidente da API BPe (endpoint documentado sem validação fiscal) materializou o risco. Proposta levada à diretoria — <strong>Bia aprovou a contratação</strong>. Angélica (Guanabara) validou a necessidade em Comitê de 14/07.
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6; margin-top:8px;">
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
           Escopo definido: a consultoria precisa dominar BPe + RTC e atuar desde a leitura da norma até a validação do requisito. Brief de Escopo, Protocolo de Envolvimento Fiscal e Matriz de Responsabilidades formalizados.
         </div>
         <div class="highlight-box blue">
@@ -1284,8 +1644,8 @@
           <div class="detail-title">🔗 CORE-004 · Integrações Smartbus e ERPs (NT v1.14 + Leiaute v200)</div>
           <span class="badge badge-ongoing">Em andamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          <strong>Spec concluída — 16 regras de negócio mapeadas.</strong> Escopo delimitado em reunião de 09/07 com Prevatto, Victor, Flávia, Cristiane e Benício. A integração atual (NT v1.10 + Leiaute v193) não cobre as evoluções exigidas pela NT v1.14 e Leiaute v200 — novos campos no BPE (45, 46, 47), IBE (13, 14, 15) e dois novos registros (RDD e IRD).
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          <strong>Discovery e especificação concluídos — spec fechada com 16 regras de negócio mapeadas.</strong> Escopo delimitado em reunião de 09/07 com Prevatto, Victor, Flávia, Cristiane e Benício. A integração atual (NT v1.10 + Leiaute v193) não cobre as evoluções exigidas pela NT v1.14 e Leiaute v200 — novos campos no BPE (45, 46, 47), IBE (13, 14, 15) e dois novos registros (RDD e IRD).
         </div>
         <ul class="update-list" style="margin-top:8px;">
           <li>SMRT-125/126/127 (Fortes Fiscal — BPE/DBE/IBE): <strong>autorizado a avançar independente do Protheus.</strong></li>
@@ -1293,7 +1653,7 @@
           <li>SMRT-130 (API Protheus): em espera — Protheus permanece em v193 até PST-3416.</li>
         </ul>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Refinamento técnico com o time · Maurício · 16/07
+          <strong>Próx. passo:</strong> Kickoff hoje (16/07) para iniciar refinamento técnico e estimativa · Maurício
         </div>
       </div>
     </div>
@@ -1307,14 +1667,14 @@
           <div class="detail-title">🏛️ CORE-002 · Compras Governamentais — suporte ao grupo gCompraGov</div>
           <span class="badge badge-ongoing">Em andamento</span>
         </div>
-        <div style="font-size:12.5px; color:#4a5568; line-height:1.6;">
-          <strong>Spec v13 fechada.</strong> Decisões consolidadas em reuniões de 30/06 e 08/07 com André Rocha e Paulo Balbino: modelo 1:N de Entidade Governamental com vigências, pRedutor e zeragem de alíquota por tpEnteGov (Art. 472/473). Menu Administração > Fiscal confirmado com Paulo Balbino. Desenvolvimento autorizado a avançar em paralelo à contratação da consultoria.
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          <strong>Spec v13 fechada — em desenvolvimento.</strong> Decisões consolidadas em reuniões de 30/06 e 08/07 com André Rocha e Paulo Balbino: modelo 1:N de Entidade Governamental com vigências, pRedutor e zeragem de alíquota por tpEnteGov (Art. 472/473). Menu Administração > Fiscal confirmado com Paulo Balbino.
         </div>
         <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
           <strong>Atenção:</strong> Lacunas de interpretação normativa (itens BPE-08, BPE-06, BPE-13 do Caderno de Testes) podem gerar retrabalho se a consultoria revisar a leitura das NTs.
         </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Iniciar seleção da consultoria técnica-fiscal · Maurício · até 31/07
+          <strong>Próx. passo:</strong> Entrega prevista · 31/07
         </div>
       </div>
     </div>
@@ -1322,20 +1682,25 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">RTC · Motor Tributário — Discovery</div>
+      <div class="section-label">RTC · Motor Tributário + Domínio de Pagamentos — Discovery</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">🧮 Motor Tributário — Discovery</div>
+          <div class="detail-title">🧮 Motor Tributário + Domínio de Pagamentos — 1 frente de discovery</div>
           <span class="badge" style="background:#f3e8ff;color:#6b21a8;">Em discovery</span>
         </div>
-        <ul class="update-list">
-          <li>Discovery em andamento — definição de arquitetura ainda aberta.</li>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          <strong>Produto apresentou ao time técnico os riscos de seguir tratando tributos e pagamentos dentro do monolito atual.</strong> Tech avaliou e <strong>optou por seguir com os ajustes no modelo atual</strong> — sem extrair um motor/domínio separado neste momento. Domínio de Pagamentos <strong>não está em desenvolvimento</strong> como frente isolada.
+        </div>
+        <ul class="update-list" style="margin-top:8px;">
+          <li>Com a decisão de manter o modelo atual, <strong>Produto segue com discovery, refinamento e especificação</strong> do que já está definido na RTC.</li>
+          <li>Discovery e especificação seguem para atender as versões mais recentes: <strong>NT 2026.002 — Reforma Tributária do Consumo v1.00 (10/06/2026)</strong> e <strong>NT 2026.001 — Vinculação com a transação de pagamento do DFe</strong>.</li>
+          <li>Ambas exigem <strong>flexibilização dos cadastros de impostos</strong> via tabelas de classificações tributárias (cClassTrib).</li>
           <li>Calculadora oficial da RF (piloto-cbs.tributos.gov.br, build V0038) em beta — sem cobertura confirmada para BP-e e compras governamentais (tpEnteGov). <strong>Não é opção viável no curto prazo.</strong></li>
-          <li>Sem calculadora RF, Smartbus pode emitir BPe com cálculo incorreto em cenários de governo (Art. 473).</li>
-          <li>Consultoria técnica-fiscal cobrirá parte desse gap — definirá se é necessário motor próprio.</li>
+          <li>Risco sinalizado por Produto: manter cálculo no modelo atual pode gerar BPe com cálculo incorreto em cenários de governo (Art. 473) — tech ciente, segue com ajustes no modelo vigente.</li>
+          <li>Consultoria técnica-fiscal <strong>não vai endereçar a decisão sobre o Motor</strong> — seu escopo é interpretação normativa e validação fiscal de requisitos.</li>
         </ul>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Concluir discovery e definir arquitetura do motor · Maurício · até 31/07
+          <strong>Próx. passo:</strong> Produto segue com discovery, refinamento e especificação do que já está definido na RTC · Maurício · em andamento
         </div>
       </div>
     </div>
@@ -1405,33 +1770,19 @@
     </div>
   </div>
 
-  <!-- ══════════════ TAB: FRAUDES — GRATUIDADES ══════════════ -->
-  <div id="tab-fraudes" class="tab-panel">
+  <!-- ══════════════ TAB: OUTRAS FRENTES ══════════════ -->
+  <div id="tab-outras" class="tab-panel" role="region" aria-labelledby="tabbtn-outras" tabindex="0">
 
-    <div style="margin-bottom:16px;">
-      <div style="font-size:12.5px; color:#8a94a8; margin-bottom:4px;">Discovery Fraudes de Gratuidades ANTT · Smartbus · Grupo Guanabara</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Maurício · Ítalo · Daniel · Guilherme</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:3px 9px;color:#dc2626;font-weight:700;">⏰ DEADLINE SUFIS: 31/07/2026</span>
-      </div>
-    </div>
+    <div class="section">
+      <div class="section-label">Time de Produto — Outras Frentes</div>
+      <div style="font-size:14px;color:#6b7280;margin-bottom:14px;font-style:italic;">Quatro iniciativas do time de produto e seu status atual</div>
 
-    <div class="section" style="margin-bottom:0;">
-      <div class="section-label">Requer atenção</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;">
-        <div class="alert-card" style="background:#fff5f5;border:1.5px solid #fca5a5;">
-          <div class="alert-icon" style="background:#dc2626;">⚠️</div>
-          <div class="alert-body">
-            <div class="alert-title" style="color:#dc2626;">PRAZO CRÍTICO — 31/07/2026</div>
-            <div class="alert-desc">SUFIS deu prazo para empresas adequarem portais. Faltam <strong>8 dias</strong>. Desativar gratuidade digital antes desta data = zero risco de multa. Após 01/08: risco pleno de autuação.</div>
-          </div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">01 · Apoio ao Viva</div>
         </div>
-        <div class="alert-card" style="background:#fff8f0;border:1.5px solid #fdba74;">
-          <div class="alert-icon" style="background:#f97316;">💰</div>
-          <div class="alert-body">
-            <div class="alert-title" style="color:#c2410c;">Exposição ANTT — 900+ mercados</div>
-            <div class="alert-desc">Guanabara-Nordeste sozinha: 900+ mercados. Multa art. 313: R$ 8.769–R$ 70.153 por mercado. Demais empresas ainda sem mapeamento. Aval de Bia pendente para ação emergencial.</div>
-          </div>
+        <div class="detail-body">
+          Daniel apoia a Bidinha para o desenvolvimento de venda com pontos Viva no frontoffice.
         </div>
       </div>
     </div>
@@ -1439,80 +1790,232 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">Estimativa de Impacto · 23/07/2026</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;">
-        <div style="border-radius:10px;padding:14px;border:1px solid #fca5a5;background:#fff5f5;text-align:center;">
-          <div style="font-size:10px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Perda por fraude confirmada</div>
-          <div style="font-size:22px;font-weight:800;color:#1a1a2e;">R$ 2,28mi</div>
-          <div style="font-size:11px;color:#6b7280;margin-top:4px;">A1+A2+A3+B1 · ano 2026</div>
+      <div class="section-label">02 · Tickets Viações — Backlog histórico resolvido</div>
+      <div class="kpi-grid col3">
+        <div class="kpi-card accent-warn">
+          <div class="kpi-label">Tickets em aberto</div>
+          <div class="kpi-value">14</div>
+          <div class="kpi-sub">Alguns com mais de 1 ano sem tratativa</div>
         </div>
-        <div style="border-radius:10px;padding:14px;border:1px solid #fde68a;background:#fffbeb;text-align:center;">
-          <div style="font-size:10px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Receita Não Auferida total</div>
-          <div style="font-size:22px;font-weight:800;color:#1a1a2e;">R$ 55,84mi</div>
-          <div style="font-size:11px;color:#6b7280;margin-top:4px;">Programa inteiro (legítimo+fraude)/ano</div>
+        <div class="kpi-card accent">
+          <div class="kpi-label">Resolvidos direto</div>
+          <div class="kpi-value">3</div>
+          <div class="kpi-sub">Eram demandas de produto</div>
         </div>
-        <div style="border-radius:10px;padding:14px;border:1px solid #c4b5fd;background:#f5f3ff;text-align:center;">
-          <div style="font-size:10px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Perda já realizada (cat.1)</div>
-          <div style="font-size:22px;font-weight:800;color:#1a1a2e;">R$ 634k</div>
-          <div style="font-size:11px;color:#6b7280;margin-top:4px;">Duplicidade jan–23/jul/26 já ocorrida · +R$ 64k ainda evitáveis</div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Mapeados p/ Linear</div>
+          <div class="kpi-value">11</div>
+          <div class="kpi-sub">Discovery feito, prontos para o time tech</div>
         </div>
       </div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">Categorias mensuradas</div>
+          <div class="detail-title">Contexto</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:6px;">
-          <div style="font-size:12px;color:#4a5568;padding:8px;background:#fef2f2;border-radius:6px;border:1px solid #fca5a5;">
-            <div style="font-size:10px;font-weight:700;color:#dc2626;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">A1 · Duplicidade mesma viagem</div>
-            <div style="font-size:16px;font-weight:800;color:#1a1a2e;">4.929 <span style="font-size:11px;font-weight:400;color:#6b7280;">bilhetes excedentes</span></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:2px;">4.513 grupos duplicados · alta confiança On</div>
-          </div>
-          <div style="font-size:12px;color:#4a5568;padding:8px;background:#fff8f0;border-radius:6px;border:1px solid #fed7aa;">
-            <div style="font-size:10px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">A2 · Viagens incompatíveis</div>
-            <div style="font-size:16px;font-weight:800;color:#1a1a2e;">4.785 <span style="font-size:11px;font-weight:400;color:#6b7280;">pares</span></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:2px;">1.173 nível 1 — alta confiança</div>
-          </div>
-          <div style="font-size:12px;color:#4a5568;padding:8px;background:#fffbeb;border-radius:6px;border:1px solid #fde68a;">
-            <div style="font-size:10px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">A3 · Acompanhante sem par</div>
-            <div style="font-size:16px;font-weight:800;color:#1a1a2e;">3.351 <span style="font-size:11px;font-weight:400;color:#6b7280;">acompanhantes</span></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:2px;">em 2.669 localizadores</div>
-          </div>
-          <div style="font-size:12px;color:#4a5568;padding:8px;background:#f0fdf4;border-radius:6px;border:1px solid #bbf7d0;">
-            <div style="font-size:10px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">B1 · Idade incompatível</div>
-            <div style="font-size:16px;font-weight:800;color:#1a1a2e;">3.053 <span style="font-size:11px;font-weight:400;color:#6b7280;">bilhetes</span></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:2px;">100% verificável via DataNascimento</div>
-          </div>
-          <div style="font-size:12px;color:#4a5568;padding:8px;background:#f5f3ff;border-radius:6px;border:1px solid #c4b5fd;">
-            <div style="font-size:10px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">B2 · Lista negra (proxy atípico)</div>
-            <div style="font-size:16px;font-weight:800;color:#1a1a2e;">3.419 <span style="font-size:11px;font-weight:400;color:#6b7280;">beneficiários</span></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:2px;">12+ bilhetes/ano · 78.682 bilhetes total</div>
-          </div>
-          <div style="font-size:12px;color:#4a5568;padding:8px;background:#f0f9ff;border-radius:6px;border:1px solid #bae6fd;">
-            <div style="font-size:10px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">C · Agentes/PDV suspeitos</div>
-            <div style="font-size:16px;font-weight:800;color:#1a1a2e;">73 <span style="font-size:11px;font-weight:400;color:#6b7280;">agentes</span></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:2px;">239 ocorrências — cancela normal, reemite gratuidade</div>
-          </div>
+        <div class="detail-body">
+          Levantamos os 14 tickets de viações em aberto há mais de um ano, sem resposta. Do total, <strong>3 foram resolvidos diretamente</strong> por serem, na prática, demandas de produto. Os <strong>outros 11 passaram por discovery</strong> completo e foram criados no Linear, já mapeados e prontos para o time tech incluir no fluxo de desenvolvimento.
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-          <div style="font-size:12px;color:#4a5568;padding:10px;background:#f0f9ff;border-radius:8px;border:1px solid #bae6fd;">
-            <div style="font-size:10px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Canal da fraude · duplicidade</div>
-            <div style="font-size:18px;font-weight:800;color:#1a1a2e;">64% <span style="color:#0369a1;">On</span> · 36% <span style="color:#64748b;">Off</span></div>
-            <div style="font-size:11px;color:#6b7280;margin-top:4px;">Canais digitais = só 23,7% do volume total → sobrerrepresentação de 2,7×</div>
-          </div>
-          <div style="font-size:12px;color:#4a5568;padding:10px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">
-            <div style="font-size:10px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Volume mensal (meses fechados)</div>
-            <div style="font-size:16px;font-weight:800;color:#1a1a2e;">~2.211 bilhetes · R$ 314k</div>
-            <div style="font-size:11px;color:#dc2626;margin-top:4px;font-weight:600;">↑ Pico julho: 2.656 bilhetes · R$ 377k</div>
-          </div>
+      </div>
+      <div class="highlight-box">
+        <strong>Zeramos um backlog de reclamações parado há mais de 1 ano</strong> e transformamos em itens rastreáveis e priorizáveis para o time tech — sem depender mais de memória ou planilha solta.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">03 · Comercial — Portfólio estruturado</div>
+      <div class="kpi-grid col3">
+        <div class="kpi-card accent">
+          <div class="kpi-label">Módulos do portfólio</div>
+          <div class="kpi-value">8</div>
+          <div class="kpi-sub">Estrutura pronta para venda</div>
         </div>
-        <div class="highlight-box" style="background:#fef2f2;border-left-color:#dc2626;margin-top:10px;">
-          <strong>Gaps:</strong> Categoria 3 (uso indevido) e Bloco C (agentes suspeitos) sem estimativa de R$. Estimativa "30–40% indevida" do time operacional ainda não reconciliada com as queries. Gap crítico: nenhum material traz prazo ou custo da solução estrutural.
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Canais de venda mapeados</div>
+          <div class="kpi-value">5</div>
+          <div class="kpi-sub">Guichê, app do motorista, totem, site/app, parceiros</div>
+        </div>
+        <div class="kpi-card accent-teal">
+          <div class="kpi-label">Dores de mercado eliminadas</div>
+          <div class="kpi-value">6</div>
+          <div class="kpi-sub">Identificadas e resolvidas pela Smart</div>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">O que foi construído</div>
+        </div>
+        <div class="detail-body">
+          Estruturamos o portfólio comercial em <strong>8 módulos</strong> e mapeamos os <strong>5 canais de venda</strong> hoje existentes: guichê, app do motorista, totem, site e aplicativo, e parceiros de venda. Em paralelo, fizemos um mapeamento de mercado com os principais concorrentes, comparando funcionalidades ponto a ponto, e identificamos <strong>6 dores que o mercado convive e que a Smart já elimina</strong>.
+        </div>
+      </div>
+      <div class="highlight-box blue">
+        Com portfólio, canais e concorrência mapeados, o time comercial passa a vender com clareza de onde a Smart resolve dores reais do mercado.
+      </div>
+      <div class="blocker-box">
+        Precificação ainda não avançou — é o próximo passo para destravar a operação comercial completa.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">04 · Product Discovery — Fluxo e priorização de produto</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Contexto</div>
+        </div>
+        <div class="detail-body">
+          Não existia um fluxo de produto estruturado em nenhuma ferramenta. Construímos todo o fluxo — da ideia à entrega — dentro do <strong>Jira Product Discovery</strong>: inbox de ideias para triagem, definição de impacto x esforço para priorização conforme as OKRs, ordenação do backlog, o fluxo completo (discovery &gt; design &gt; refinamento técnico &gt; desenvolvimento &gt; validação &gt; lançamento) e um board de acompanhamento dos bugs reportados.
+        </div>
+      </div>
+      <div class="kpi-grid col2">
+        <div class="kpi-card accent-teal">
+          <div class="kpi-label">Iniciativas cadastradas</div>
+          <div class="kpi-value">20</div>
+          <div class="kpi-sub">Coletadas na Rodoviária Novo Rio, já dentro do fluxo</div>
+        </div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Origem da iniciativa</div>
+          <div class="kpi-value" style="font-size:16px;">Visita de campo</div>
+          <div class="kpi-sub">Conexão direta com o time da rodoviária</div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <strong>22/07 — Daniel:</strong> todo o fluxo foi construído e as 20 iniciativas coletadas na rodoviária foram cadastradas. Melhor visibilidade dos projetos e organização do time de produto, com uma visão mais clara do backlog.
+      </div>
+      <div class="highlight-box blue" style="margin-top:10px;">
+        <strong>Decisão:</strong> migrar todas as ideias e features em andamento para o novo fluxo.<br>
+        <strong>Próx. passo:</strong> migrar as ideias do antigo board e cadastrar as features que já estão em andamento · Daniel
+      </div>
+      <ul class="update-list">
+        <li>📅 <strong>Recorrência mensal</strong> — visitas às rodoviárias, para manter a conexão com o time de campo e levantar continuamente dores e ideias de evolução do produto Smart.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ══════════════ TAB: FRAUDES (GRATUIDADE) ══════════════ -->
+  <div id="tab-fraudes" class="tab-panel" role="region" aria-labelledby="tabbtn-fraudes" tabindex="0">
+
+    <!-- INITIATIVE HEADER -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Discovery Fraudes de Gratuidades ANTT — reservas indevidas em canais online e offline</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Maurício · Ítalo · Daniel · Guilherme</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 23 jul 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;padding:3px 9px;color:#dc2626;font-weight:700;">⏰ Prazo SUFIS: 31/07/2026</span>
+      </div>
+    </div>
+
+    <!-- ALERT CARDS -->
+    <div class="section-label">Requer atenção</div>
+    <div class="alert-grid" style="--alert-cols:2;">
+      <div class="alert-card danger">
+        <div class="alert-card-label">⚠️ Prazo crítico</div>
+        <div class="alert-card-title">31/07/2026 — janela para adequação SUFIS</div>
+        <div class="alert-card-body">SUFIS deu prazo para as empresas adequarem os portais — faltam 8 dias. Desativar a gratuidade digital antes desta data elimina o risco de multa. A partir de 01/08, risco pleno de autuação.</div>
+      </div>
+      <div class="alert-card warning">
+        <div class="alert-card-label">💰 Exposição ANTT</div>
+        <div class="alert-card-title">900+ mercados só na Guanabara-Nordeste</div>
+        <div class="alert-card-body">Multa do art. 313: R$ 8.769 a R$ 70.153 por mercado. Demais empresas do grupo ainda sem mapeamento. Aval de Bia pendente para ação emergencial.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CONTEXTO -->
+    <div class="section">
+      <div class="section-label">Contexto — origem da iniciativa</div>
+      <div class="detail-block">
+        <div class="detail-body">
+          Equipes comerciais e operacionais do Grupo Guanabara nos blocos Nordeste e Sudeste compartilham a mesma dor: fraudes detectadas apenas no momento do embarque das viagens. Isso gera impacto duplo — para o cliente que detém o direito legítimo, que muitas vezes enfrenta a poltrona já ocupada, e para a companhia, que perde receita. Primeira reunião de discovery em 21/07 entre Produto (Maurício, Ítalo e Daniel), o PM do e-commerce Viaje Guanabara (Guilherme) e o operacional/comercial do Grupo Guanabara Nordeste e Sudeste.
         </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
+    <!-- ESTIMATIVA DE IMPACTO -->
+    <div class="section">
+      <div class="section-label">Estimativa de Impacto · 23/07</div>
+      <div class="kpi-grid col3">
+        <div class="kpi-card accent-danger">
+          <div class="kpi-label">Perda por fraude confirmada</div>
+          <div class="kpi-value">R$ 2,28mi</div>
+          <div class="kpi-sub">A1+A2+A3+B1 · ano 2026</div>
+        </div>
+        <div class="kpi-card accent-warn">
+          <div class="kpi-label">Receita não auferida (total)</div>
+          <div class="kpi-value">R$ 55,84mi</div>
+          <div class="kpi-sub">Programa inteiro (legítimo + fraude) / ano</div>
+        </div>
+        <div class="kpi-card accent">
+          <div class="kpi-label">Perda já realizada (cat. 1)</div>
+          <div class="kpi-value">R$ 634k</div>
+          <div class="kpi-sub">Duplicidade jan–23/jul/26 · +R$ 64k ainda evitáveis</div>
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:12px;">
+        <div class="detail-header">
+          <div class="detail-title">Categorias mensuradas</div>
+        </div>
+        <div class="kpi-grid col3" style="margin-top:8px;">
+          <div class="kpi-card accent-danger">
+            <div class="kpi-label">A1 · Duplicidade mesma viagem</div>
+            <div class="kpi-value" style="font-size:19px;">4.929</div>
+            <div class="kpi-sub">bilhetes excedentes · 4.513 grupos duplicados, alta confiança On</div>
+          </div>
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">A2 · Viagens incompatíveis</div>
+            <div class="kpi-value" style="font-size:19px;">4.785</div>
+            <div class="kpi-sub">pares · 1.173 nível 1, alta confiança</div>
+          </div>
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">A3 · Acompanhante sem par</div>
+            <div class="kpi-value" style="font-size:19px;">3.351</div>
+            <div class="kpi-sub">acompanhantes em 2.669 localizadores</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">B1 · Idade incompatível</div>
+            <div class="kpi-value" style="font-size:19px;">3.053</div>
+            <div class="kpi-sub">bilhetes · 100% verificável via data de nascimento</div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-label">B2 · Lista negra (proxy atípico)</div>
+            <div class="kpi-value" style="font-size:19px;">3.419</div>
+            <div class="kpi-sub">beneficiários · 12+ bilhetes/ano, 78.682 bilhetes no total</div>
+          </div>
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">C · Agentes/PDV suspeitos</div>
+            <div class="kpi-value" style="font-size:19px;">73</div>
+            <div class="kpi-sub">agentes · 239 ocorrências (cancela normal, reemite gratuidade)</div>
+          </div>
+        </div>
+        <div class="kpi-grid col2" style="margin-top:8px;">
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">Canal da fraude · duplicidade</div>
+            <div class="kpi-value" style="font-size:19px;">64% On · 36% Off</div>
+            <div class="kpi-sub">Canais digitais são só 23,7% do volume total → sobrerrepresentação de 2,7×</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">Volume mensal (meses fechados)</div>
+            <div class="kpi-value" style="font-size:19px;">~2.211 bilhetes</div>
+            <div class="kpi-sub">R$ 314k/mês · pico em julho: 2.656 bilhetes, R$ 377k</div>
+          </div>
+        </div>
+        <div class="blocker-box">
+          Categoria 3 (uso indevido) e Bloco C (agentes suspeitos) ainda sem estimativa de R$. A estimativa de "30–40% indevida" do time operacional ainda não foi reconciliada com as queries. Gap crítico: nenhum material traz prazo ou custo da solução estrutural.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TAXONOMIA -->
     <div class="section">
       <div class="section-label">Taxonomia de Fraude · Bruno Ferro · 21/07</div>
       <div class="detail-block">
@@ -1523,129 +2026,133 @@
         <ul class="update-list">
           <li><strong>1 · Marcações em duplicidade</strong> — mesmo passageiro, 2+ bilhetes para o mesmo trecho/data/hora. <span style="color:#1D9E75;font-weight:600;">Mapeada.</span> Cancelamento manual semanal (Bergson/Roberto).</li>
           <li><strong>2 · Viagens incompatíveis</strong> — combinações fisicamente impossíveis. <span style="color:#d97706;font-weight:600;">Em levantamento.</span> Query entregue.</li>
-          <li><strong>3 · Utilização indevida</strong> — pessoa sem direito ao benefício. <span style="color:#dc2626;font-weight:600;">Mais complexa.</span> Proxy de idade disponível via DataNascimento; renda não verificável via banco.</li>
+          <li><strong>3 · Utilização indevida</strong> — pessoa sem direito ao benefício. <span style="color:#dc2626;font-weight:600;">Mais complexa.</span> Proxy de idade disponível via data de nascimento; renda não verificável via banco.</li>
         </ul>
         <div class="highlight-box blue">
-          <strong>Vetor digital — duas métricas distintas:</strong><br><strong>Taxa de duplicidade:</strong> canais On têm taxa de duplicidade <strong>4 a 11×</strong> maior que canais presenciais (ex.: Mobile 5,50% vs. Prestação Serviço 0,51%) — comparação de risco por bilhete emitido, canal a canal.<br><strong>Concentração do problema:</strong> On responde por 64% da fraude mas é só 23,7% do volume → <strong>2,7×</strong> de sobrerrepresentação do share de fraude vs. share de volume.<br>CPF/IdCliente confiável apenas em INTERNET e MOBILE — nos demais canais, chave cai para nome (confiança baixa). Solução estrutural age exatamente nesse vetor.
+          <strong>Vetor digital — duas métricas distintas:</strong> canais online têm taxa de duplicidade de <strong>4 a 11×</strong> maior que canais presenciais (ex.: Mobile 5,50% vs. Prestação de Serviço 0,51%). Além disso, o online responde por 64% da fraude mas é só 23,7% do volume — <strong>2,7×</strong> de sobrerrepresentação do share de fraude vs. share de volume. CPF/ID do cliente só é confiável em Internet e Mobile; nos demais canais a chave cai para nome (confiança baixa) — é exatamente nesse vetor que a solução estrutural precisa agir.
         </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
+    <!-- EXPOSIÇÃO ANTT -->
     <div class="section">
-      <div class="section-label">Exposição ANTT · art. 313 · Resolução 6.033/2023</div>
+      <div class="section-label">Exposição ANTT · Art. 313 · Resolução 6.033/2023</div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">📋 Risco regulatório — Infração 313</div>
-          <span class="badge" style="background:#fef2f2;color:#dc2626;">Risco crítico</span>
+          <span class="badge badge-blocked">Risco crítico</span>
         </div>
         <ul class="update-list">
-          <li>Multa art. 313: <strong>R$ 8.769 a R$ 70.153 por mercado</strong> (30.000 UMRP × 0,292308 — por viagem convencional, por semana, por sentido).</li>
-          <li>Guanabara-Nordeste: <strong>900+ mercados</strong> (só uma empresa). REX, RAF, UTIL, BRISA, SAMPAIO: mapeamento pendente.</li>
-          <li>SUFIS: fiscalização online a partir de <strong>01/08/2026</strong>. Adequação sem risco: até <strong>31/07</strong>.</li>
-          <li>Roberto Vasconcelos: aplicação por mercado tem discricionariedade do fiscal (fé pública) — teto teórico é exposição máxima, não previsão realista.</li>
+          <li>Multa do art. 313: <strong>R$ 8.769 a R$ 70.153 por mercado</strong> (30.000 UMRP × 0,292308 — por viagem convencional, por semana, por sentido).</li>
+          <li>Guanabara-Nordeste: <strong>900+ mercados</strong> (só essa empresa). REX, RAF, UTIL, BRISA e SAMPAIO: mapeamento ainda pendente.</li>
+          <li>SUFIS inicia fiscalização online a partir de <strong>01/08/2026</strong>. Janela de adequação sem risco: até <strong>31/07</strong>.</li>
+          <li>Roberto Vasconcelos: a aplicação por mercado tem discricionariedade do fiscal — o teto teórico é a exposição máxima, não uma previsão realista.</li>
         </ul>
-        <div class="highlight-box" style="background:#fff8f0;border-left-color:#f97316;">
-          <strong>Teto teórico consolidado:</strong> R$ 11,6 a R$ 92,6 mi (900 mercados × R$ 8.769–70.153/mercado, Guanabara-Nordeste). Exposição real depende da discricionariedade do fiscal — teto é exposição máxima, não previsão realista. Manual ANTT solicitado por Roberto (pendente).
+        <div class="highlight-box" style="margin-top:8px;">
+          <strong>Teto teórico consolidado:</strong> R$ 11,6 a R$ 92,6 milhões (900 mercados × R$ 8.769–70.153/mercado, só Guanabara-Nordeste). Manual de fiscalização da ANTT solicitado por Roberto (pendente de recebimento).
         </div>
         <div class="highlight-box blue" style="margin-top:8px;">
-          <strong>Ação emergencial:</strong> Desativar gratuidade em canais digitais antes de 31/07 via backoffice — "simples". Para risco de multa nova a partir de 01/08. <strong>Pendente: aval de Bia.</strong>
+          <strong>Ação emergencial:</strong> desativar a gratuidade em canais digitais antes de 31/07 via backoffice — simples de executar, neutraliza o risco de nova autuação a partir de 01/08. <strong>Pendente: aval de Bia.</strong>
         </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
+    <!-- DECISÃO RECOMENDADA -->
     <div class="section">
-      <div class="section-label">Decisão recomendada ao board · 23/07/2026</div>
+      <div class="section-label">Decisão recomendada ao board · 23/07</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">🛑 Solução temporária + definitiva</div>
-          <span class="badge" style="background:#fef2f2;color:#dc2626;">Decisão pendente</span>
+          <div class="detail-title">🛑 Solução temporária + solução definitiva</div>
+          <span class="badge badge-pending">Decisão pendente</span>
         </div>
         <div style="overflow-x:auto;margin-top:10px;">
-          <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <table class="conflict-table">
             <thead>
-              <tr style="background:#f1f5f9;">
-                <th style="text-align:left;padding:8px 10px;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid #e2e8f0;">Ação</th>
-                <th style="text-align:center;padding:8px 10px;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid #e2e8f0;">Prazo</th>
-                <th style="text-align:center;padding:8px 10px;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid #e2e8f0;">Impacto</th>
-                <th style="text-align:center;padding:8px 10px;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid #e2e8f0;">Risco de não agir</th>
-                <th style="text-align:center;padding:8px 10px;font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid #e2e8f0;">Custo</th>
+              <tr>
+                <th>Ação</th>
+                <th style="text-align:center;">Prazo</th>
+                <th style="text-align:center;">Impacto</th>
+                <th style="text-align:center;">Risco de não agir</th>
+                <th style="text-align:center;">Custo</th>
               </tr>
             </thead>
             <tbody>
-              <tr style="background:#fef2f2;">
-                <td style="padding:8px 10px;color:#1a1a2e;border-bottom:1px solid #fee2e2;"><strong>Suspender gratuidade nos canais digitais</strong></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #fee2e2;"><span style="background:#dc2626;color:#fff;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">8 dias (até 31/07)</span></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #fee2e2;"><span style="background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Alto</span></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #fee2e2;"><span style="background:#fee2e2;color:#dc2626;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Alto</span></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #fee2e2;"><span style="background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Baixo</span></td>
+              <tr>
+                <td><strong>Suspender gratuidade nos canais digitais</strong></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">8 dias (até 31/07)</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
               </tr>
               <tr>
-                <td style="padding:8px 10px;color:#1a1a2e;border-bottom:1px solid #f1f5f9;">Pedir nº de mercados das outras 5 empresas</td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;">1 semana</td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;"><span style="background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Alto</span></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;"><span style="background:#fef9c3;color:#ca8a04;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Médio</span></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;"><span style="background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Baixo</span></td>
+                <td>Pedir nº de mercados das outras 5 empresas</td>
+                <td style="text-align:center;">1 semana</td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
               </tr>
               <tr>
-                <td style="padding:8px 10px;color:#1a1a2e;border-bottom:1px solid #f1f5f9;">Auditar top 10 agentes/PDV e top 5 lista negra</td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;">2–4 semanas</td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;"><span style="background:#fef9c3;color:#ca8a04;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Médio</span></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;"><span style="background:#fef9c3;color:#ca8a04;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Médio</span></td>
-                <td style="padding:8px 10px;text-align:center;border-bottom:1px solid #f1f5f9;"><span style="background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Baixo</span></td>
+                <td>Auditar top 10 agentes/PDV e top 5 lista negra</td>
+                <td style="text-align:center;">2–4 semanas</td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
               </tr>
               <tr>
-                <td style="padding:8px 10px;color:#1a1a2e;">T-shirt sizing da solução estrutural (Ítalo + Engenharia)</td>
-                <td style="padding:8px 10px;text-align:center;">2 semanas</td>
-                <td style="padding:8px 10px;text-align:center;"><span style="background:#dcfce7;color:#15803d;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Alto</span></td>
-                <td style="padding:8px 10px;text-align:center;"><span style="background:#fee2e2;color:#dc2626;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">Alto</span></td>
-                <td style="padding:8px 10px;text-align:center;"><span style="background:#f1f5f9;color:#64748b;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;">A definir</span></td>
+                <td>T-shirt sizing da solução estrutural (Ítalo + Engenharia)</td>
+                <td style="text-align:center;">2 semanas</td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
+                <td style="text-align:center;"><span class="badge" style="background:#f1f5f9;color:#64748b;">A definir</span></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
-          <div style="padding:12px;background:#fff8f0;border-radius:8px;border:1px solid #fed7aa;">
-            <div style="font-size:10px;font-weight:700;color:#c2410c;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Temporária — janela de 8 dias</div>
-            <div style="font-size:12px;color:#4a5568;line-height:1.5;">Pausar gratuidade nos canais digitais via backoffice. Simples de executar. Neutraliza risco de nova autuação ANTT a partir de 01/08. Não resolve a causa raiz.</div>
+        <div class="kpi-grid col2" style="margin-top:10px;">
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">Temporária — janela de 8 dias</div>
+            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Pausar gratuidade nos canais digitais via backoffice. Simples de executar. Neutraliza risco de nova autuação a partir de 01/08. Não resolve a causa raiz.</div>
           </div>
-          <div style="padding:12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">
-            <div style="font-size:10px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;">Definitiva — sem T-shirt size</div>
-            <div style="font-size:12px;color:#4a5568;line-height:1.5;">Bloquear gratuidades simultâneas por CPF/IdCliente na mesma rota/dia + validação documental na reserva. Maior gap do discovery — sem estimativa de prazo ou custo.</div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">Definitiva — sem T-shirt size</div>
+            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Bloquear gratuidades simultâneas por CPF/ID do cliente na mesma rota/dia + validação documental na reserva. Maior gap do discovery — sem estimativa de prazo ou custo.</div>
           </div>
         </div>
-        <div class="highlight-box" style="background:#fef2f2;border-left-color:#dc2626;margin-top:10px;">
-          <strong>Próx. passo urgente:</strong> Aval de Bia para pausar canais digitais antes de 31/07 · Maurício · <strong>URGENTE</strong>
+        <div class="blocker-box">
+          <strong>Próx. passo urgente:</strong> aval de Bia para pausar canais digitais antes de 31/07 · Maurício · URGENTE
         </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
+    <!-- ENTREGÁVEIS -->
     <div class="section">
-      <div class="section-label">Discovery — Entregáveis · 22–23/07/2026</div>
+      <div class="section-label">Discovery — Entregáveis · 22–23/07</div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">📦 Pacote de discovery produzido</div>
           <span class="badge badge-done">Entregue</span>
         </div>
         <ul class="update-list">
-          <li><strong>Dashboard Executivo HTML</strong> — 10 abas, 18.512 linhas de dados completos com busca JS e links diretos pro frontoffice/backoffice por bilhete.</li>
-          <li><strong>6 queries SQL vigentes</strong> (TblBilhete/BI) — A1 duplicidade, A2 viagens incompatíveis, A3 acompanhante sem par, B elegibilidade/lista negra, C agente suspeito, D perda tarifa real + LoadFactor, E mercados digitais/multa.</li>
+          <li><strong>Dashboard executivo HTML</strong> — 10 abas, 18.512 linhas de dados completos, com busca via JS e links diretos para o frontoffice/backoffice por bilhete.</li>
+          <li><strong>6 queries SQL vigentes</strong> (TblBilhete/BI) — A1 duplicidade, A2 viagens incompatíveis, A3 acompanhante sem par, B elegibilidade/lista negra, C agente suspeito, D perda de tarifa real + LoadFactor, E mercados digitais/multa.</li>
           <li><strong>Workbook Excel multi-aba</strong> (~3,4MB) — export por categoria para uso do time comercial e BI.</li>
           <li><strong>Benchmark de mercado</strong> — 6 viações + 4 marketplaces. Viaje Guanabara conforme. ClickBus e QueroPassagem revendem inventário próprio — ação via contrato.</li>
         </ul>
-        <div class="highlight-box" style="border-left-color:#dc2626;background:#fef2f2;">
-          <strong>Gap crítico em aberto:</strong> Nenhum material traz prazo ou custo da solução estrutural. Recomendação: pedir estimativa T-shirt (P/M/G) a Ítalo + Engenharia como próximo passo imediato.
+        <div class="blocker-box">
+          <strong>Gap crítico em aberto:</strong> nenhum material traz prazo ou custo da solução estrutural. Recomendação: pedir estimativa T-shirt (P/M/G) a Ítalo + Engenharia como próximo passo imediato.
         </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
+    <!-- PRÓXIMOS PASSOS -->
     <div class="section">
       <div class="section-label">Próximos passos</div>
       <div class="detail-block">
@@ -1656,36 +2163,388 @@
           <li>✅ <strong>Concluído · 23/07</strong> — Dashboard executivo HTML + planilha de dados como base única do discovery · Maurício</li>
           <li>📅 <strong>Antes de 31/07 — URGENTE</strong> — Decisão de Bia: desativar gratuidade em canais digitais · Maurício</li>
           <li>📅 <strong>Até 31/07</strong> — Pedir a REX, RAF, UTIL, BRISA, SAMPAIO o nº de mercados (dimensionar exposição total do grupo) · Maurício</li>
-          <li>📅 <strong>Até 31/07</strong> — Acompanhar recebimento do manual de fiscalização ANTT (solicitado por Roberto ao "Raul") · Maurício</li>
-          <li>📅 <strong>A agendar</strong> — Reunião com Ítalo/Daniel para reconciliar estimativa 30–40% (campo) com volumes por categoria (queries) — definir conceito comum de "indevida" antes de ir ao board · Maurício + Ítalo</li>
+          <li>📅 <strong>Até 31/07</strong> — Acompanhar recebimento do manual de fiscalização ANTT (solicitado por Roberto) · Maurício</li>
+          <li>📅 <strong>A agendar</strong> — Reunião com Ítalo/Daniel para reconciliar estimativa 30–40% (campo) com volumes por categoria (queries) — definir conceito comum de "indevida" antes de levar ao board · Maurício + Ítalo</li>
           <li>📅 <strong>A combinar</strong> — Plano de combate a fraudes + estimativa T-shirt da solução estrutural · Ítalo + Engenharia</li>
-          <li>📅 <strong>Aberto</strong> — Confirmar com Roberto descredenciamento de ~20 agentes (Guanabara Nordeste vs. "Cláudinho")</li>
+          <li>📅 <strong>Aberto</strong> — Confirmar com Roberto o descredenciamento de ~20 agentes suspeitos (Guanabara Nordeste)</li>
         </ul>
       </div>
     </div>
 
   </div>
 
+  <!-- ══════════════ TAB: NOVO ORG CHART ══════════════ -->
+  <div id="tab-orgchart" class="tab-panel" role="region" aria-labelledby="tabbtn-orgchart" tabindex="0">
 
-  <!-- FOOTER -->
-  <div class="card-footer">
-    <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-    <div class="footer-date">Atualizado em 23 jul 2026 · 14:00</div>
+    <div class="section">
+      <div class="section-label">Time de Produto — Novo Org Chart</div>
+      <div style="font-size:14px;color:#6b7280;margin-bottom:18px;font-style:italic;">Papéis, responsabilidades e estrutura de reporte</div>
+
+      <div class="org-chart">
+        <div class="org-card org-top">
+          <div class="org-name">MAURÍCIO · <span class="org-role">GPM</span></div>
+          <div class="org-desc-italic">Group Product Manager: lidera múltiplos squads e conecta estratégia à entrega.</div>
+          <div class="org-desc">Responsável pela Reforma Tributária e apoio às demais frentes; gerencia Ítalo e Daniel.</div>
+        </div>
+        <div class="org-connector"></div>
+        <div class="org-children">
+          <div class="org-child">
+            <div class="org-card">
+              <div class="org-name">DANIEL · <span class="org-role">PM Pleno</span></div>
+              <div class="org-desc-italic">Product Manager: dono do produto ponta a ponta — prioriza, especifica e entrega.</div>
+              <div class="org-desc">Responsável por Motor de Conexões, Riocard, Operações Simultâneas Parciais e viações.</div>
+            </div>
+          </div>
+          <div class="org-child">
+            <div class="org-card">
+              <div class="org-name">ÍTALO · <span class="org-role">Associate PM</span></div>
+              <div class="org-desc-italic">Associate Product Manager: apoia a gestão do produto no dia a dia e ganha autonomia.</div>
+              <div class="org-desc">Apoia Maurício na Reforma Tributária e lidera o relacionamento com as viações.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
+  <!-- ══════════════ POST MORTEM: MOTOR DE CONEXÃO 07/2026 ══════════════ -->
+  <div id="tab-postmortem-motor" class="tab-panel" role="region" aria-labelledby="tabbtn-postmortem-motor" tabindex="0">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Instabilidade do sistema Smart · Período: 01 a 09 de julho de 2026</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👤 Preparado por Daniel Silva</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Publicado 09/07/2026 · Apresentado ao GPM</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Resumo</div>
+      <div class="alert-grid" style="--alert-cols:2;">
+        <div class="alert-card danger">
+          <div class="alert-card-label">⚠️ 9 dias · 2 incidentes técnicos distintos</div>
+          <div class="alert-card-title">Instabilidade recorrente, concentrada nas manhãs</div>
+          <div class="alert-card-body">Primeiro sinal em 01/07; primeira crise multi-localidade em 02/07; pior dia em 07/07 (manhã praticamente sem vendas no Digital); segundo incidente, de causa distinta, em 08/07.</div>
+        </div>
+        <div class="alert-card success">
+          <div class="alert-card-label">🟢 Resolvido</div>
+          <div class="alert-card-title">Estável desde a manhã de 09/07</div>
+          <div class="alert-card-body">Picos de tráfego das 8h, 9h e 10h absorvidos sem novo incidente após as duas correções aplicadas (banco de dados em 07/07 à noite; autoscaling em 08/07).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card accent-warn">
+        <div class="kpi-label">Perda Online Próprio · semana</div>
+        <div class="kpi-value">R$ 1,32 mi</div>
+        <div class="kpi-sub">vs. forecast de negócio, 01–07/07 (Smart Travel/Guanabara)</div>
+      </div>
+      <div class="kpi-card accent-warn">
+        <div class="kpi-label">Projeção do mês, sem contenção</div>
+        <div class="kpi-value">R$ 9,51 mi</div>
+        <div class="kpi-sub">R$ 7,88 mi com War Room + Voy On</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">Instabilidade acumulada</div>
+        <div class="kpi-value">23h</div>
+        <div class="kpi-sub">1 a 8 de julho — motor de venda</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">Canais afetados</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-sub">Online Próprio · Terceiros · Offline</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- LINHA DO TEMPO -->
+    <div class="section">
+      <div class="section-label">Linha do tempo · Horas de instabilidade por dia</div>
+      <div class="detail-block">
+        <table class="conflict-table">
+          <caption style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Horas de instabilidade do motor de venda por dia, 01 a 08/07/2026</caption>
+          <thead>
+            <tr><th scope="col">Dia</th><th scope="col">Horas de impacto</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Dia">Qua 01/07</td><td data-label="Horas de impacto">9h, 10h, 11h, 13h, 14h, 15h</td></tr>
+            <tr><td data-label="Dia">Qui 02/07</td><td data-label="Horas de impacto">9h, 10h, 11h, 18h</td></tr>
+            <tr><td data-label="Dia">Sex 03/07</td><td data-label="Horas de impacto">8h</td></tr>
+            <tr><td data-label="Dia">Sáb 04/07</td><td data-label="Horas de impacto">12h, 13h</td></tr>
+            <tr><td data-label="Dia">Dom 05/07</td><td data-label="Horas de impacto">3h, 6h, 7h, 9h</td></tr>
+            <tr><td data-label="Dia">Seg 06/07</td><td data-label="Horas de impacto">9h</td></tr>
+            <tr><td data-label="Dia">Ter 07/07 — pior dia</td><td data-label="Horas de impacto">8h às 12h (4h)</td></tr>
+            <tr><td data-label="Dia">Qua 08/07 — 2º incidente</td><td data-label="Horas de impacto">11h às 12h30</td></tr>
+            <tr><td data-label="Dia"><strong>Total 01–08/07</strong></td><td data-label="Horas de impacto"><strong>23h de instabilidade acumulada</strong></td></tr>
+          </tbody>
+        </table>
+        <ul class="update-list" style="margin-top:12px;">
+          <li><strong>30/06 (véspera):</strong> Motor de Conexões V2 teve 2 janelas de instabilidade própria (14h28–16h e 21h54–22h06), contidas em war room e não confundidas pela equipe técnica com o problema de banco — data corrigida em 16/07 a partir do export do WhatsApp e confirmação de Daniel (o post-mortem original datava esses eventos em 01/07).</li>
+          <li><strong>01/07:</strong> primeiros alarmes de latência no Senna à tarde; DevOps aponta RDS Guanabara pesado por relatórios de início de mês.</li>
+          <li><strong>02/07:</strong> primeira crise multi-localidade (Goiânia, Osasco, Curitiba, Campinas fora do ar às 9h11). DBA identifica sessão de reindexação presa; a stored procedure <em>GetPricingRouteNestingDetailsByParamsWithCapacity</em> (mais pesada do sistema) já aparece com problema de plano de execução — mesmo padrão que reaparece em 08/07. CEO chega a sugerir suspender conexões de 3 trechos do motor.</li>
+          <li><strong>03/07:</strong> nova lentidão em Brasília/Goiânia (requisições "select de cache" presas em async_network_io). Decisão: aplicar melhorias na madrugada de sábado.</li>
+          <li><strong>04–06/07:</strong> falhas pontuais recorrentes; em 06/07 Tomás comunica formalmente a causa (SQL Server legado é o gargalo, tráfego 20–35% acima do pico de jan/fev) e aplica mitigação (pausa de relatórios/BI nos picos).</li>
+          <li><strong>07/07 — dia mais crítico:</strong> manhã inteira comprometida (8h–13h), receita cai 90,5% às 9h. 10h23: grupo de crise "Crise Smart" criado. Motor V2 desativado por precaução; ao final da investigação, liderança técnica confirma que o motor <strong>não é a causa</strong> (problema persistiu com ele desligado). 18h50: decisão de ampliar o banco (dobro de recursos, ~US$ 18–20 mil/mês). 23h00–01h33: upgrade executado.</li>
+          <li><strong>08/07 — segundo incidente, causa distinta:</strong> manhã estável após upgrade (reindexação concluída 7h23, query mais pesada caiu de minutos para ~118ms). 10h13–11h00: nova instabilidade, agora afetando também outros clientes do Smart (não só Guanabara) — mais de 30 localidades reportaram sistema fora. Causa raiz: autoscaling (HPA) mal configurado nas 8 apps de produção do SmartBus. Correção aplicada no mesmo dia.</li>
+          <li><strong>09/07:</strong> sistema estável; picos das 8h, 9h e 10h absorvidos sem incidente. Motor V2 permanece desativado por decisão da liderança ("não vamos religar esse mês"), mesmo sem relação causal encontrada nos dados.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CAUSAS RAIZ -->
+    <div class="section">
+      <div class="section-label">Causas raiz</div>
+      <div class="alert-grid" style="--alert-cols:2;">
+        <div class="alert-card danger">
+          <div class="alert-card-label">CAUSA 1 · 01–07/07 · Guanabara</div>
+          <div class="alert-card-title">Capacidade do banco de dados legado</div>
+          <div class="alert-card-body">SQL Server monolítico sem cluster nem réplica de leitura (limitação de código, exigiria reescrever o Smart para separar leitura/escrita). Tráfego de julho 20–35% acima do pico de jan/fev. Banco já vinha sendo otimizado há quase 2 anos, sem muita margem adicional sem investimento estrutural. Apenas DBAs têm acesso ao banco.</div>
+          <div class="alert-card-foot">Fatores descartados: Motor de Conexões V2 (problema persistiu com ele desligado) e geração de relatórios/BI (agravante, não causa raiz).</div>
+        </div>
+        <div class="alert-card danger">
+          <div class="alert-card-label">CAUSA 2 · 08/07 · multi-cliente Smart</div>
+          <div class="alert-card-title">Autoscaling (HPA) e dimensionamento de CPU</div>
+          <div class="alert-card-body">Nas 8 aplicações de produção do SmartBus (destaque sale-api e gateway-api), alvo de utilização de CPU do HPA entre 300–600% (recomendado ~70%) e requests de CPU subdimensionados (sale-api em 250m). Sob aumento orgânico de tráfego de 20–30%, gerou fila de requisições e reinícios de pods por OOMKill (p99 chegando a ~60s).</div>
+          <div class="alert-card-foot">Confirmado como causa distinta: afetou também outros clientes do Smart, não só a Guanabara — diferente do incidente de 07/07.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- IMPACTO -->
+    <div class="section">
+      <div class="section-label">Impacto no canal Online Próprio · vs. forecast de negócio</div>
+      <div class="detail-block">
+        <table class="conflict-table">
+          <caption style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Impacto no canal Online Próprio, forecast vs. realizado, 01–07/07/2026</caption>
+          <thead>
+            <tr><th scope="col">Métrica</th><th scope="col">Forecast</th><th scope="col">Realizado na crise</th><th scope="col">Impacto</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Métrica">Receita</td><td data-label="Forecast">R$ 8,76 mi</td><td data-label="Realizado">R$ 7,44 mi</td><td data-label="Impacto">− R$ 1,32 mi</td></tr>
+            <tr><td data-label="Métrica">% da meta</td><td data-label="Forecast">110,6%</td><td data-label="Realizado">94,0%</td><td data-label="Impacto">− 16,6 p.p.</td></tr>
+            <tr><td data-label="Métrica">Crescimento YoY</td><td data-label="Forecast">+22,0%</td><td data-label="Realizado">+3,6%</td><td data-label="Impacto">− 18,4 p.p.</td></tr>
+          </tbody>
+        </table>
+        <div class="highlight-box" style="margin-top:10px;">
+          Sem a contenção do War Room e redirecionamento para o Voy On, a perda da semana teria sido <strong>R$ 1,69 milhão</strong> — as mitigações já reduziram o impacto em <strong>~R$ 370 mil</strong> só na 1ª semana. Projeção se a crise persistisse o mês inteiro: receita cairia de R$ 39,8 mi para R$ 31,9 mi (<strong>−R$ 7,88 mi</strong>), ou −R$ 9,51 mi sem contenção.
+        </div>
+      </div>
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-title" style="margin-bottom:8px;">Impacto operacional (não financeiro)</div>
+        <ul class="update-list">
+          <li>Sistema fora do ar em Goiânia, Osasco, Curitiba e Campinas já em 02/07 — primeiro incidente com abrangência geográfica ampla.</li>
+          <li>Filas de horas em rodoviárias (Novo Rio/RJ, Tietê/SP, Antônio Bezerra/Fortaleza), com reclamação formal por escrito da equipe de Fortaleza relatando evasão de clientes.</li>
+          <li>Mais de 30 localidades reportaram sistema fora em 08/07, com evasão de clientes registrada em vídeo.</li>
+          <li>Fila de atendimento em 07/07: 32 pessoas na telefonia e 29 no WhatsApp, agravada por oscilação simultânea da operadora de telefonia.</li>
+          <li>Sobrecarga do call center e aumento de reclamações em redes sociais — impacto ainda não quantificado formalmente.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- O QUE FUNCIONOU -->
+    <div class="section">
+      <div class="section-label">O que funcionou · ações de mitigação e correção já realizadas</div>
+      <div class="detail-block">
+        <ul class="update-list">
+          <li><span class="badge badge-done" style="margin-right:6px;">Concluído</span> Upgrade da instância do banco (dobro de capacidade + disco de melhor performance), executado na madrugada de 08/07.</li>
+          <li><span class="badge badge-done" style="margin-right:6px;">Concluído</span> Reindexação completa e otimização de disco — consulta mais pesada do sistema caiu de minutos para ~118ms.</li>
+          <li><span class="badge badge-done" style="margin-right:6px;">Concluído</span> Correção do HPA (alvo de CPU normalizado para 70%) e aumento de requests/limits de CPU e memória nas 8 apps do SmartBus.</li>
+          <li><span class="badge badge-done" style="margin-right:6px;">Concluído</span> Mensagem de aviso de lentidão no fluxo de compra + redirecionamento de checkouts quebrados para WhatsApp.</li>
+          <li><span class="badge badge-done" style="margin-right:6px;">Concluído</span> Pausa diária de relatórios e processos de BI durante os picos, restabelecidos após normalização.</li>
+          <li><span class="badge badge-done" style="margin-right:6px;">Concluído</span> Suporte presencial da equipe de produto na rodoviária do Novo Rio durante o pico da crise — 21 dores/oportunidades de melhoria levantadas para o backlog.</li>
+          <li><span class="badge badge-blocked" style="margin-right:6px;">Precaução</span> Motor de Conexões V2 desativado nos canais digitais (mantido desligado até hoje, mesmo já descartado como causa raiz).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- APRENDIZADOS -->
+    <div class="section">
+      <div class="section-label">Aprendizados · Tech</div>
+      <div class="detail-block">
+        <ul class="update-list">
+          <li><strong>Débito técnico estrutural virou risco operacional:</strong> o SQL Server monolítico sem cluster/réplica de leitura já era um limite conhecido (otimizado há ~2 anos sem muita margem), mas só o crescimento de tráfego de alta temporada (20–35% acima do pico de jan/fev) o transformou em incidente. Capacidade de banco precisa de gatilho de revisão antes do pico sazonal, não durante.</li>
+          <li><strong>Configuração de autoscaling não estava alinhada ao tráfego real:</strong> alvo de CPU do HPA em 300–600% (vs. ~70% recomendado) e requests subdimensionados em 8 apps de produção passaram despercebidos até o pico de tráfego expor o problema. Faltou processo recorrente de auditoria de HPA/requests-limits contra tráfego real (a correção usou análise de 7 dias de tráfego real — esse tipo de checagem poderia ser periódica, não reativa).</li>
+          <li><strong>Diagnóstico sob incidente foi lento por ambiguidade de causa:</strong> a coincidência temporal do Motor de Conexões V2 (rollout gradual) com os incidentes gerou suspeita recorrente sobre o motor (inclusive da CEO e de lideranças), consumindo tempo de decisão até os dados confirmarem que a causa era o banco (07/07) e depois o HPA (08/07), ambas não relacionadas ao motor. Registrado em tempo real no grupo de acompanhamento do motor (07/07, 12h20), quando o time técnico precisou reafirmar publicamente, em meio ao incidente: "isso não é a causa do problema (...) não tem nada a ver".</li>
+          <li><strong>Comparação multi-cliente acelerou o diagnóstico do 2º incidente:</strong> o fato de o incidente de 08/07 afetar outros clientes do Smart, além da Guanabara, foi o sinal que confirmou se tratar de causa distinta (infraestrutura compartilhada) e não repetição do problema de banco (específico da Guanabara).</li>
+          <li><strong>Acesso ao banco concentrado em DBAs</strong> foi citado como fator durante a investigação de 07/07 — item a considerar para tempo de resposta em crises futuras.</li>
+          <li><strong>Causa raiz do pico recorrente às 8h/9h/10h segue sem confirmação</strong> (orgânico vs. job/integração agendada) — item em aberto que limita a confiança total na correção aplicada.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Aprendizados · Produto</div>
+      <div class="detail-block">
+        <ul class="update-list">
+          <li><strong>Capacidade de engenharia dedicada ao motor já era mínima antes da crise:</strong> o report de status de 03/07 registrava apenas 1 desenvolvedor dedicado ao Motor de Conexões V2, com Ítalo dividido entre sustentação e produto — restrição que se agravou quando o time técnico foi redirecionado integralmente para a crise do Smart, bloqueando entregas já priorizadas (ver "Atualização · 10 a 16/07" abaixo).</li>
+          <li><strong>Iniciativa em rollout pagou o custo de reputação de um incidente que não causou:</strong> o Motor de Conexões V2 foi desativado por precaução em 07/07 e 08/07, chegou a ser cogitado para suspensão pela CEO e por lideranças comerciais, e segue desligado até hoje — mesmo com a liderança técnica confirmando, em ambos os incidentes, que o motor não foi a causa raiz. Falta um critério objetivo e combinado previamente para religar, hoje pendente de decisão ad hoc da liderança.</li>
+          <li><strong>Mitigações de UX/atendimento tiveram ROI mensurável durante a instabilidade de infraestrutura:</strong> aviso de lentidão no fluxo de compra, redirecionamento de checkout quebrado para WhatsApp e War Room com redirecionamento de tráfego para o Voy On reduziram a perda projetada da semana de R$ 1,69 mi para R$ 1,32 mi (~R$ 370 mil de economia).</li>
+          <li><strong>Presença de campo durante a crise gerou descoberta útil fora do escopo do incidente:</strong> a equipe de produto na rodoviária do Novo Rio, mobilizada para apoiar a operação, levantou 21 dores/oportunidades (totem, guichê/conexão, frontoffice) que alimentam o backlog independentemente da crise.</li>
+          <li><strong>A crise funcionou como validação do forecast de negócio, não como sinal de queda de demanda:</strong> assim que o sistema estabilizou, 08/07 e 09/07 fecharam acima do forecast (+21% e +20% YoY, 108% e 105% da meta) — evidência de que o problema era exclusivamente de infraestrutura, reforçando o argumento de priorização de investimento em estabilidade do motor de venda como decisão de produto/negócio, não só de tech.</li>
+          <li><strong>Migração de demanda para canais de maior custo durante a indisponibilidade</strong> (Terceiros e Rodoviárias venderam acima do padrão enquanto o Digital caía) é um efeito colateral de produto/comercial a considerar em playbooks futuros de contingência, além da perda direta de receita.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ATUALIZAÇÃO PÓS-POSTMORTEM -->
+    <div class="section">
+      <div class="section-label">Atualização · 10 a 16/07 (pós-postmortem)</div>
+      <div style="font-size:12.5px;color:#6b7280;margin-bottom:10px;">Com base no export do grupo de WhatsApp "Conexões V2 (Report Executivo)" (26/06–16/07) e no "Motor de Conexão v2 — One Report" de 03/07.</div>
+
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">💰 Custo de capacidade já visível antes da crise</div>
+          <span class="badge badge-pending">03/07</span>
+        </div>
+        <div style="font-size:14px;color:#4a5568;line-height:1.6;">
+          O report de status do Motor V2 de 03/07 já registrava equipe reduzida — <strong>apenas 1 desenvolvedor dedicado ao motor</strong>, com Ítalo sobrecarregado entre sustentação e produto — antes mesmo do time técnico ser redirecionado integralmente para a crise do Smart.
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">🔁 Decisão e execução da reativação gradual do Motor V2</div>
+          <span class="badge badge-ongoing">Em andamento</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>10/07 (comitê):</strong> em vez de manter o motor 100% desligado até agosto, decisão de testar reativação controlada e gradual. Tomás reafirma: motor não é causa raiz dos problemas do Smart; ponto de atenção é a carga da precificação multi-trecho no banco.</li>
+          <li><strong>14/07:</strong> ativação parcial planejada para a tarde é adiada em 1 dia — ajuste técnico para garantir que o motor use a base de agenda mais atualizada.</li>
+          <li><strong>15/07, 14h:</strong> piloto ativado em 7 PDVs (Guichês Brasília, São Paulo, Rio de Janeiro, Goiânia, Belo Horizonte, Comercial Teste FOR e Guichê Fortaleza IV). Equipe de produto e tech acompanham em conjunto; nenhum impacto identificado até o momento.</li>
+          <li><strong>16/07:</strong> times de campo confirmam operação estável nos PDVs ativados. Liderança solicita a Tomás um plano de expansão controlada; decisão explícita de deixar os canais digitais (incluindo Senna) por último — expansão imediata restrita à operação offline/front.</li>
+        </ul>
+        <div class="highlight-box blue" style="margin-top:10px;">
+          <strong>Caso em aberto:</strong> conexão manual UDI (Rio ↔ Cuiabá) não aparece para os agentes nos PDVs ativados, reportado em 15/07 — em análise por Daniel com o time técnico, sem resolução registrada até 16/07.
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:10px;">
+        <div class="detail-header">
+          <div class="detail-title">⚠️ Incidente pontual · conexões de parceiros somem do sistema</div>
+          <span class="badge badge-blocked">10/07</span>
+        </div>
+        <div style="font-size:14px;color:#4a5568;line-height:1.6;">
+          Entre ~12h09 e 13h57 de 10/07, conexões manuais na modalidade "Transporte Parceiros" (recibo Extra) desapareceram do sistema, reportado por Bruno Ferro. Conexões próprias da Guanabara voltaram a aparecer primeiro; as de parceiros normalizaram ao longo da tarde após verificação conjunta de cadastros.
+        </div>
+        <div class="blocker-box">
+          Causa não confirmada no chat — Tomás declarou não ter identificado mudança do lado técnico ("acho que do nosso lado não tive mudança, mas podemos verificar"). Sem causa raiz registrada; não incluído nas duas causas raiz da crise principal (banco de dados e HPA) por falta de confirmação técnica.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ITENS EM ABERTO -->
+    <div class="section">
+      <div class="section-label">Itens em aberto e decisões da liderança</div>
+      <div class="detail-block">
+        <ul class="update-list">
+          <li><span class="badge badge-pending" style="margin-right:6px;">Decisão pendente</span> Custo adicional do upgrade do banco (~US$ 18–20 mil/mês) — ROI estimado em 70–95x menor que a perda mensal projetada sem contenção; a formalizar com a liderança de operações.</li>
+          <li><span class="badge badge-ongoing" style="margin-right:6px;">Em andamento</span> Critério e data para religar o Motor de Conexões V2 — <strong>atualizado (10–16/07):</strong> comitê de 10/07 decidiu reativação controlada e gradual em vez de aguardar agosto; piloto ativado em 7 PDVs desde 15/07, com canais digitais (incluindo Senna) deixados para o final. Ver "Atualização · 10 a 16/07" abaixo.</li>
+          <li><span class="badge badge-pending" style="margin-right:6px;">Em aberto</span> Confirmar a origem exata do pico de tráfego recorrente às 8h, 9h e 10h (orgânico vs. job/integração agendada).</li>
+          <li><span class="badge badge-ongoing" style="margin-right:6px;">Em andamento</span> Monitorar reinícios de pods, OOMKill e comportamento do HPA nos próximos picos para validar a correção de 08/07.</li>
+          <li><span class="badge badge-ongoing" style="margin-right:6px;">Em andamento</span> Quantificar formalmente o impacto do call center, redes sociais e custo de oportunidade de Produto/Engenharia desviado para a crise. Já sabido qualitativamente (recap de 10/07): a semana da crise bloqueou 3 entregas já priorizadas do Motor V2 — divergência de preço, conexões do mesmo veículo não ofertadas e seleção inadequada de conexão (Imperatriz × São Paulo).</li>
+          <li><span class="badge badge-pending" style="margin-right:6px;">Estrutural</span> Avançar migração de Estoques (disponibilidade de assentos) para o Hérmes e dos dashboards de BI para o Athena, reduzindo a dependência do banco legado.</li>
+          <li><span class="badge badge-pending" style="margin-right:6px;">A priorizar</span> Consolidar e priorizar as 21 dores/oportunidades de melhoria levantadas em campo no Novo Rio.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="font-size:11.5px; color:#9aa1af; margin-top:4px; line-height:1.5;">
+      Fontes: post-mortem "Instabilidade do sistema Smart" (Daniel Silva, 09/07/2026) · post-mortem técnico "Incidente de latência em sale-api / gateway-api" (08/07/2026) · relatório "Crise do Sistema Smart — Impacto Online Próprio" (Smart Travel S.A., dados até 09/07 14h) · "Smart Weekly 15 jul 26" (horas de instabilidade e impacto financeiro Digital Próprio) · export do grupo de WhatsApp "Conexões V2 (Report Executivo)" (26/06 a 16/07/2026) · "Motor de Conexão v2 — One Report" (reunião de status 03/07/2026).
+    </div>
+
+  </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+      <div class="footer-brand">Smart Travel IT · Arara Tech</div>
+      <div class="footer-date">Atualizado em 23 jul 2026 · 19:00</div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-  function toggleSennaDetail() {
-    var el = document.getElementById('senna-incident');
-    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  var TAB_IDS = ['geral', 'orgchart', 'motor', 'vtr', 'osp', 'reforma', 'outras', 'fraudes', 'postmortem-motor'];
+
+  function activateTab(id) {
+    if (TAB_IDS.indexOf(id) === -1) id = 'geral';
+
+    document.querySelectorAll('.tab-panel').forEach(function (p) {
+      p.classList.toggle('active', p.id === 'tab-' + id);
+    });
+
+    document.querySelectorAll('.side-item').forEach(function (b) {
+      var active = b.dataset.tab === id;
+      b.classList.toggle('active', active);
+      if (active) {
+        b.setAttribute('aria-current', 'page');
+      } else {
+        b.removeAttribute('aria-current');
+      }
+    });
+
+    if (location.hash !== '#' + id) {
+      history.replaceState(null, '', '#' + id);
+    }
+
+    closeSidebar();
   }
-  function switchTab(id, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + id).classList.add('active');
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+
+  // Navegação por setas entre os itens do menu lateral
+  document.addEventListener('keydown', function (e) {
+    if (!e.target.classList || !e.target.classList.contains('side-item')) return;
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    var current = TAB_IDS.indexOf(e.target.dataset.tab);
+    var next = e.key === 'ArrowDown'
+      ? (current + 1) % TAB_IDS.length
+      : (current - 1 + TAB_IDS.length) % TAB_IDS.length;
+    var nextBtn = document.getElementById('tabbtn-' + TAB_IDS[next]);
+    activateTab(TAB_IDS[next]);
+    nextBtn.focus();
+  });
+
+  function toggleSidebar() {
+    var sb = document.getElementById('sidebar-nav');
+    var open = sb.classList.toggle('open');
+    document.querySelector('.sidebar-backdrop').classList.toggle('open', open);
+    document.querySelector('.menu-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
   }
+
+  function closeSidebar() {
+    var sb = document.getElementById('sidebar-nav');
+    if (sb) sb.classList.remove('open');
+    var bd = document.querySelector('.sidebar-backdrop');
+    if (bd) bd.classList.remove('open');
+    var mt = document.querySelector('.menu-toggle');
+    if (mt) mt.setAttribute('aria-expanded', 'false');
+  }
+
+  function initTabFromHash() {
+    var id = (location.hash || '#geral').replace('#', '');
+    activateTab(id);
+  }
+
+  window.addEventListener('hashchange', initTabFromHash);
+  document.addEventListener('DOMContentLoaded', initTabFromHash);
 </script>
 </body>
 </html>
