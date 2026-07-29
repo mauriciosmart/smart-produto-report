@@ -897,14 +897,14 @@
           <span class="ov-arrow" aria-hidden="true">›</span>
         </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: atualizações de 29/07">
+        <button type="button" class="ov-item" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: novo prazo crítico CORE-009 em 03/08">
           <div class="ov-icon" aria-hidden="true">📋</div>
           <div class="ov-content">
-            <div class="ov-title">Reforma Tributária — RTC</div>
-            <div class="ov-sub">CORE-008 entregue e encerrado. Consultoria: escopo entregue ao Caparica, 1ª reunião com E&Y. CORE-002 em desenvolvimento (deploy da tela de cadastro). Motor Tributário on hold, aguardando a consultoria.</div>
+            <div class="ov-title">Reforma Tributária — RTC: novo prazo 03/08 (CORE-009)</div>
+            <div class="ov-sub">Novo: CORE-009 (Globus) — IBS/CBS obrigatório em produção a partir de 03/08. CORE-008 entregue. Consultoria: escopo no Caparica + reunião E&Y. CORE-002 em dev (71%, entrega 12/08). Motor Tributário on hold.</div>
           </div>
           <div class="ov-right">
-            <span class="deadline-tag">29/07</span>
+            <span class="deadline-tag urgent">03/08</span>
             <span class="badge badge-ongoing">Em andamento</span>
           </div>
           <span class="ov-arrow" aria-hidden="true">›</span>
@@ -1582,13 +1582,18 @@
   <div id="tab-reforma" class="tab-panel" role="region" aria-labelledby="tabbtn-reforma" tabindex="0">
     <div class="section" style="margin-bottom:0;">
       <div class="section-label">Destaques da semana</div>
-      <div class="alert-grid" style="--alert-cols:3; margin-bottom:4px;">
+      <div class="alert-grid" style="--alert-cols:4; margin-bottom:4px;">
+        <div class="alert-card danger">
+          <div class="alert-card-label">🆕 Prazo 03/08</div>
+          <div class="alert-card-title" style="margin-bottom:0;">CORE-009 — NT IBS/CBS obrigatória</div>
+          <div class="alert-card-body">Integração Smartbus x Globus. NT 2026.002 torna IBS/CBS (CRT 3) obrigatório em produção a partir de 03/08.</div>
+        </div>
         <div class="alert-card neutral">
           <div class="alert-card-label">🔍 Em seleção</div>
           <div class="alert-card-title" style="margin-bottom:0;">Consultoria Técnica-Fiscal</div>
           <div class="alert-card-body">Escopo entregue ao Caparica · reunião com E&Y realizada · 29/07.</div>
         </div>
-        <div class="alert-card danger">
+        <div class="alert-card warning">
           <div class="alert-card-label">⏸️ On hold</div>
           <div class="alert-card-title" style="margin-bottom:0;">Motor Tributário</div>
           <div class="alert-card-body">Pausado, aguardando output da Consultoria Técnica-Fiscal.</div>
@@ -1597,6 +1602,34 @@
           <div class="alert-card-label">🔵 Em desenvolvimento</div>
           <div class="alert-card-title" style="margin-bottom:0;">Domínio de Pagamentos</div>
           <div class="alert-card-body">Multi-acquirer + Split Payment. Economia estimada: R$ 1M–2,5M/ano.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC · CORE-009 — Integração Smartbus x Globus · Atualização NTs IBS/CBS</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🆕 Atualização de leiautes para as NTs 2026.001/2026.002 (IBS/CBS)</div>
+          <span class="badge badge-ongoing">Em discovery / mapeamento</span>
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          Criado em 28/07 · Maurício. Validação em produção com a Expresso MS (27/07) mapeou campos pendentes do lado Smartbus para a API de Excessos (<code>/Globus/ExcessBaggage</code>). Os leiautes da Praxio estão desatualizados em relação às NTs 2026.001 e 2026.002.
+        </div>
+        <div class="blocker-box">
+          <strong>NT 2026.002 — IBS/CBS obrigatório (CRT 3) em produção a partir de 03/08/2026.</strong>
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>O que já está funcionando:</strong> WS Bilhetes (SOAP) e API Excessos (REST) — IBS/CBS, cstIbsCbs, cClassTrib, alíquotas e reduções: tudo OK em produção.
+        </div>
+        <ul class="update-list" style="margin-top:8px;">
+          <li><strong>Dependência 1:</strong> campos <code>gCompraGov</code> aguardam a conclusão do CORE-002.</li>
+          <li><strong>Dependência 2:</strong> resposta da Praxio sobre os leiautes das NTs 2026.001/2026.002 (e-mail enviado em 28/07).</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> aguardar retorno da Praxio sobre os leiautes · mapear esforço de desenvolvimento · Maurício
         </div>
       </div>
     </div>
@@ -1646,22 +1679,28 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">RTC · CORE-004 — Integrações Smartbus e ERPs</div>
+      <div class="section-label">RTC · CORE-004 — Integrações Smartbus e ERPs (Protheus + Fortes)</div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">🔗 CORE-004 · Integrações Smartbus e ERPs (NT v1.14 + Leiaute v200)</div>
-          <span class="badge badge-ongoing">Em andamento</span>
+          <span class="badge badge-pending">Aguardando refinamento técnico</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           <strong>Spec concluída — 16 regras de negócio mapeadas.</strong> Escopo delimitado em reunião de 09/07 com Prevatto, Victor, Flávia, Cristiane e Benício. A integração atual (NT v1.10 + Leiaute v193) não cobre as evoluções exigidas pela NT v1.14 e Leiaute v200 — novos campos no BPE (45, 46, 47), IBE (13, 14, 15) e dois novos registros (RDD e IRD).
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>Escopo atualizado:</strong> versão-alvo passou de v199 para <strong>v200</strong> (mudança no Registro ARA · Tipo de Crédito — sem impacto para o Smart). PRD Confluence e Linear atualizados.
         </div>
         <ul class="update-list" style="margin-top:8px;">
           <li>SMRT-125/126/127 (Fortes Fiscal — BPE/DBE/IBE): <strong>autorizado a avançar independente do Protheus.</strong></li>
           <li>RDD/IRD: bloqueados — aguardando padrão TOTVS.</li>
           <li>SMRT-130 (API Protheus): em espera — Protheus permanece em v193 até PST-3416.</li>
         </ul>
+        <div class="highlight-box" style="background:#fffbeb;border-left-color:#d97706;">
+          <strong>29/07 — Rodrigo Adones:</strong> "Ainda está on hold. Na próxima semana será realizado o refinamento técnico."
+        </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Refinamento técnico com o time tech · Maurício · aguardando agenda
+          <strong>Próx. passo:</strong> Refinamento técnico · Adones + Maurício · semana de 04/08
         </div>
       </div>
     </div>
@@ -1679,7 +1718,19 @@
           <strong>Spec v13 fechada.</strong> Decisões consolidadas em reuniões de 30/06 e 08/07 com André Rocha e Paulo Balbino: modelo 1:N de Entidade Governamental com vigências, pRedutor e zeragem de alíquota por tpEnteGov (Art. 472/473). Menu Administração &gt; Fiscal confirmado com Paulo Balbino. Desenvolvimento autorizado a avançar em paralelo à contratação da consultoria.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
-          <strong>29/07 · Update</strong> — Em desenvolvimento. Deploy da tela de cadastro de entidades governamentais realizado.
+          <strong>29/07 · Update</strong> — Em desenvolvimento. Deploy da tela de cadastro de entidades governamentais realizado (Paulo Balbino).
+        </div>
+        <ul class="update-list" style="margin-top:8px;">
+          <li><span style="color:#1D9E75;">✅</span> SMRT-168 · GovernmentAgency class — Migration</li>
+          <li><span style="color:#1D9E75;">✅</span> SMRT-172 · GovernmentAgencyDataAccess</li>
+          <li><span style="color:#1D9E75;">✅</span> SMRT-174 · GovernmentAgencyValidityDataAccess</li>
+          <li><span style="color:#1D9E75;">✅</span> SMRT-175 · GovernmentAgencyComponent</li>
+          <li><span style="color:#1D9E75;">✅</span> SMRT-176 · Create permission script — SQL</li>
+          <li><span style="color:#d97706;">⏳</span> SMRT-177 · Add log — <em>In Validation</em></li>
+          <li><span style="color:#9ca3af;">⬜</span> SMRT-411 · Preencher refDFeAnt — <em>Todo</em></li>
+        </ul>
+        <div class="highlight-box">
+          <strong>5/7 issues concluídas (71%)</strong> — dev termina esta semana, QA na semana seguinte. <strong>Previsão de entrega total: 12/08</strong>, confirmada por Rodrigo Adones.
         </div>
         <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
           <strong>Atenção:</strong> Lacunas de interpretação normativa (itens BPE-08, BPE-06, BPE-13 do Caderno de Testes) podem gerar retrabalho se a consultoria revisar a leitura das NTs.
