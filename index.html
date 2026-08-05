@@ -307,6 +307,26 @@
   .badge-pending { background: #fff3e0; color: #b06010; }
   .badge-blocked { background: #fdecea; color: #c0392b; }
 
+  /* ── SUBTAB TOGGLE (ex.: Discovery x Roadmap dentro de uma aba) ── */
+  .subtab-toggle { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .subtab-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #eaecf2;
+    background: #f7f9fc;
+    color: #4a5568;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .subtab-btn:hover { background: #eef1f6; }
+  .subtab-btn.active {
+    background: linear-gradient(90deg, #F482E7, #83C0F2);
+    color: #fff;
+    border-color: transparent;
+  }
+
   /* ── DETAIL BLOCKS ── */
   .detail-block {
     background: #f7f9fc;
@@ -2120,6 +2140,14 @@
       </div>
     </div>
 
+    <!-- SUBTAB TOGGLE -->
+    <div class="subtab-toggle">
+      <button type="button" class="subtab-btn active" id="subtabbtn-fraudes-discovery" onclick="showFraudesView('discovery')">📋 Discovery ANTT</button>
+      <button type="button" class="subtab-btn" id="subtabbtn-fraudes-roadmap" onclick="showFraudesView('roadmap')">🗺️ Roadmap de Produto</button>
+    </div>
+
+    <div id="fraudes-view-discovery">
+
     <!-- ALERT CARDS -->
     <div class="section-label">Requer atenção</div>
     <div class="alert-grid" style="--alert-cols:2;">
@@ -2149,7 +2177,265 @@
 
     <div class="divider"></div>
 
-    <!-- ══════ ROADMAP DE PRODUTO — ANTIFRAUDE DE GRATUIDADES ══════ -->
+    <!-- DESENVOLVIMENTO -->
+    <div class="section">
+      <div class="section-label">Desenvolvimento — Fase 1 entregue · 04/08</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🛠️ Cancelamento automático libera a poltrona da gratuidade de criança</div>
+          <span class="badge badge-done">Fase 1 entregue</span>
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          Deploy realizado na noite de 04/08: o bilhete da criança agora é cancelado junto com o bilhete principal, liberando a poltrona de gratuidade automaticamente. Fase 2 já iniciada. Todas as fases de melhorias e evolução do sistema referentes às gratuidades já foram levantadas e apresentadas ao time tech.
+        </div>
+        <div class="highlight-box blue">
+          <strong>Nota:</strong> esta frente é independente do Motor de Conexões V2 — o motor segue pausado para qualquer atualização, sem relação com este desenvolvimento.<br>
+          <strong>Próx. passo:</strong> Daniel organiza e documenta todas as fases do plano de melhorias · em andamento
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ESTIMATIVA DE IMPACTO -->
+    <div class="section">
+      <div class="section-label">Estimativa de Impacto · 23/07</div>
+      <div class="kpi-grid col3">
+        <div class="kpi-card accent-danger">
+          <div class="kpi-label">Perda por fraude confirmada</div>
+          <div class="kpi-value">R$ 2,28mi</div>
+          <div class="kpi-sub">A1+A2+A3+B1 · ano 2026</div>
+        </div>
+        <div class="kpi-card accent-warn">
+          <div class="kpi-label">Receita não auferida (total)</div>
+          <div class="kpi-value">R$ 55,84mi</div>
+          <div class="kpi-sub">Programa inteiro (legítimo + fraude) / ano</div>
+        </div>
+        <div class="kpi-card accent">
+          <div class="kpi-label">Perda já realizada (cat. 1)</div>
+          <div class="kpi-value">R$ 634k</div>
+          <div class="kpi-sub">Duplicidade jan–23/jul/26 · +R$ 64k ainda evitáveis</div>
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:12px;">
+        <div class="detail-header">
+          <div class="detail-title">Categorias mensuradas</div>
+        </div>
+        <div class="kpi-grid col3" style="margin-top:8px;">
+          <div class="kpi-card accent-danger">
+            <div class="kpi-label">A1 · Duplicidade mesma viagem</div>
+            <div class="kpi-value" style="font-size:19px;">4.929</div>
+            <div class="kpi-sub">bilhetes excedentes · 4.513 grupos duplicados, alta confiança On</div>
+          </div>
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">A2 · Viagens incompatíveis</div>
+            <div class="kpi-value" style="font-size:19px;">4.785</div>
+            <div class="kpi-sub">pares · 1.173 nível 1, alta confiança</div>
+          </div>
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">A3 · Acompanhante sem par</div>
+            <div class="kpi-value" style="font-size:19px;">3.351</div>
+            <div class="kpi-sub">acompanhantes em 2.669 localizadores</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">B1 · Idade incompatível</div>
+            <div class="kpi-value" style="font-size:19px;">3.053</div>
+            <div class="kpi-sub">bilhetes · 100% verificável via data de nascimento</div>
+          </div>
+          <div class="kpi-card accent">
+            <div class="kpi-label">B2 · Lista negra (proxy atípico)</div>
+            <div class="kpi-value" style="font-size:19px;">3.419</div>
+            <div class="kpi-sub">beneficiários · 12+ bilhetes/ano, 78.682 bilhetes no total</div>
+          </div>
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">C · Agentes/PDV suspeitos</div>
+            <div class="kpi-value" style="font-size:19px;">73</div>
+            <div class="kpi-sub">agentes · 239 ocorrências (cancela normal, reemite gratuidade)</div>
+          </div>
+        </div>
+        <div class="kpi-grid col2" style="margin-top:8px;">
+          <div class="kpi-card accent-blue">
+            <div class="kpi-label">Canal da fraude · duplicidade</div>
+            <div class="kpi-value" style="font-size:19px;">64% On · 36% Off</div>
+            <div class="kpi-sub">Canais digitais são só 23,7% do volume total → sobrerrepresentação de 2,7×</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">Volume mensal (meses fechados)</div>
+            <div class="kpi-value" style="font-size:19px;">~2.211 bilhetes</div>
+            <div class="kpi-sub">R$ 314k/mês · pico em julho: 2.656 bilhetes, R$ 377k</div>
+          </div>
+        </div>
+        <div class="blocker-box">
+          Categoria 3 (uso indevido) e Bloco C (agentes suspeitos) ainda sem estimativa de R$. A estimativa de "30–40% indevida" do time operacional ainda não foi reconciliada com as queries. Gap crítico: nenhum material traz prazo ou custo da solução estrutural.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TAXONOMIA -->
+    <div class="section">
+      <div class="section-label">Taxonomia de Fraude · Bruno Ferro · 21/07</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">3 categorias identificadas — canais digitais são o vetor principal</div>
+          <span class="badge badge-ongoing">Em mapeamento</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>1 · Marcações em duplicidade</strong> — mesmo passageiro, 2+ bilhetes para o mesmo trecho/data/hora. <span style="color:#1D9E75;font-weight:600;">Mapeada.</span> Cancelamento manual semanal (Bergson/Roberto).</li>
+          <li><strong>2 · Viagens incompatíveis</strong> — combinações fisicamente impossíveis. <span style="color:#d97706;font-weight:600;">Em levantamento.</span> Query entregue.</li>
+          <li><strong>3 · Utilização indevida</strong> — pessoa sem direito ao benefício. <span style="color:#dc2626;font-weight:600;">Mais complexa.</span> Proxy de idade disponível via data de nascimento; renda não verificável via banco.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Vetor digital — duas métricas distintas:</strong> canais online têm taxa de duplicidade de <strong>4 a 11×</strong> maior que canais presenciais (ex.: Mobile 5,50% vs. Prestação de Serviço 0,51%). Além disso, o online responde por 64% da fraude mas é só 23,7% do volume — <strong>2,7×</strong> de sobrerrepresentação do share de fraude vs. share de volume. CPF/ID do cliente só é confiável em Internet e Mobile; nos demais canais a chave cai para nome (confiança baixa) — é exatamente nesse vetor que a solução estrutural precisa agir.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- EXPOSIÇÃO ANTT -->
+    <div class="section">
+      <div class="section-label">Exposição ANTT · Art. 313 · Resolução 6.033/2023</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">📋 Risco regulatório — Infração 313</div>
+          <span class="badge badge-blocked">Risco crítico</span>
+        </div>
+        <ul class="update-list">
+          <li>Multa do art. 313: <strong>R$ 8.769 a R$ 70.153 por mercado</strong> (30.000 UMRP × 0,292308 — por viagem convencional, por semana, por sentido).</li>
+          <li>Guanabara-Nordeste: <strong>900+ mercados</strong> (só essa empresa). REX, RAF, UTIL, BRISA e SAMPAIO: mapeamento ainda pendente.</li>
+          <li>SUFIS inicia fiscalização online a partir de <strong>01/08/2026</strong>. Janela de adequação sem risco: até <strong>31/07</strong>.</li>
+          <li>Roberto Vasconcelos: a aplicação por mercado tem discricionariedade do fiscal — o teto teórico é a exposição máxima, não uma previsão realista.</li>
+        </ul>
+        <div class="highlight-box" style="margin-top:8px;">
+          <strong>Teto teórico consolidado:</strong> R$ 11,6 a R$ 92,6 milhões (900 mercados × R$ 8.769–70.153/mercado, só Guanabara-Nordeste). Manual de fiscalização da ANTT solicitado por Roberto (pendente de recebimento).
+        </div>
+        <div class="highlight-box blue" style="margin-top:8px;">
+          <strong>Ação emergencial:</strong> desativar a gratuidade em canais digitais antes de 31/07 via backoffice — simples de executar, neutraliza o risco de nova autuação a partir de 01/08. <strong>Pendente: aval de Bia.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DECISÃO RECOMENDADA -->
+    <div class="section">
+      <div class="section-label">Decisão recomendada ao board · 23/07</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🛑 Solução temporária + solução definitiva</div>
+          <span class="badge badge-pending">Decisão pendente</span>
+        </div>
+        <div style="overflow-x:auto;margin-top:10px;">
+          <table class="conflict-table">
+            <thead>
+              <tr>
+                <th>Ação</th>
+                <th style="text-align:center;">Prazo</th>
+                <th style="text-align:center;">Impacto</th>
+                <th style="text-align:center;">Risco de não agir</th>
+                <th style="text-align:center;">Custo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Suspender gratuidade nos canais digitais</strong></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">8 dias (até 31/07)</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
+              </tr>
+              <tr>
+                <td>Pedir nº de mercados das outras 5 empresas</td>
+                <td style="text-align:center;">1 semana</td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
+              </tr>
+              <tr>
+                <td>Auditar top 10 agentes/PDV e top 5 lista negra</td>
+                <td style="text-align:center;">2–4 semanas</td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
+                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
+              </tr>
+              <tr>
+                <td>T-shirt sizing da solução estrutural (Ítalo + Engenharia)</td>
+                <td style="text-align:center;">2 semanas</td>
+                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
+                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
+                <td style="text-align:center;"><span class="badge" style="background:#f1f5f9;color:#64748b;">A definir</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kpi-grid col2" style="margin-top:10px;">
+          <div class="kpi-card accent-warn">
+            <div class="kpi-label">Temporária — janela de 8 dias</div>
+            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Pausar gratuidade nos canais digitais via backoffice. Simples de executar. Neutraliza risco de nova autuação a partir de 01/08. Não resolve a causa raiz.</div>
+          </div>
+          <div class="kpi-card accent-teal">
+            <div class="kpi-label">Definitiva — sem T-shirt size</div>
+            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Bloquear gratuidades simultâneas por CPF/ID do cliente na mesma rota/dia + validação documental na reserva. Maior gap do discovery — sem estimativa de prazo ou custo.</div>
+          </div>
+        </div>
+        <div class="blocker-box">
+          <strong>Próx. passo urgente:</strong> aval de Bia para pausar canais digitais antes de 31/07 · Maurício · URGENTE
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ENTREGÁVEIS -->
+    <div class="section">
+      <div class="section-label">Discovery — Entregáveis · 22–23/07</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">📦 Pacote de discovery produzido</div>
+          <span class="badge badge-done">Entregue</span>
+        </div>
+        <ul class="update-list">
+          <li><strong>Dashboard executivo HTML</strong> — 10 abas, 18.512 linhas de dados completos, com busca via JS e links diretos para o frontoffice/backoffice por bilhete.</li>
+          <li><strong>6 queries SQL vigentes</strong> (TblBilhete/BI) — A1 duplicidade, A2 viagens incompatíveis, A3 acompanhante sem par, B elegibilidade/lista negra, C agente suspeito, D perda de tarifa real + LoadFactor, E mercados digitais/multa.</li>
+          <li><strong>Workbook Excel multi-aba</strong> (~3,4MB) — export por categoria para uso do time comercial e BI.</li>
+          <li><strong>Benchmark de mercado</strong> — 6 viações + 4 marketplaces. Viaje Guanabara conforme. ClickBus e QueroPassagem revendem inventário próprio — ação via contrato.</li>
+        </ul>
+        <div class="blocker-box">
+          <strong>Gap crítico em aberto:</strong> nenhum material traz prazo ou custo da solução estrutural. Recomendação: pedir estimativa T-shirt (P/M/G) a Ítalo + Engenharia como próximo passo imediato.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PRÓXIMOS PASSOS -->
+    <div class="section">
+      <div class="section-label">Próximos passos</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Ações priorizadas</div>
+        </div>
+        <ul class="update-list">
+          <li>✅ <strong>Concluído · 23/07</strong> — Dashboard executivo HTML + planilha de dados como base única do discovery · Maurício</li>
+          <li>📅 <strong>Antes de 31/07 — URGENTE</strong> — Decisão de Bia: desativar gratuidade em canais digitais · Maurício</li>
+          <li>📅 <strong>Até 31/07</strong> — Pedir a REX, RAF, UTIL, BRISA, SAMPAIO o nº de mercados (dimensionar exposição total do grupo) · Maurício</li>
+          <li>📅 <strong>Até 31/07</strong> — Acompanhar recebimento do manual de fiscalização ANTT (solicitado por Roberto) · Maurício</li>
+          <li>📅 <strong>A agendar</strong> — Reunião com Ítalo/Daniel para reconciliar estimativa 30–40% (campo) com volumes por categoria (queries) — definir conceito comum de "indevida" antes de levar ao board · Maurício + Ítalo</li>
+          <li>📅 <strong>A combinar</strong> — Plano de combate a fraudes + estimativa T-shirt da solução estrutural · Ítalo + Engenharia</li>
+          <li>📅 <strong>Aberto</strong> — Confirmar com Roberto o descredenciamento de ~20 agentes suspeitos (Guanabara Nordeste)</li>
+        </ul>
+      </div>
+    </div>
+
+    </div>
+    <!-- /fraudes-view-discovery -->
+
+    <div id="fraudes-view-roadmap" style="display:none;">
+
+<!-- ══════ ROADMAP DE PRODUTO — ANTIFRAUDE DE GRATUIDADES ══════ -->
     <div class="section">
       <div class="section-label">🗺️ Roadmap de Produto — Antifraude de Gratuidades ANTT</div>
       <div class="detail-block">
@@ -2683,260 +2969,8 @@
       </div>
     </div>
 
-    <div class="divider"></div>
-
-    <!-- DESENVOLVIMENTO -->
-    <div class="section">
-      <div class="section-label">Desenvolvimento — Fase 1 entregue · 04/08</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">🛠️ Cancelamento automático libera a poltrona da gratuidade de criança</div>
-          <span class="badge badge-done">Fase 1 entregue</span>
-        </div>
-        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
-          Deploy realizado na noite de 04/08: o bilhete da criança agora é cancelado junto com o bilhete principal, liberando a poltrona de gratuidade automaticamente. Fase 2 já iniciada. Todas as fases de melhorias e evolução do sistema referentes às gratuidades já foram levantadas e apresentadas ao time tech.
-        </div>
-        <div class="highlight-box blue">
-          <strong>Nota:</strong> esta frente é independente do Motor de Conexões V2 — o motor segue pausado para qualquer atualização, sem relação com este desenvolvimento.<br>
-          <strong>Próx. passo:</strong> Daniel organiza e documenta todas as fases do plano de melhorias · em andamento
-        </div>
-      </div>
     </div>
-
-    <div class="divider"></div>
-
-    <!-- ESTIMATIVA DE IMPACTO -->
-    <div class="section">
-      <div class="section-label">Estimativa de Impacto · 23/07</div>
-      <div class="kpi-grid col3">
-        <div class="kpi-card accent-danger">
-          <div class="kpi-label">Perda por fraude confirmada</div>
-          <div class="kpi-value">R$ 2,28mi</div>
-          <div class="kpi-sub">A1+A2+A3+B1 · ano 2026</div>
-        </div>
-        <div class="kpi-card accent-warn">
-          <div class="kpi-label">Receita não auferida (total)</div>
-          <div class="kpi-value">R$ 55,84mi</div>
-          <div class="kpi-sub">Programa inteiro (legítimo + fraude) / ano</div>
-        </div>
-        <div class="kpi-card accent">
-          <div class="kpi-label">Perda já realizada (cat. 1)</div>
-          <div class="kpi-value">R$ 634k</div>
-          <div class="kpi-sub">Duplicidade jan–23/jul/26 · +R$ 64k ainda evitáveis</div>
-        </div>
-      </div>
-
-      <div class="detail-block" style="margin-top:12px;">
-        <div class="detail-header">
-          <div class="detail-title">Categorias mensuradas</div>
-        </div>
-        <div class="kpi-grid col3" style="margin-top:8px;">
-          <div class="kpi-card accent-danger">
-            <div class="kpi-label">A1 · Duplicidade mesma viagem</div>
-            <div class="kpi-value" style="font-size:19px;">4.929</div>
-            <div class="kpi-sub">bilhetes excedentes · 4.513 grupos duplicados, alta confiança On</div>
-          </div>
-          <div class="kpi-card accent-warn">
-            <div class="kpi-label">A2 · Viagens incompatíveis</div>
-            <div class="kpi-value" style="font-size:19px;">4.785</div>
-            <div class="kpi-sub">pares · 1.173 nível 1, alta confiança</div>
-          </div>
-          <div class="kpi-card accent-warn">
-            <div class="kpi-label">A3 · Acompanhante sem par</div>
-            <div class="kpi-value" style="font-size:19px;">3.351</div>
-            <div class="kpi-sub">acompanhantes em 2.669 localizadores</div>
-          </div>
-          <div class="kpi-card accent-teal">
-            <div class="kpi-label">B1 · Idade incompatível</div>
-            <div class="kpi-value" style="font-size:19px;">3.053</div>
-            <div class="kpi-sub">bilhetes · 100% verificável via data de nascimento</div>
-          </div>
-          <div class="kpi-card accent">
-            <div class="kpi-label">B2 · Lista negra (proxy atípico)</div>
-            <div class="kpi-value" style="font-size:19px;">3.419</div>
-            <div class="kpi-sub">beneficiários · 12+ bilhetes/ano, 78.682 bilhetes no total</div>
-          </div>
-          <div class="kpi-card accent-blue">
-            <div class="kpi-label">C · Agentes/PDV suspeitos</div>
-            <div class="kpi-value" style="font-size:19px;">73</div>
-            <div class="kpi-sub">agentes · 239 ocorrências (cancela normal, reemite gratuidade)</div>
-          </div>
-        </div>
-        <div class="kpi-grid col2" style="margin-top:8px;">
-          <div class="kpi-card accent-blue">
-            <div class="kpi-label">Canal da fraude · duplicidade</div>
-            <div class="kpi-value" style="font-size:19px;">64% On · 36% Off</div>
-            <div class="kpi-sub">Canais digitais são só 23,7% do volume total → sobrerrepresentação de 2,7×</div>
-          </div>
-          <div class="kpi-card accent-teal">
-            <div class="kpi-label">Volume mensal (meses fechados)</div>
-            <div class="kpi-value" style="font-size:19px;">~2.211 bilhetes</div>
-            <div class="kpi-sub">R$ 314k/mês · pico em julho: 2.656 bilhetes, R$ 377k</div>
-          </div>
-        </div>
-        <div class="blocker-box">
-          Categoria 3 (uso indevido) e Bloco C (agentes suspeitos) ainda sem estimativa de R$. A estimativa de "30–40% indevida" do time operacional ainda não foi reconciliada com as queries. Gap crítico: nenhum material traz prazo ou custo da solução estrutural.
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- TAXONOMIA -->
-    <div class="section">
-      <div class="section-label">Taxonomia de Fraude · Bruno Ferro · 21/07</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">3 categorias identificadas — canais digitais são o vetor principal</div>
-          <span class="badge badge-ongoing">Em mapeamento</span>
-        </div>
-        <ul class="update-list">
-          <li><strong>1 · Marcações em duplicidade</strong> — mesmo passageiro, 2+ bilhetes para o mesmo trecho/data/hora. <span style="color:#1D9E75;font-weight:600;">Mapeada.</span> Cancelamento manual semanal (Bergson/Roberto).</li>
-          <li><strong>2 · Viagens incompatíveis</strong> — combinações fisicamente impossíveis. <span style="color:#d97706;font-weight:600;">Em levantamento.</span> Query entregue.</li>
-          <li><strong>3 · Utilização indevida</strong> — pessoa sem direito ao benefício. <span style="color:#dc2626;font-weight:600;">Mais complexa.</span> Proxy de idade disponível via data de nascimento; renda não verificável via banco.</li>
-        </ul>
-        <div class="highlight-box blue">
-          <strong>Vetor digital — duas métricas distintas:</strong> canais online têm taxa de duplicidade de <strong>4 a 11×</strong> maior que canais presenciais (ex.: Mobile 5,50% vs. Prestação de Serviço 0,51%). Além disso, o online responde por 64% da fraude mas é só 23,7% do volume — <strong>2,7×</strong> de sobrerrepresentação do share de fraude vs. share de volume. CPF/ID do cliente só é confiável em Internet e Mobile; nos demais canais a chave cai para nome (confiança baixa) — é exatamente nesse vetor que a solução estrutural precisa agir.
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- EXPOSIÇÃO ANTT -->
-    <div class="section">
-      <div class="section-label">Exposição ANTT · Art. 313 · Resolução 6.033/2023</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">📋 Risco regulatório — Infração 313</div>
-          <span class="badge badge-blocked">Risco crítico</span>
-        </div>
-        <ul class="update-list">
-          <li>Multa do art. 313: <strong>R$ 8.769 a R$ 70.153 por mercado</strong> (30.000 UMRP × 0,292308 — por viagem convencional, por semana, por sentido).</li>
-          <li>Guanabara-Nordeste: <strong>900+ mercados</strong> (só essa empresa). REX, RAF, UTIL, BRISA e SAMPAIO: mapeamento ainda pendente.</li>
-          <li>SUFIS inicia fiscalização online a partir de <strong>01/08/2026</strong>. Janela de adequação sem risco: até <strong>31/07</strong>.</li>
-          <li>Roberto Vasconcelos: a aplicação por mercado tem discricionariedade do fiscal — o teto teórico é a exposição máxima, não uma previsão realista.</li>
-        </ul>
-        <div class="highlight-box" style="margin-top:8px;">
-          <strong>Teto teórico consolidado:</strong> R$ 11,6 a R$ 92,6 milhões (900 mercados × R$ 8.769–70.153/mercado, só Guanabara-Nordeste). Manual de fiscalização da ANTT solicitado por Roberto (pendente de recebimento).
-        </div>
-        <div class="highlight-box blue" style="margin-top:8px;">
-          <strong>Ação emergencial:</strong> desativar a gratuidade em canais digitais antes de 31/07 via backoffice — simples de executar, neutraliza o risco de nova autuação a partir de 01/08. <strong>Pendente: aval de Bia.</strong>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- DECISÃO RECOMENDADA -->
-    <div class="section">
-      <div class="section-label">Decisão recomendada ao board · 23/07</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">🛑 Solução temporária + solução definitiva</div>
-          <span class="badge badge-pending">Decisão pendente</span>
-        </div>
-        <div style="overflow-x:auto;margin-top:10px;">
-          <table class="conflict-table">
-            <thead>
-              <tr>
-                <th>Ação</th>
-                <th style="text-align:center;">Prazo</th>
-                <th style="text-align:center;">Impacto</th>
-                <th style="text-align:center;">Risco de não agir</th>
-                <th style="text-align:center;">Custo</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Suspender gratuidade nos canais digitais</strong></td>
-                <td style="text-align:center;"><span class="badge badge-blocked">8 dias (até 31/07)</span></td>
-                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
-                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
-                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
-              </tr>
-              <tr>
-                <td>Pedir nº de mercados das outras 5 empresas</td>
-                <td style="text-align:center;">1 semana</td>
-                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
-                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
-                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
-              </tr>
-              <tr>
-                <td>Auditar top 10 agentes/PDV e top 5 lista negra</td>
-                <td style="text-align:center;">2–4 semanas</td>
-                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
-                <td style="text-align:center;"><span class="badge badge-pending">Médio</span></td>
-                <td style="text-align:center;"><span class="badge badge-done">Baixo</span></td>
-              </tr>
-              <tr>
-                <td>T-shirt sizing da solução estrutural (Ítalo + Engenharia)</td>
-                <td style="text-align:center;">2 semanas</td>
-                <td style="text-align:center;"><span class="badge badge-done">Alto</span></td>
-                <td style="text-align:center;"><span class="badge badge-blocked">Alto</span></td>
-                <td style="text-align:center;"><span class="badge" style="background:#f1f5f9;color:#64748b;">A definir</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="kpi-grid col2" style="margin-top:10px;">
-          <div class="kpi-card accent-warn">
-            <div class="kpi-label">Temporária — janela de 8 dias</div>
-            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Pausar gratuidade nos canais digitais via backoffice. Simples de executar. Neutraliza risco de nova autuação a partir de 01/08. Não resolve a causa raiz.</div>
-          </div>
-          <div class="kpi-card accent-teal">
-            <div class="kpi-label">Definitiva — sem T-shirt size</div>
-            <div class="kpi-sub" style="font-size:13px;color:#4a5568;margin-top:4px;">Bloquear gratuidades simultâneas por CPF/ID do cliente na mesma rota/dia + validação documental na reserva. Maior gap do discovery — sem estimativa de prazo ou custo.</div>
-          </div>
-        </div>
-        <div class="blocker-box">
-          <strong>Próx. passo urgente:</strong> aval de Bia para pausar canais digitais antes de 31/07 · Maurício · URGENTE
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- ENTREGÁVEIS -->
-    <div class="section">
-      <div class="section-label">Discovery — Entregáveis · 22–23/07</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">📦 Pacote de discovery produzido</div>
-          <span class="badge badge-done">Entregue</span>
-        </div>
-        <ul class="update-list">
-          <li><strong>Dashboard executivo HTML</strong> — 10 abas, 18.512 linhas de dados completos, com busca via JS e links diretos para o frontoffice/backoffice por bilhete.</li>
-          <li><strong>6 queries SQL vigentes</strong> (TblBilhete/BI) — A1 duplicidade, A2 viagens incompatíveis, A3 acompanhante sem par, B elegibilidade/lista negra, C agente suspeito, D perda de tarifa real + LoadFactor, E mercados digitais/multa.</li>
-          <li><strong>Workbook Excel multi-aba</strong> (~3,4MB) — export por categoria para uso do time comercial e BI.</li>
-          <li><strong>Benchmark de mercado</strong> — 6 viações + 4 marketplaces. Viaje Guanabara conforme. ClickBus e QueroPassagem revendem inventário próprio — ação via contrato.</li>
-        </ul>
-        <div class="blocker-box">
-          <strong>Gap crítico em aberto:</strong> nenhum material traz prazo ou custo da solução estrutural. Recomendação: pedir estimativa T-shirt (P/M/G) a Ítalo + Engenharia como próximo passo imediato.
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- PRÓXIMOS PASSOS -->
-    <div class="section">
-      <div class="section-label">Próximos passos</div>
-      <div class="detail-block">
-        <div class="detail-header">
-          <div class="detail-title">Ações priorizadas</div>
-        </div>
-        <ul class="update-list">
-          <li>✅ <strong>Concluído · 23/07</strong> — Dashboard executivo HTML + planilha de dados como base única do discovery · Maurício</li>
-          <li>📅 <strong>Antes de 31/07 — URGENTE</strong> — Decisão de Bia: desativar gratuidade em canais digitais · Maurício</li>
-          <li>📅 <strong>Até 31/07</strong> — Pedir a REX, RAF, UTIL, BRISA, SAMPAIO o nº de mercados (dimensionar exposição total do grupo) · Maurício</li>
-          <li>📅 <strong>Até 31/07</strong> — Acompanhar recebimento do manual de fiscalização ANTT (solicitado por Roberto) · Maurício</li>
-          <li>📅 <strong>A agendar</strong> — Reunião com Ítalo/Daniel para reconciliar estimativa 30–40% (campo) com volumes por categoria (queries) — definir conceito comum de "indevida" antes de levar ao board · Maurício + Ítalo</li>
-          <li>📅 <strong>A combinar</strong> — Plano de combate a fraudes + estimativa T-shirt da solução estrutural · Ítalo + Engenharia</li>
-          <li>📅 <strong>Aberto</strong> — Confirmar com Roberto o descredenciamento de ~20 agentes suspeitos (Guanabara Nordeste)</li>
-        </ul>
-      </div>
-    </div>
+    <!-- /fraudes-view-roadmap -->
 
   </div>
 
@@ -3288,6 +3322,18 @@
     activateTab(TAB_IDS[next]);
     nextBtn.focus();
   });
+
+  function showFraudesView(view) {
+    var discovery = document.getElementById('fraudes-view-discovery');
+    var roadmap = document.getElementById('fraudes-view-roadmap');
+    var btnDiscovery = document.getElementById('subtabbtn-fraudes-discovery');
+    var btnRoadmap = document.getElementById('subtabbtn-fraudes-roadmap');
+    if (!discovery || !roadmap) return;
+    discovery.style.display = (view === 'discovery') ? '' : 'none';
+    roadmap.style.display = (view === 'roadmap') ? '' : 'none';
+    if (btnDiscovery) btnDiscovery.classList.toggle('active', view === 'discovery');
+    if (btnRoadmap) btnRoadmap.classList.toggle('active', view === 'roadmap');
+  }
 
   function toggleSidebar() {
     var sb = document.getElementById('sidebar-nav');
