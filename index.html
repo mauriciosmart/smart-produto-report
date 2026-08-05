@@ -2149,6 +2149,542 @@
 
     <div class="divider"></div>
 
+    <!-- ══════ ROADMAP DE PRODUTO — ANTIFRAUDE DE GRATUIDADES ══════ -->
+    <div class="section">
+      <div class="section-label">🗺️ Roadmap de Produto — Antifraude de Gratuidades ANTT</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Smartbus · Responsável: Daniel Silva</div>
+          <span class="badge badge-ongoing">20 demandas · 4 fases</span>
+        </div>
+        <div class="detail-body">
+          Origem: reunião de 29/07/2026 com José Carlos, Bruno, Zé e Maurício. Documento de 05/08/2026. Canais afetados: site, app, WhatsApp, guichê (front office), backoffice, bilhete/BPe.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">1 · O Problema</div>
+      <div class="detail-block">
+        <div class="detail-body">
+          O Smartbus não tem nenhuma trava de gratuidade. Qualquer CPF marca quantas gratuidades quiser, em qualquer canal, sem comprovar o benefício. E a empresa não tem como negar formalmente uma gratuidade indevida sem se expor a autuação da ANTT, porque não existe emissão de termo de recusa no sistema.
+        </div>
+      </div>
+
+      <div class="kpi-grid col3" style="margin-top:12px;">
+        <div class="kpi-card accent-danger">
+          <div class="kpi-label">Passagens no mesmo dia, mesmo CPF</div>
+          <div class="kpi-value">9</div>
+        </div>
+        <div class="kpi-card accent-danger">
+          <div class="kpi-label">Viagens em 1 ano, mesmo beneficiário</div>
+          <div class="kpi-value">150</div>
+        </div>
+        <div class="kpi-card accent-warn">
+          <div class="kpi-label">P/ emitir e cancelar bilhete pagante</div>
+          <div class="kpi-value">13s</div>
+          <div class="kpi-sub">criança de colo seguiu transportada</div>
+        </div>
+      </div>
+
+      <div class="blocker-box">
+        <strong>2 poltronas</strong> ocupadas no mesmo carro/horário pelo mesmo CPF (61 e 62) · Multa por autuação ANTT: <strong>R$ 8.000</strong> (premissa citada na reunião) · Volume total e receita perdida: <strong>não medido — é entrega da Fase 0</strong>.
+      </div>
+
+      <div class="detail-block" style="margin-top:12px;">
+        <div class="detail-header">
+          <div class="detail-title">Brechas confirmadas</div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>#</th><th>Brecha</th><th>Tratada em</th></tr></thead>
+            <tbody>
+              <tr><td data-label="#">1</td><td data-label="Brecha">Duplicidade: mesmo CPF marca mais de uma poltrona no mesmo carro e horário</td><td data-label="Tratada em">Fase 1</td></tr>
+              <tr><td data-label="#">2</td><td data-label="Brecha">Viagens incompatíveis: nova marcação com a viagem anterior em curso, ou destino geograficamente inviável</td><td data-label="Tratada em">Fase 1 e Fase 3</td></tr>
+              <tr><td data-label="#">3</td><td data-label="Brecha">Zero comprovação: nenhum canal confere se o CPF tem direito ao benefício</td><td data-label="Tratada em">Fase 2</td></tr>
+              <tr><td data-label="#">4</td><td data-label="Brecha">Acompanhante solto: emitido e transportado sem o titular do passe livre</td><td data-label="Tratada em">Fase 1</td></tr>
+              <tr><td data-label="#">5</td><td data-label="Brecha">Vínculo quebrado: pagante cancelado, criança de colo segue transportada e poltrona travada</td><td data-label="Tratada em">Fase 0</td></tr>
+              <tr><td data-label="#">6</td><td data-label="Brecha">Bilhete sem destaque: motorista e fiscal não distinguem gratuidade de pagante</td><td data-label="Tratada em">Fase 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">2 · Visão Geral do Roadmap</div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="kpi-card accent-danger">
+          <div class="kpi-label">Fase 0 · Agora</div>
+          <div class="kpi-value" style="font-size:15px;">Correções imediatas</div>
+          <div class="kpi-sub">~2 semanas · 4 demandas</div>
+        </div>
+        <div class="kpi-card accent-warn">
+          <div class="kpi-label">Fase 1 · Agora</div>
+          <div class="kpi-value" style="font-size:15px;">Travas + termo de recusa</div>
+          <div class="kpi-sub">~8 semanas · 6 demandas</div>
+        </div>
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">Fase 2 · Próximo</div>
+          <div class="kpi-value" style="font-size:15px;">Comprovação do benefício</div>
+          <div class="kpi-sub">~10 semanas · 6 demandas</div>
+        </div>
+        <div class="kpi-card accent-teal">
+          <div class="kpi-label">Fase 3 · Depois</div>
+          <div class="kpi-value" style="font-size:15px;">Evolução e escala</div>
+          <div class="kpi-sub">a definir · 4 demandas</div>
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:12px;">
+        <div class="detail-header"><div class="detail-title">Objetivo de cada fase</div></div>
+        <ul class="update-list">
+          <li><strong>Fase 0:</strong> parar o sangramento — são bugs em produção, não features novas. Sai do escopo do projeto e entra na fila de correção.</li>
+          <li><strong>Fase 1:</strong> impedir a marcação indevida e passar a negar com respaldo legal. Resolve cerca de 90% dos casos.</li>
+          <li><strong>Fase 2:</strong> fechar a porta de entrada — só emitir para quem comprova o direito.</li>
+          <li><strong>Fase 3:</strong> casos residuais, viabilidade geográfica, automação e fraude interna.</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box blue" style="margin-top:10px;">
+        <strong>Sequenciamento:</strong> Fases 0 e 1 correm em paralelo, porque a Fase 0 é correção de defeito e não deveria disputar prioridade com o projeto. A Fase 2 só inicia com parecer jurídico favorável ao modelo de checkout com espera. A Fase 3 só é priorizada depois que o painel da Fase 0 mostrar o volume residual.
+      </div>
+
+      <div class="detail-block" style="margin-top:12px;">
+        <div class="detail-header"><div class="detail-title">Resultado esperado por fase</div></div>
+        <ul class="update-list">
+          <li><strong>Fase 0:</strong> poltrona não fica mais travada por bilhete vinculado, acompanhante sai com o tipo correto, idade é validada na emissão e existe número de volume e receita perdida por cenário.</li>
+          <li><strong>Fase 1:</strong> marcação indevida bloqueada na origem, com termo de recusa protocolado, e gratuidade identificável no bilhete.</li>
+          <li><strong>Fase 2:</strong> nenhuma gratuidade emitida sem comprovação automática ou documental do benefício.</li>
+          <li><strong>Fase 3:</strong> casos residuais tratados, validação documental automatizada e fraude interna monitorada.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">3 · Demandas por Fase</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:10px;font-style:italic;">Tam.: P = pequeno, M = médio, G = grande · Ordem: sequência de execução dentro da fase (mesmo número = podem correr em paralelo)</div>
+
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">Fase 0 · Correções imediatas</div>
+          <span class="badge badge-blocked">4 demandas</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>ID</th><th>Demanda</th><th>Situação hoje</th><th>Resultado esperado</th><th>Tam.</th><th>Ordem</th><th>Depende de</th><th>Canais</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="ID">F01</td>
+                <td data-label="Demanda">Cancelamento em cascata da passagem vinculada</td>
+                <td data-label="Situação hoje">Cancela-se bilhete a bilhete. O pagante é cancelado, a criança de colo segue como transportada e a poltrona fica travada.</td>
+                <td data-label="Resultado esperado">Cancelar o bilhete principal cancela todo bilhete vinculado e libera a poltrona imediatamente.</td>
+                <td data-label="Tam.">P</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">guichê, backoffice</td>
+                <td data-label="Status">não iniciado *</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F02</td>
+                <td data-label="Demanda">Tipo de passagem do acompanhante no site</td>
+                <td data-label="Situação hoje">No site o acompanhante é emitido com tipo passe livre, o que distorce cota, relatório e fiscalização.</td>
+                <td data-label="Resultado esperado">Acompanhante emitido com o tipo de passagem correto em todos os canais.</td>
+                <td data-label="Tam.">P</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">site</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F03</td>
+                <td data-label="Demanda">Validação de idade na emissão</td>
+                <td data-label="Situação hoje">Existem bilhetes de idoso emitidos com idade incompatível. A checagem existe, mas não está barrando.</td>
+                <td data-label="Resultado esperado">Data de nascimento conferida contra a regra do benefício, com emissão negada de imediato.</td>
+                <td data-label="Tam.">P</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F04</td>
+                <td data-label="Demanda">Painel de volume e receita perdida por cenário</td>
+                <td data-label="Situação hoje">Sabemos que os casos existem, mas não quantos, em que canais, nem quanto custam por mês.</td>
+                <td data-label="Resultado esperado">Painel no Discovery com volume e receita perdida por cenário de fraude, base para priorizar as fases seguintes.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">backoffice</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="highlight-box" style="margin-top:8px;">
+          <strong>* F01:</strong> o deploy de 04/08 (ver seção "Desenvolvimento" acima) já entrega o comportamento descrito no resultado esperado desta demanda. O status "não iniciado" reflete o roadmap formal na data do documento (05/08) — a validar/atualizar pelo time.
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:14px;">
+        <div class="detail-header">
+          <div class="detail-title">Fase 1 · Travas de marcação e termo de recusa</div>
+          <span class="badge badge-pending">6 demandas</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>ID</th><th>Demanda</th><th>Situação hoje</th><th>Resultado esperado</th><th>Tam.</th><th>Ordem</th><th>Depende de</th><th>Canais</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="ID">F05</td>
+                <td data-label="Demanda">Motor de regras antifraude</td>
+                <td data-label="Situação hoje">Nenhuma trava de gratuidade no sistema. Qualquer regra nova exige desenvolvimento e deploy.</td>
+                <td data-label="Resultado esperado">Módulo onde produto e operação cadastram, ligam e desligam regras sem depender do time de tech.</td>
+                <td data-label="Tam.">G</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F09</td>
+                <td data-label="Demanda">Módulo de Termo de Recusa</td>
+                <td data-label="Situação hoje">Não existe forma de negar formalmente. Negar sem documento protocolado é o que gera multa.</td>
+                <td data-label="Resultado esperado">Recusa com protocolo, motivo, canal de origem, envio por e-mail, 2ª via, log e guarda de 5 anos, acessível para consulta futura.</td>
+                <td data-label="Tam.">G</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">site, app, WhatsApp, guichê, backoffice</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F10</td>
+                <td data-label="Demanda">Destaque de gratuidade no bilhete</td>
+                <td data-label="Situação hoje">Passe livre sai em corpo mínimo no meio do bilhete. Motorista e fiscal não enxergam.</td>
+                <td data-label="Resultado esperado">Destaque junto ao QR Code e marca d'água no PDF, configurável por tipo de passagem, sem violar o layout obrigatório do BPe.</td>
+                <td data-label="Tam.">P</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">bilhete/BPe</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F08</td>
+                <td data-label="Demanda">Vínculo obrigatório entre passagens</td>
+                <td data-label="Situação hoje">Acompanhante de passe livre pode ser emitido e viajar sozinho, sem titular no mesmo serviço.</td>
+                <td data-label="Resultado esperado">Nova configuração "ocupa poltrona" somada ao vínculo obrigatório. Sem titular não existe acompanhante, criança de colo, cão ou gato.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">2</td><td data-label="Depende de">F01</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F06</td>
+                <td data-label="Demanda">Trava de duplicidade no mesmo serviço</td>
+                <td data-label="Situação hoje">O mesmo CPF marca duas ou mais poltronas no mesmo carro e horário, em qualquer canal.</td>
+                <td data-label="Resultado esperado">Segunda marcação no mesmo serviço é negada e gera termo de recusa automático.</td>
+                <td data-label="Tam.">P</td><td data-label="Ordem">3</td><td data-label="Depende de">F05, F09</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F07</td>
+                <td data-label="Demanda">Trava de viagem não finalizada</td>
+                <td data-label="Situação hoje">O passageiro marca vários horários do mesmo dia e bloqueia poltronas de outros beneficiários.</td>
+                <td data-label="Resultado esperado">Nenhuma nova marcação entre a partida e a chegada prevista da viagem já emitida. Volta no mesmo dia continua permitida.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">3</td><td data-label="Depende de">F05, F09</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:14px;">
+        <div class="detail-header">
+          <div class="detail-title">Fase 2 · Comprovação do benefício</div>
+          <span class="badge badge-pending">6 demandas</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>ID</th><th>Demanda</th><th>Situação hoje</th><th>Resultado esperado</th><th>Tam.</th><th>Ordem</th><th>Depende de</th><th>Canais</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="ID">F11</td>
+                <td data-label="Demanda">Validação automática do benefício via API</td>
+                <td data-label="Situação hoje">Nenhuma comprovação. O sistema aceita qualquer CPF como beneficiário em qualquer canal.</td>
+                <td data-label="Resultado esperado">Consulta automática na base do benefício (ID Jovem, passe livre, carteira do idoso) antes de emitir.</td>
+                <td data-label="Tam.">G</td><td data-label="Ordem">1</td><td data-label="Depende de">nenhuma</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F12</td>
+                <td data-label="Demanda">Anexo de documento em todos os canais</td>
+                <td data-label="Situação hoje">Quando a consulta não retorna, não existe plano B. A emissão simplesmente segue em frente.</td>
+                <td data-label="Resultado esperado">Passageiro anexa o documento e declara veracidade. No guichê, o bilheteiro anexa pelo front office.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">2</td><td data-label="Depende de">F11</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F13</td>
+                <td data-label="Demanda">Fila de validação no backoffice</td>
+                <td data-label="Situação hoje">Não há tela para conferir documento. Toda tratativa acontece por fora do sistema.</td>
+                <td data-label="Resultado esperado">Fila com aprovar ou recusar, responsável identificado e tempo de resposta medido.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">3</td><td data-label="Depende de">F12</td><td data-label="Canais">backoffice</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F14</td>
+                <td data-label="Demanda">Liberação automática por SLA</td>
+                <td data-label="Situação hoje">Não existe. Sem alguém olhando, o processo trava ou libera sem critério.</td>
+                <td data-label="Resultado esperado">Se ninguém avaliar no prazo definido, o bilhete é emitido presumindo boa-fé do passageiro.</td>
+                <td data-label="Tam.">P</td><td data-label="Ordem">4</td><td data-label="Depende de">F13</td><td data-label="Canais">site, app, WhatsApp, guichê, backoffice</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F15</td>
+                <td data-label="Demanda">Whitelist de beneficiário já validado</td>
+                <td data-label="Situação hoje">Cada nova compra recomeçaria o processo de documento, mesmo para quem já foi aprovado.</td>
+                <td data-label="Resultado esperado">Aprovado uma vez, as próximas emissões desse CPF passam direto.</td>
+                <td data-label="Tam.">P</td><td data-label="Ordem">4</td><td data-label="Depende de">F13</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F16</td>
+                <td data-label="Demanda">Checkout com espera controlada</td>
+                <td data-label="Situação hoje">Só existem dois caminhos, emitir ou negar. E a ANTT já negou por carta o uso de reserva.</td>
+                <td data-label="Resultado esperado">"Compra concluída, bilhete em até X minutos": não nega e não entrega antes de validar.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">4</td><td data-label="Depende de">F13 e parecer jurídico</td><td data-label="Canais">site, app, WhatsApp</td>
+                <td data-label="Status"><strong style="color:#c0392b;">bloqueado</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="detail-block" style="margin-top:14px;">
+        <div class="detail-header">
+          <div class="detail-title">Fase 3 · Evolução e escala</div>
+          <span class="badge badge-pending">4 demandas</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>ID</th><th>Demanda</th><th>Situação hoje</th><th>Resultado esperado</th><th>Tam.</th><th>Ordem</th><th>Depende de</th><th>Canais</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="ID">F17</td>
+                <td data-label="Demanda">Regra de viabilidade geográfica</td>
+                <td data-label="Situação hoje">O passageiro chega em Juiz de Fora às 15h e marca uma saída de São Paulo às 15h10. O sistema aceita.</td>
+                <td data-label="Resultado esperado">A malha calcula se a próxima viagem é fisicamente possível a partir do destino e do horário anteriores.</td>
+                <td data-label="Tam.">G</td><td data-label="Ordem">1</td><td data-label="Depende de">F04, F05</td><td data-label="Canais">site, app, WhatsApp, guichê</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F18</td>
+                <td data-label="Demanda">Validação documental com IA</td>
+                <td data-label="Situação hoje">A comprovação da Fase 2 depende de conferência humana, o que não escala em alta temporada.</td>
+                <td data-label="Resultado esperado">Leitura automática do documento com OCR e IA. Humano só entra na exceção.</td>
+                <td data-label="Tam.">G</td><td data-label="Ordem">1</td><td data-label="Depende de">F13</td><td data-label="Canais">backoffice</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F19</td>
+                <td data-label="Demanda">Score de risco por CPF</td>
+                <td data-label="Situação hoje">Casos como 150 viagens em um ano só aparecem quando alguém investiga manualmente.</td>
+                <td data-label="Resultado esperado">Score de comportamento por beneficiário, com alerta automático para a operação.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">2</td><td data-label="Depende de">F04, F05</td><td data-label="Canais">backoffice</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+              <tr>
+                <td data-label="ID">F20</td>
+                <td data-label="Demanda">Auditoria de usuário interno</td>
+                <td data-label="Situação hoje">O caso da criança de colo foi um bilheteiro emitindo e cancelando em 13 segundos, sem alerta nenhum.</td>
+                <td data-label="Resultado esperado">Trilha de auditoria por usuário e agência, com alerta em padrão suspeito de emissão e cancelamento.</td>
+                <td data-label="Tam.">M</td><td data-label="Ordem">2</td><td data-label="Depende de">F01</td><td data-label="Canais">guichê, backoffice</td>
+                <td data-label="Status">não iniciado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">4 · Mapa de Dependências</div>
+      <div class="detail-block">
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>Demanda</th><th>Habilita</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Demanda">F01 · Cancelamento em cascata</td><td data-label="Habilita">F08, F20</td></tr>
+              <tr><td data-label="Demanda">F04 · Painel de volume</td><td data-label="Habilita">F17, F19 (priorização)</td></tr>
+              <tr><td data-label="Demanda">F05 · Motor de regras</td><td data-label="Habilita">F06, F07, F17, F19</td></tr>
+              <tr><td data-label="Demanda">F09 · Termo de recusa</td><td data-label="Habilita">F06, F07</td></tr>
+              <tr><td data-label="Demanda">F11 · Validação via API</td><td data-label="Habilita">F12</td></tr>
+              <tr><td data-label="Demanda">F12 · Anexo de documento</td><td data-label="Habilita">F13</td></tr>
+              <tr><td data-label="Demanda">F13 · Fila de validação</td><td data-label="Habilita">F14, F15, F16, F18</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="highlight-box blue" style="margin-top:10px;">
+          <strong>Caminho crítico:</strong> F05 e F09 (Fase 1) → F11 → F12 → F13 (Fase 2) → F18 (Fase 3)
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">5 · Marcos</div>
+      <div class="detail-block">
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>Marco</th><th>Critério de conclusão</th><th>Fase</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Marco">M1 · Sangramento contido</td><td data-label="Critério">F01 a F04 em produção e painel de volume publicado</td><td data-label="Fase">0</td></tr>
+              <tr><td data-label="Marco">M2 · Base legal para negar</td><td data-label="Critério">Motor de regras, termo de recusa e as três travas de marcação em produção</td><td data-label="Fase">1</td></tr>
+              <tr><td data-label="Marco">M3 · Porta de entrada fechada</td><td data-label="Critério">Validação de benefício ativa em todos os canais, com fila de backoffice operando</td><td data-label="Fase">2</td></tr>
+              <tr><td data-label="Marco">M4 · Escala e prevenção</td><td data-label="Critério">Fase 3 priorizada com base no volume residual medido</td><td data-label="Fase">3</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">6 · Riscos</div>
+      <div class="detail-block">
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>ID</th><th>Risco</th><th>Severidade</th><th>Impacto</th><th>Mitigação</th><th>Área</th></tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="ID">R1</td>
+                <td data-label="Risco">Parecer jurídico desfavorável ao checkout com espera (F16)</td>
+                <td data-label="Severidade"><strong style="color:#c0392b;">Alta</strong></td>
+                <td data-label="Impacto">A Fase 2 muda de desenho e a estimativa de 10 semanas deixa de valer</td>
+                <td data-label="Mitigação">Levar o modelo ao jurídico antes de iniciar a Fase 2</td>
+                <td data-label="Área">Produto e Jurídico</td>
+              </tr>
+              <tr>
+                <td data-label="ID">R2</td>
+                <td data-label="Risco">Time não dedicado ao projeto</td>
+                <td data-label="Severidade"><strong style="color:#c0392b;">Alta</strong></td>
+                <td data-label="Impacto">Todas as estimativas dobram</td>
+                <td data-label="Mitigação">Confirmar alocação antes de abrir a Fase 1</td>
+                <td data-label="Área">Tech</td>
+              </tr>
+              <tr>
+                <td data-label="ID">R3</td>
+                <td data-label="Risco">Volume de validação documental acima da capacidade da operação</td>
+                <td data-label="Severidade" style="color:#d97706;">Média</td>
+                <td data-label="Impacto">Fila estoura em alta temporada e o SLA libera bilhete sem conferência</td>
+                <td data-label="Mitigação">Medir volume na Fase 0 e dimensionar equipe antes da Fase 2. Antecipar F18 se necessário</td>
+                <td data-label="Área">Operação</td>
+              </tr>
+              <tr>
+                <td data-label="ID">R4</td>
+                <td data-label="Risco">Correção do vínculo da criança de colo já falhou uma vez</td>
+                <td data-label="Severidade" style="color:#d97706;">Média</td>
+                <td data-label="Impacto">F01 reabre depois de entregue</td>
+                <td data-label="Mitigação">Investigar a correção anterior antes de reimplementar e cobrir com teste de regressão</td>
+                <td data-label="Área">Tech</td>
+              </tr>
+              <tr>
+                <td data-label="ID">R5</td>
+                <td data-label="Risco">Consulta ao benefício não é confiável em 100% dos casos</td>
+                <td data-label="Severidade" style="color:#d97706;">Média</td>
+                <td data-label="Impacto">Passageiro legítimo cai no fluxo documental sem necessidade</td>
+                <td data-label="Mitigação">Fallback documental (F12) e whitelist (F15) já previstos na mesma fase</td>
+                <td data-label="Área">Tech</td>
+              </tr>
+              <tr>
+                <td data-label="ID">R6</td>
+                <td data-label="Risco">Fiscal da ANTT questionar o destaque no bilhete (F10)</td>
+                <td data-label="Severidade" style="color:#1D9E75;">Baixa</td>
+                <td data-label="Impacto">Retrabalho no layout do BPe</td>
+                <td data-label="Mitigação">Duplicar a informação em destaque sem remover o campo padrão, e validar com jurídico antes de subir</td>
+                <td data-label="Área">Produto</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">7 · Decisões Pendentes</div>
+      <div class="detail-block">
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>ID</th><th>Decisão</th><th>Bloqueia</th><th>Área</th></tr></thead>
+            <tbody>
+              <tr><td data-label="ID">D1</td><td data-label="Decisão">Fase 0 sai do escopo do projeto e entra como correção de bug?</td><td data-label="Bloqueia">F01 a F04</td><td data-label="Área">Tech</td></tr>
+              <tr><td data-label="ID">D2</td><td data-label="Decisão">Time dedicado ou o antifraude disputa o backlog atual?</td><td data-label="Bloqueia">Todo o roadmap</td><td data-label="Área">Tech</td></tr>
+              <tr><td data-label="ID">D3</td><td data-label="Decisão">Quem leva o checkout com espera ao jurídico e em que prazo?</td><td data-label="Bloqueia">F16</td><td data-label="Área">Produto</td></tr>
+              <tr><td data-label="ID">D4</td><td data-label="Decisão">Operação assume a fila de validação? Com quantas pessoas e em que horário?</td><td data-label="Bloqueia">F13, F14</td><td data-label="Área">Operação</td></tr>
+              <tr><td data-label="ID">D5</td><td data-label="Decisão">O destaque no bilhete sobe para a Fase 0?</td><td data-label="Bloqueia">F10</td><td data-label="Área">Produto</td></tr>
+              <tr><td data-label="ID">D6</td><td data-label="Decisão">Investigar por que a correção do vínculo da criança de colo não pegou</td><td data-label="Bloqueia">F01</td><td data-label="Área">Tech</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="blocker-box">
+          6 decisões em aberto bloqueando praticamente todo o roadmap — nenhuma fase além da 0 pode ser confirmada sem elas.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">8 · Limites Regulatórios</div>
+      <div class="detail-block">
+        <div class="detail-body">
+          Referência: Marco Regulatório 6.033, de 2024. Nenhuma solução do roadmap pode violar os itens abaixo.
+        </div>
+        <div style="overflow-x:auto;margin-top:8px;">
+          <table class="conflict-table">
+            <thead><tr><th>Restrição</th><th>Detalhe</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Restrição">Não pode exigir pré-cadastro do beneficiário</td><td data-label="Detalhe">A gratuidade tem que ser ofertada nas mesmas condições de um passageiro pagante</td></tr>
+              <tr><td data-label="Restrição">Não pode entregar reserva em vez de bilhete</td><td data-label="Detalhe">Já foi pedido por carta formal e a ANTT respondeu negativamente</td></tr>
+              <tr><td data-label="Restrição">Não pode esconder ou restringir a oferta</td><td data-label="Detalhe">Independe de canal, classe de conforto e localização da poltrona. Já houve multa em rodoviária porque o passageiro não via o mapa de assentos</td></tr>
+              <tr><td data-label="Restrição">Pode negar, mas nunca sem documentar</td><td data-label="Detalhe">Exige termo de recusa protocolado, com motivo, notificação ao passageiro e canal de suporte indicado</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="highlight-box" style="margin-top:10px;">
+          <strong>Cotas por benefício:</strong> Idoso — 2 assentos a 100% por serviço, mais 50% de desconto no restante havendo disponibilidade. ID Jovem — 2 a 100% mais 2 a 50%. Passe livre — ilimitado dentro do serviço convencional e com direito a acompanhante, é a maior exposição. Cerca de 10% dos serviços operados devem ser ofertados como convencional.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">9 · Premissas</div>
+      <div class="detail-block">
+        <div style="overflow-x:auto;">
+          <table class="conflict-table">
+            <thead><tr><th>ID</th><th>Premissa</th><th>Efeito se for falsa</th></tr></thead>
+            <tbody>
+              <tr><td data-label="ID">P1</td><td data-label="Premissa">Time dedicado ao projeto</td><td data-label="Efeito">Todas as durações estimadas dobram</td></tr>
+              <tr><td data-label="ID">P2</td><td data-label="Premissa">Fases 0 e 1 podem correr em paralelo</td><td data-label="Efeito">A Fase 1 atrasa em cerca de 2 semanas</td></tr>
+              <tr><td data-label="ID">P3</td><td data-label="Premissa">Durações estimadas por produto, ainda não validadas pelo time de desenvolvimento</td><td data-label="Efeito">Todo o horizonte precisa ser reestimado</td></tr>
+              <tr><td data-label="ID">P4</td><td data-label="Premissa">Multa de R$ 8.000 por autuação</td><td data-label="Efeito">A exposição financeira muda de ordem de grandeza</td></tr>
+              <tr><td data-label="ID">P5</td><td data-label="Premissa">Nenhum dado de volume disponível hoje</td><td data-label="Efeito">Não há estimativa de receita perdida nem de probabilidade de autuação até a Fase 0 entregar o painel</td></tr>
+              <tr><td data-label="ID">P6</td><td data-label="Premissa">Fase 2 é viável com parecer jurídico favorável</td><td data-label="Efeito">Se o parecer for contrário, a Fase 2 é redesenhada</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">10 · Campos a Preencher pelo Time</div>
+      <div class="detail-block">
+        <ul class="update-list">
+          <li><strong>Responsável por demanda</strong> — todas as tabelas da seção 3</li>
+          <li><strong>Data de início real</strong> — Fases 0 e 1</li>
+          <li><strong>Estimativa validada pelo time de desenvolvimento</strong> — coluna Tamanho, todas as fases</li>
+          <li><strong>Prazo das decisões pendentes</strong> — seção 7</li>
+          <li><strong>Horizonte da Fase 3</strong> — seção 2</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
     <!-- DESENVOLVIMENTO -->
     <div class="section">
       <div class="section-label">Desenvolvimento — Fase 1 entregue · 04/08</div>
