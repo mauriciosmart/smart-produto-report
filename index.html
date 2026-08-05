@@ -764,10 +764,11 @@
   .kanban-card-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 6px;
     flex-wrap: wrap;
   }
+  .kanban-card-footer .badge:last-child { margin-left: auto; }
   .kanban-cards-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
