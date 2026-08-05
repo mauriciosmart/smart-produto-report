@@ -683,6 +683,114 @@
   button.ov-item.no-nav:hover { background: var(--surface-muted); }
   .ov-arrow { font-size: 14px; color: #b6bcc9; flex-shrink: 0; align-self: center; }
 
+  /* ── KANBAN BOARD (Visão Geral) ── */
+  .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .kanban-board { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .kanban-board { grid-template-columns: 1fr; }
+  }
+  .kanban-column {
+    background: #fbfbfd;
+    border: 1px solid #eaecf2;
+    border-radius: 12px;
+    padding: 12px;
+  }
+  .kanban-column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 3px solid var(--kb-color, #83C0F2);
+  }
+  .kanban-column-title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #2d3748;
+  }
+  .kanban-count {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--kb-color, #83C0F2);
+    border-radius: 10px;
+    padding: 1px 8px;
+    min-width: 18px;
+    text-align: center;
+  }
+  .kanban-card {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid #eaecf2;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: box-shadow .15s, transform .15s, border-color .15s;
+  }
+  .kanban-card:last-child { margin-bottom: 0; }
+  .kanban-card:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,.07);
+    transform: translateY(-1px);
+    border-color: #d8ddea;
+  }
+  .kanban-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+  .kanban-card-sub {
+    font-size: 11.5px;
+    color: #6b7280;
+    line-height: 1.45;
+    margin-bottom: 9px;
+  }
+  .kanban-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .kanban-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .kanban-cards-grid .kanban-card { margin-bottom: 0; }
+  @media (max-width: 700px) {
+    .kanban-cards-grid { grid-template-columns: 1fr; }
+  }
+  .kanban-subheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #6b7280;
+    margin: 16px 0 10px;
+    padding-top: 12px;
+    border-top: 1px dashed #d8ddea;
+  }
+
   /* ── ALERT CARD (componente único p/ blocos de atenção/impedimento/destaque) ── */
   .alert-grid {
     display: grid;
@@ -854,137 +962,130 @@
   <div id="tab-geral" class="tab-panel active" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
     <div class="section">
       <div class="section-label">Iniciativas da semana</div>
-      <div class="overview-grid">
+      <div class="kanban-board">
 
-        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: 85% dos PDVs offline ativados">
-          <div class="ov-icon" aria-hidden="true">🔌</div>
-          <div class="ov-content">
-            <div class="ov-title">Motor V2 — 85% dos PDVs offline ativados</div>
-            <div class="ov-sub">05/08: conclusão da ativação offline em curso desde 20/07. Motor segue pausado para qualquer nova melhoria/atualização — sem relação com a frente de Fraude/Gratuidade.</div>
+        <!-- COLUNA: REQUER ATENÇÃO -->
+        <div class="kanban-column" style="--kb-color:#dc2626;">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">🔴 Requer Atenção</span>
+            <span class="kanban-count">2</span>
           </div>
-          <div class="ov-right">
-            <span class="deadline-tag urgent">05/08</span>
-            <span class="badge badge-blocked">Pausado p/ melhorias</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 1 entregue">
-          <div class="ov-icon" aria-hidden="true">🚨</div>
-          <div class="ov-content">
-            <div class="ov-title">Fraudes (Gratuidade) — Fase 1 de desenvolvimento entregue</div>
-            <div class="ov-sub">Deploy 04/08: bilhete da criança é cancelado com o principal, liberando a poltrona da gratuidade. Fase 2 iniciada. Discovery ANTT (23/07): perda confirmada R$ 2,28mi/ano, exposição de até R$ 92,6mi em multas.</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag urgent">04/08</span>
-            <span class="badge badge-ongoing">Em desenvolvimento</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: 85% dos PDVs offline ativados">
+            <div class="kanban-card-title">🔌 Motor V2 — 85% dos PDVs offline</div>
+            <div class="kanban-card-sub">Conclusão da ativação offline desde 20/07. Pausado para qualquer nova melhoria — problema de performance no banco.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">05/08</span>
+              <span class="badge badge-pending">Pausado</span>
+            </div>
+          </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: consultoria reprovada, CORE-009 e novas demandas">
-          <div class="ov-icon" aria-hidden="true">📋</div>
-          <div class="ov-content">
-            <div class="ov-title">Reforma Tributária — RTC: consultoria reprovada, CORE-009 aguarda Praxio</div>
-            <div class="ov-sub">1ª consultoria reprovada (menos de 10% do escopo) — prospecção continua. CORE-009 aguardando retorno da Praxio. CORE-002 no prazo (deploy 10-11/08). Novas demandas: separação IBS estadual/municipal, arquivo RD, excesso de bagagem.</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag">05/08</span>
-            <span class="badge badge-ongoing">Em andamento</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+          <button type="button" class="kanban-card" onclick="activateTab('osp')" aria-label="Ver detalhes em OSP: pausada, foco em gratuidades">
+            <div class="kanban-card-title">🔁 Simultâneas Parciais (OSP)</div>
+            <div class="kanban-card-sub">Pausada — capacidade do time concentrada na frente de Gratuidades. Retomada sem data definida.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">05/08</span>
+              <span class="badge badge-pending">Pausado</span>
+            </div>
+          </button>
+        </div>
 
-        <button type="button" class="ov-item" onclick="activateTab('viacoes')" aria-label="Ver detalhes em Outras Viações: Motta e Princesa">
-          <div class="ov-icon" aria-hidden="true">🚌</div>
-          <div class="ov-content">
-            <div class="ov-title">Outras Viações — Motta e Princesa (novo)</div>
-            <div class="ov-sub">Duas demandas de Evanildo priorizadas com Adones: copia e cola do Pix no frontoffice e paradas de embarque no e-commerce Viaje Princesa. Refinamento com o time tech amanhã.</div>
+        <!-- COLUNA: EM ANDAMENTO (largura dupla, cards lado a lado) -->
+        <div class="kanban-column" style="--kb-color:#83C0F2; grid-column: span 2;">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">🔵 Em Andamento</span>
+            <span class="kanban-count">5</span>
           </div>
-          <div class="ov-right">
-            <span class="deadline-tag">05/08</span>
-            <span class="badge badge-ongoing">Em andamento</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('osp')" aria-label="Ver detalhes em OSP: pausada, foco em gratuidades">
-          <div class="ov-icon" aria-hidden="true">🔁</div>
-          <div class="ov-content">
-            <div class="ov-title">Simultâneas Parciais (OSP) — pausada, foco em Gratuidades</div>
-            <div class="ov-sub">Segue pausada em 05/08: capacidade do time concentrada na frente de Gratuidades, já em desenvolvimento. Retomada sem data definida.</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag">05/08</span>
-            <span class="badge badge-pending">Pausado</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+          <div class="kanban-cards-grid">
 
-        <button type="button" class="ov-item" onclick="activateTab('vtr')" aria-label="Ver detalhes em VTR: seção arquivada">
-          <div class="ov-icon" aria-hidden="true">🚌</div>
-          <div class="ov-content">
-            <div class="ov-title">VTR — Arquivado</div>
-            <div class="ov-sub">Frente saiu de pauta em 05/08. Seção mantida arquivada para rastreio histórico (inclusão VTR no VG/Senna, dados macro, conflitos PE/PB).</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag">05/08</span>
-            <span class="badge" style="background:#e5e7eb;color:#6b7280;">Arquivado</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+          <button type="button" class="kanban-card" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 1 entregue">
+            <div class="kanban-card-title">🚨 Fraudes (Gratuidade) — Fase 1 entregue</div>
+            <div class="kanban-card-sub">Deploy 04/08: cancelamento em cascata libera a poltrona da gratuidade. Fase 2 iniciada. Discovery ANTT: exposição de até R$ 92,6mi.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag urgent">04/08</span>
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('orgchart')" aria-label="Ver detalhes em Novo Org Chart: Ítalo promovido a PM Júnior">
-          <div class="ov-icon" aria-hidden="true">🧭</div>
-          <div class="ov-content">
-            <div class="ov-title">Time de Produto — Ítalo promovido a PM Júnior</div>
-            <div class="ov-sub">Maurício (GPM) lidera o time; Daniel (PM Pleno) e Ítalo (agora PM Júnior, promovido em 05/08) reportam diretamente a ele.</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag">05/08</span>
-            <span class="badge badge-done">Atualizado</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+          <button type="button" class="kanban-card" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: consultoria reprovada, CORE-009 e novas demandas">
+            <div class="kanban-card-title">📋 Reforma Tributária — RTC</div>
+            <div class="kanban-card-sub">Consultoria reprovada, prospecção continua. CORE-009 aguarda Praxio. CORE-002 no prazo (10-11/08). 3 novas demandas mapeadas.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">05/08</span>
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Tickets, Comercial, Product Discovery, Processos de Produto e Rio Card">
-          <div class="ov-icon" aria-hidden="true">🧩</div>
-          <div class="ov-content">
-            <div class="ov-title">Outras Frentes — 6 iniciativas</div>
-            <div class="ov-sub">Tickets Viações, Comercial, Product Discovery, Apoio ao Viva já em andamento. Novo: Processos de Produto (autonomia de dados/Jira PM) e Rio Card Totem RJ (pausado, movido para esta aba).</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag">05/08</span>
-            <span class="badge badge-ongoing">Em andamento</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+          <button type="button" class="kanban-card" onclick="activateTab('viacoes')" aria-label="Ver detalhes em Outras Viações: Motta e Princesa">
+            <div class="kanban-card-title">🚌 Outras Viações — Motta e Princesa</div>
+            <div class="kanban-card-sub">Duas demandas priorizadas com Adones: Pix copia-e-cola e paradas de embarque. Refinamento com o time tech amanhã.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">05/08</span>
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard de Acompanhamento em desenvolvimento">
-          <div class="ov-icon" aria-hidden="true">📊</div>
-          <div class="ov-content">
-            <div class="ov-title">Motor V2 — Dashboard de Acompanhamento</div>
-            <div class="ov-sub">Último refinamento feito com BI + time Smart. Documentação entregue, chamado GLPI aberto — time de BI inicia o desenvolvimento.</div>
-          </div>
-          <div class="ov-right">
-            <span class="deadline-tag">29/07</span>
-            <span class="badge badge-ongoing">Em desenvolvimento</span>
-          </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Tickets, Comercial, Product Discovery, Processos de Produto e Rio Card">
+            <div class="kanban-card-title">🧩 Outras Frentes — 6 iniciativas</div>
+            <div class="kanban-card-sub">Tickets, Comercial, Product Discovery e Apoio ao Viva em andamento. Novo: Processos de Produto e Rio Card (pausado).</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">05/08</span>
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
 
-        <button type="button" class="ov-item" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Nova Tela Frontoffice">
-          <div class="ov-icon" aria-hidden="true">🖥️</div>
-          <div class="ov-content">
-            <div class="ov-title">Motor V2 — Nova Tela Frontoffice</div>
-            <div class="ov-sub">Entregue em 15/07. Deploy realizado — validado pelo time de negócio, elogios do time de operações.</div>
+          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard de Acompanhamento em desenvolvimento">
+            <div class="kanban-card-title">📊 Motor V2 — Dashboard de Acompanhamento</div>
+            <div class="kanban-card-sub">Refinamento feito com BI + time Smart. Documentação entregue, chamado GLPI aberto.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">29/07</span>
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
+
           </div>
-          <div class="ov-right">
-            <span class="deadline-tag">15/07</span>
-            <span class="badge badge-done">Entregue</span>
+        </div>
+
+        <!-- COLUNA: CONCLUÍDO + ARQUIVADO -->
+        <div class="kanban-column" style="--kb-color:#1D9E75;">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">🟢 Concluído</span>
+            <span class="kanban-count">2</span>
           </div>
-          <span class="ov-arrow" aria-hidden="true">›</span>
-        </button>
+
+          <button type="button" class="kanban-card" onclick="activateTab('orgchart')" aria-label="Ver detalhes em Novo Org Chart: Ítalo promovido a PM Júnior">
+            <div class="kanban-card-title">🧭 Time de Produto — Ítalo é PM Júnior</div>
+            <div class="kanban-card-sub">Maurício (GPM) lidera; Daniel (PM Pleno) e Ítalo (agora PM Júnior) reportam a ele.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">05/08</span>
+              <span class="badge badge-done">Concluído</span>
+            </div>
+          </button>
+
+          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Nova Tela Frontoffice">
+            <div class="kanban-card-title">🖥️ Motor V2 — Nova Tela Frontoffice</div>
+            <div class="kanban-card-sub">Entregue em 15/07. Deploy validado pelo time de negócio, elogios da operação.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">15/07</span>
+              <span class="badge badge-done">Concluído</span>
+            </div>
+          </button>
+
+          <div class="kanban-subheader">
+            <span>⚫ Arquivado</span>
+            <span class="kanban-count" style="background:#9ca3af;">1</span>
+          </div>
+
+          <button type="button" class="kanban-card" onclick="activateTab('vtr')" aria-label="Ver detalhes em VTR: seção arquivada">
+            <div class="kanban-card-title">🚌 VTR</div>
+            <div class="kanban-card-sub">Saiu de pauta em 05/08. Mantida arquivada para rastreio histórico (VG/Senna, dados macro, conflitos PE/PB).</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">05/08</span>
+              <span class="badge" style="background:#e5e7eb;color:#6b7280;">Arquivado</span>
+            </div>
+          </button>
+        </div>
 
       </div>
     </div>
