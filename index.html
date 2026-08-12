@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRODUTO Smart — Status Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --brand-pink: #F482E7;
@@ -856,6 +859,143 @@
     .ov-arrow { display: none; }
   }
 
+  /* ══════════════ RESUMO EXECUTIVO ══════════════ */
+  #tab-resumo { font-family: 'Manrope', system-ui, sans-serif; }
+  #tab-resumo a { color: #4F3FD6; text-decoration: none; }
+  #tab-resumo a:hover { color: #3A2CB8; text-decoration: underline; }
+  #tab-resumo textarea { font-family: 'Manrope', system-ui, sans-serif; }
+
+  .rs-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 14px;
+    padding-bottom: 18px; margin-bottom: 22px;
+    border-bottom: 1px solid #E9ECF2;
+  }
+  .rs-header-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #8A93A3; }
+  .rs-header-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #12141A; }
+  .rs-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .rs-filter-btn {
+    font-family: inherit; font-size: 12.5px; font-weight: 700;
+    padding: 8px 13px; border-radius: 9px; cursor: pointer;
+    border: 1px solid #DDE2EA; background: #fff; color: #4A5364;
+  }
+  .rs-filter-btn:hover { filter: brightness(0.97); }
+  .rs-filter-btn.active { border-color: #12141A; background: #12141A; color: #fff; }
+
+  .rs-produto-box {
+    background: linear-gradient(180deg,#F3F1FF 0%,#FBFAFF 100%);
+    border: 1px solid #DDD6FF; border-radius: 16px;
+    padding: 24px 26px; margin-bottom: 28px;
+  }
+  .rs-produto-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px; margin-bottom: 20px;
+  }
+  .rs-produto-eyebrow { display: flex; align-items: center; gap: 9px; margin-bottom: 5px; }
+  .rs-produto-eyebrow span:first-child { width: 7px; height: 7px; border-radius: 50%; background: #5B4BE8; }
+  .rs-produto-eyebrow span:last-child { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #5B4BE8; }
+  .rs-produto-title { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: #1B1440; display: block; margin-bottom: 3px; }
+  .rs-produto-desc { font-size: 13px; color: #6E6790; max-width: 520px; display: block; }
+  .rs-kpis { display: flex; gap: 14px; flex-wrap: wrap; }
+  .rs-kpi {
+    min-width: 122px; background: #fff; border: 1px solid #E4DEFF; border-radius: 12px;
+    padding: 14px 16px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .rs-kpi-value { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .rs-kpi-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8A85A8; }
+  .rs-produto-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; align-items: stretch; }
+  @media (max-width: 860px) { .rs-produto-grid { grid-template-columns: 1fr; } }
+  .rs-produto-card {
+    background: #fff; border: 1px solid #E4DEFF; border-radius: 14px; padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    box-shadow: 0 1px 2px rgba(27,20,64,0.04);
+  }
+  .rs-produto-card:hover { border-color: #B9A9FF; box-shadow: 0 6px 20px rgba(60,40,160,0.10); }
+  .rs-pill {
+    display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 6px;
+    font-size: 10.5px; font-weight: 800; letter-spacing: 0.07em; white-space: nowrap;
+  }
+  .rs-produto-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .rs-produto-card-date { font-size: 12px; color: #9A94B2; font-variant-numeric: tabular-nums; }
+  .rs-produto-card-title { font-size: 16px; font-weight: 750; letter-spacing: -0.015em; color: #1B1440; line-height: 1.3; }
+  .rs-produto-card-desc { font-size: 13.5px; line-height: 1.55; color: #5C567A; }
+  .rs-produto-card-footer {
+    margin-top: auto; padding-top: 14px; border-top: 1px solid #F0EDFB;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .rs-avatar {
+    width: 22px; height: 22px; border-radius: 50%; font-size: 9.5px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .rs-owner-row { display: flex; align-items: center; gap: 8px; }
+  .rs-progress-label { font-size: 12px; font-weight: 700; color: #5B4BE8; }
+  .rs-progress-track { height: 4px; border-radius: 99px; background: #EDE9FB; overflow: hidden; }
+  .rs-progress-bar { height: 100%; border-radius: 99px; }
+
+  .rs-feature-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .rs-feature-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #5C6473; }
+  .rs-feature-rule { flex: 1; height: 1px; background: #E4E8F0; min-width: 24px; }
+  .rs-feature-count { font-size: 12px; color: #8A93A3; }
+  .rs-board { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; align-items: start; }
+  @media (max-width: 900px) { .rs-board { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px) { .rs-board { grid-template-columns: 1fr; } }
+  .rs-col {
+    background: #fff; border: 1px solid #E5E9F1; border-radius: 14px; padding: 12px;
+    display: flex; flex-direction: column; gap: 8px; min-height: 120px;
+  }
+  .rs-col-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 4px 6px 10px; border-bottom: 1px solid #F0F2F7;
+  }
+  .rs-col-head-left { display: flex; align-items: center; gap: 8px; }
+  .rs-col-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .rs-col-label { font-size: 12px; font-weight: 800; letter-spacing: 0.05em; color: #3C4453; }
+  .rs-col-count {
+    font-size: 11px; font-weight: 800; color: #7A8494; background: #F2F4F8;
+    border-radius: 6px; padding: 2px 7px; font-variant-numeric: tabular-nums;
+  }
+  .rs-card {
+    border: 1px solid #E9ECF2; border-radius: 10px; padding: 11px 12px;
+    display: flex; flex-direction: column; gap: 9px; background: #FDFDFE;
+  }
+  .rs-card:hover { border-color: #CFD6E2; box-shadow: 0 4px 14px rgba(20,30,60,0.06); }
+  .rs-card-title { font-size: 13.5px; font-weight: 700; line-height: 1.35; color: #1B2130; letter-spacing: -0.01em; cursor: pointer; }
+  .rs-card-desc { font-size: 12.5px; line-height: 1.55; color: #5C6473; }
+  .rs-update-wrap { display: flex; flex-direction: column; gap: 7px; border-radius: 9px; padding: 9px 10px; }
+  .rs-update-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .rs-update-top-left { display: flex; align-items: center; gap: 6px; }
+  .rs-update-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .rs-update-label { font-size: 9.5px; font-weight: 800; letter-spacing: 0.09em; }
+  .rs-update-stamp { font-size: 10px; font-weight: 700; color: #A6AEBB; font-variant-numeric: tabular-nums; }
+  .rs-update-text { font-size: 12.5px; line-height: 1.5; color: #3C4453; cursor: text; }
+  .rs-update-text:hover { color: #5B4BE8; }
+  .rs-update-empty-btn {
+    align-self: flex-start; display: flex; align-items: center; gap: 5px;
+    border: 1px dashed #CBD2DD; background: none; color: #8A93A3; font-family: inherit;
+    font-size: 11.5px; font-weight: 700; padding: 5px 9px; border-radius: 7px; cursor: pointer;
+  }
+  .rs-update-empty-btn:hover { border-color: #B9A9FF; color: #5B4BE8; background: #F7F5FF; }
+  .rs-update-textarea {
+    width: 100%; box-sizing: border-box; resize: vertical; border: 1px solid #C9BEFF;
+    border-radius: 8px; padding: 8px 9px; font-size: 12.5px; line-height: 1.5; color: #1B2130;
+    outline: none; background: #fff;
+  }
+  .rs-update-actions { display: flex; gap: 6px; }
+  .rs-btn-save {
+    flex: 1; border: none; background: #5B4BE8; color: #fff; font-family: inherit;
+    font-size: 11.5px; font-weight: 800; padding: 7px; border-radius: 7px; cursor: pointer;
+  }
+  .rs-btn-save:hover { background: #4A3BD0; }
+  .rs-btn-cancel {
+    border: 1px solid #DDE2EA; background: #fff; color: #7A8494; font-family: inherit;
+    font-size: 11.5px; font-weight: 700; padding: 7px 11px; border-radius: 7px; cursor: pointer;
+  }
+  .rs-btn-cancel:hover { background: #F2F4F8; }
+  .rs-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 2px; }
+  .rs-card-owner { display: flex; align-items: center; gap: 7px; }
+  .rs-card-owner-name { font-size: 11.5px; font-weight: 600; }
+  .rs-card-date { font-size: 11.5px; color: #9AA3B2; font-variant-numeric: tabular-nums; }
+
 </style>
 </head>
 <body>
@@ -883,6 +1023,10 @@
       </svg>
       <span class="sidebar-logo-text">Smart <strong>Travel</strong></span>
     </div>
+    <button type="button" class="side-item" id="tabbtn-resumo" data-tab="resumo" onclick="activateTab('resumo')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 12v5"/></svg>
+      Resumo Executivo
+    </button>
     <button type="button" class="side-item active" id="tabbtn-geral" data-tab="geral" aria-current="page" onclick="activateTab('geral')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
       Visão Geral
@@ -960,6 +1104,38 @@
     <!-- CONTEÚDO -->
     <div class="content">
       <div class="content-inner">
+
+  <!-- ══════════════ TAB: RESUMO EXECUTIVO ══════════════ -->
+  <div id="tab-resumo" class="tab-panel" role="region" aria-labelledby="tabbtn-resumo" tabindex="0">
+
+    <div class="rs-header">
+      <div>
+        <div class="rs-header-eyebrow">SEMANAL DE PRODUTO</div>
+        <div class="rs-header-title">Demandas — semana de 12/08</div>
+      </div>
+      <div class="rs-filters" id="rsFilters"></div>
+    </div>
+
+    <div class="rs-produto-box">
+      <div class="rs-produto-head">
+        <div>
+          <div class="rs-produto-eyebrow"><span></span><span>DEMANDAS DE PRODUTO</span></div>
+          <span class="rs-produto-title">Iniciativas do time</span><br>
+          <span class="rs-produto-desc">Trabalho que o time de produto conduz por conta própria, fora do backlog de feature.</span>
+        </div>
+        <div class="rs-kpis" id="rsProdKpis"></div>
+      </div>
+      <div class="rs-produto-grid" id="rsProdCards"></div>
+    </div>
+
+    <div class="rs-feature-head">
+      <span class="rs-feature-eyebrow">DEMANDAS DE FEATURE</span>
+      <span class="rs-feature-rule"></span>
+      <span class="rs-feature-count" id="rsFeatCount"></span>
+    </div>
+    <div class="rs-board" id="rsBoard"></div>
+
+  </div>
 
   <!-- ══════════════ TAB: GERAL ══════════════ -->
   <div id="tab-geral" class="tab-panel active" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
@@ -3541,7 +3717,7 @@
 </div>
 
 <script>
-  var TAB_IDS = ['geral', 'orgchart', 'motor', 'vtr', 'osp', 'reforma', 'outras', 'viacoes', 'fraudes', 'postmortem-motor'];
+  var TAB_IDS = ['resumo', 'geral', 'orgchart', 'motor', 'vtr', 'osp', 'reforma', 'outras', 'viacoes', 'fraudes', 'postmortem-motor'];
 
   function activateTab(id) {
     if (TAB_IDS.indexOf(id) === -1) id = 'geral';
@@ -3580,6 +3756,230 @@
     activateTab(TAB_IDS[next]);
     nextBtn.focus();
   });
+
+  /* ══════════════ RESUMO EXECUTIVO — dados e renderização ══════════════ */
+  var RS_STATUS = {
+    pausado:   { label: 'PAUSADO',      color: '#C2790B', bg: '#FDF3E1', fg: '#8A5606' },
+    andamento: { label: 'EM ANDAMENTO', color: '#5B4BE8', bg: '#EEEBFF', fg: '#4437B8' },
+    concluido: { label: 'CONCLUÍDO',    color: '#12855B', bg: '#E4F5EE', fg: '#0B6144' },
+    arquivado: { label: 'ARQUIVADO',    color: '#98A1AF', bg: '#F1F3F7', fg: '#697285' }
+  };
+
+  var RS_DATA = [
+    { id:'p1', area:'produto', status:'pausado', date:'05/08', progress:60, title:'Comercial — Portfólio estruturado',
+      desc:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.', owner:'' },
+    { id:'p2', area:'produto', status:'andamento', date:'12/08', progress:45, title:'Product Discovery — Painel de features',
+      desc:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.', owner:'' },
+    { id:'p3', area:'produto', status:'andamento', date:'12/08', progress:70, title:'Processos de Produto — Autonomia de Dados',
+      desc:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.', owner:'' },
+
+    { id:'f1', area:'feature', status:'pausado', date:'12/08', title:'Motor V2 — 100% dos PDVs offline',
+      desc:'Ativação offline concluída em 12/08. Pausado para qualquer nova melhoria — problema de performance no banco.',
+      update:'Ativação offline concluída em todos os PDVs. Novas melhorias travadas até resolver a performance do banco.', updateStamp:'12/08', owner:'' },
+    { id:'f2', area:'feature', status:'pausado', date:'05/08', title:'Simultâneas Parciais (OSP)',
+      desc:'Pausada — capacidade do time concentrada na frente de Gratuidades. Retomada sem data definida.',
+      update:'Capacidade do time segue alocada em Gratuidades. Sem data de retomada.', updateStamp:'05/08', owner:'' },
+    { id:'f3', area:'feature', status:'pausado', date:'—', title:'Rio Card Totem RJ',
+      desc:'Reunião realizada, VPN sendo habilitada para testes. Pausado por foco no Motor V2.',
+      update:'', updateStamp:'', owner:'' },
+
+    { id:'f4', area:'feature', status:'andamento', date:'—', title:'Apoio ao Viva',
+      desc:'Daniel apoia a Bidinha no desenvolvimento de venda com pontos Viva no frontoffice.',
+      update:'', updateStamp:'', owner:'Daniel' },
+    { id:'f5', area:'feature', status:'andamento', date:'12/08', title:'Fraudes (Gratuidade) — Fase 2 entregue, Fase 3 pausada',
+      desc:'Roadmap formalizado com milestones no Linear. Fase 1 e Fase 2 entregues; Fase 3 pausada — Gui realocado para bug do dashboard do Motor V2 desde 10/08.',
+      update:'Fase 2 entregue. Fase 3 parada desde 10/08 com a realocação do Gui.', updateStamp:'12/08', owner:'Gui' },
+    { id:'f6', area:'feature', status:'andamento', date:'12/08', title:'Reforma Tributária — RTC',
+      desc:'E&Y não pode assumir (conflito de interesse); BDO é o novo prospect. CORE-002 desliza para 12-13/08. CORE-009 aguarda Proteus/Globus/Praxio. Novo: CORE-012, discovery de vínculo de pagamento do DFe.',
+      update:'BDO entra no lugar da E&Y. CORE-002 desliza para 12-13/08. CORE-012 (NT 2026.001) inicia discovery.', updateStamp:'12/08', owner:'' },
+    { id:'f7', area:'feature', status:'andamento', date:'12/08', title:'Outras Viações — Motta e Princesa',
+      desc:'Refinamento com Motta e Princesa marcado para amanhã com o time tech. Novas demandas de viação surgiram — como tratar a discutir na semanal.',
+      update:'Refinamento com o time tech marcado para amanhã.', updateStamp:'12/08', owner:'' },
+    { id:'f8', area:'feature', status:'andamento', date:'12/08', title:'Motor V2 — Dashboard de Acompanhamento',
+      desc:'Bug de persistência encontrado pelo time de BI. Gui foi realocado para corrigir o ajuste.',
+      update:'Bug de persistência achado pelo BI; Gui realocado para a correção.', updateStamp:'12/08', owner:'Gui' },
+
+    { id:'f9', area:'feature', status:'concluido', date:'05/08', title:'Time de Produto — Ítalo é PM Júnior',
+      desc:'Maurício (GPM) lidera; Daniel (PM Pleno) e Ítalo (agora PM Júnior) reportam a ele.',
+      update:'Estrutura do time formalizada.', updateStamp:'05/08', owner:'Maurício' },
+    { id:'f10', area:'feature', status:'concluido', date:'15/07', title:'Motor V2 — Nova Tela Frontoffice',
+      desc:'Entregue em 15/07. Deploy validado pelo time de negócio, elogios da operação.',
+      update:'Deploy validado pelo negócio.', updateStamp:'15/07', owner:'' },
+    { id:'f11', area:'feature', status:'concluido', date:'—', title:'Tickets Viações — Backlog resolvido',
+      desc:'14 tickets zerados: 3 resolvidos direto, 11 mapeados no Linear para o time tech.',
+      update:'', updateStamp:'', owner:'' },
+
+    { id:'f12', area:'feature', status:'arquivado', date:'05/08', title:'VTR',
+      desc:'Saiu de pauta em 05/08. Mantida arquivada para rastreio histórico (VG/Senna, dados macro, conflitos PE/PB).',
+      update:'', updateStamp:'', owner:'' }
+  ];
+
+  var RS_STATE = {
+    filter: 'todas',
+    open: null,
+    editing: null,
+    draft: '',
+    updates: {}
+  };
+  RS_DATA.forEach(function (d) {
+    RS_STATE.updates[d.id] = { text: d.update || '', stamp: d.updateStamp || '' };
+  });
+
+  function rsEsc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function rsOwner(it) {
+    if (it.owner) {
+      return {
+        owner: it.owner, initials: it.owner.slice(0, 2).toUpperCase(),
+        avatarStyle: 'background:#E7E4FB;color:#4437B8;', ownerColor: '#3C4453'
+      };
+    }
+    return {
+      owner: 'sem dono', initials: '?',
+      avatarStyle: 'background:#fff;border:1px dashed #CBD2DD;color:#AAB2BF;', ownerColor: '#AAB2BF'
+    };
+  }
+
+  function rsRenderFilters() {
+    var filters = [['todas', 'Todas'], ['pausado', 'Pausadas'], ['andamento', 'Em andamento'], ['concluido', 'Concluídas']];
+    var html = filters.map(function (f) {
+      var active = RS_STATE.filter === f[0];
+      return '<button type="button" class="rs-filter-btn' + (active ? ' active' : '') + '" onclick="rsSetFilter(\'' + f[0] + '\')">' + f[1] + '</button>';
+    }).join('');
+    document.getElementById('rsFilters').innerHTML = html;
+  }
+
+  function rsRenderProduto() {
+    var prod = RS_DATA.filter(function (d) { return d.area === 'produto'; });
+    var kpis = [
+      { value: String(prod.length), label: 'INICIATIVAS', color: '#1B1440' },
+      { value: String(prod.filter(function (p) { return p.status === 'andamento'; }).length), label: 'EM ANDAMENTO', color: '#5B4BE8' },
+      { value: String(prod.filter(function (p) { return p.status === 'pausado'; }).length), label: 'PAUSADAS', color: '#C2790B' }
+    ];
+    document.getElementById('rsProdKpis').innerHTML = kpis.map(function (k) {
+      return '<div class="rs-kpi"><span class="rs-kpi-value" style="color:' + k.color + ';">' + k.value + '</span><span class="rs-kpi-label">' + k.label + '</span></div>';
+    }).join('');
+
+    document.getElementById('rsProdCards').innerHTML = prod.map(function (p) {
+      var o = rsOwner(p);
+      var st = RS_STATUS[p.status];
+      var barColor = p.status === 'pausado' ? '#C2790B' : '#5B4BE8';
+      return '' +
+        '<div class="rs-produto-card">' +
+          '<div class="rs-produto-card-top">' +
+            '<span class="rs-pill" style="background:' + st.bg + ';color:' + st.fg + ';">' + st.label + '</span>' +
+            '<span class="rs-produto-card-date">' + rsEsc(p.date) + '</span>' +
+          '</div>' +
+          '<span class="rs-produto-card-title">' + rsEsc(p.title) + '</span>' +
+          '<span class="rs-produto-card-desc">' + rsEsc(p.desc) + '</span>' +
+          '<div class="rs-produto-card-footer">' +
+            '<div class="rs-owner-row"><span class="rs-avatar" style="' + o.avatarStyle + '">' + o.initials + '</span><span style="font-size:12.5px;font-weight:600;color:' + o.ownerColor + ';">' + rsEsc(o.owner) + '</span></div>' +
+            '<span class="rs-progress-label">' + p.progress + '%</span>' +
+          '</div>' +
+          '<div class="rs-progress-track"><div class="rs-progress-bar" style="width:' + p.progress + '%;background:' + barColor + ';"></div></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function rsCardHtml(f) {
+    var o = rsOwner(f);
+    var u = RS_STATE.updates[f.id] || { text: '', stamp: '' };
+    var open = RS_STATE.open === f.id;
+    var editing = RS_STATE.editing === f.id;
+    var has = !!u.text;
+    var st = RS_STATUS[f.status];
+    var dotColor = has ? st.color : '#CBD2DD';
+    var labelColor = has ? '#6B7382' : '#A6AEBB';
+    var wrapBg = has ? '#F8F9FC' : '#FCFCFD';
+    var wrapBorder = editing ? '#C9BEFF' : '#EDEFF4';
+
+    var updateInner = '';
+    if (editing) {
+      updateInner =
+        '<div style="display:flex;flex-direction:column;gap:7px;">' +
+          '<textarea class="rs-update-textarea" id="rsTa-' + f.id + '" rows="3" placeholder="O que mudou nesta semana?" oninput="RS_STATE.draft=this.value">' + rsEsc(RS_STATE.draft) + '</textarea>' +
+          '<div class="rs-update-actions">' +
+            '<button type="button" class="rs-btn-save" onclick="rsSave(\'' + f.id + '\')">Salvar</button>' +
+            '<button type="button" class="rs-btn-cancel" onclick="rsCancelEdit()">Cancelar</button>' +
+          '</div>' +
+        '</div>';
+    } else if (has) {
+      updateInner = '<span class="rs-update-text" onclick="rsStartEdit(\'' + f.id + '\')">' + rsEsc(u.text) + '</span>';
+    } else {
+      updateInner = '<button type="button" class="rs-update-empty-btn" onclick="rsStartEdit(\'' + f.id + '\')"><span style="font-size:13px;line-height:1;">+</span><span>Adicionar resumo</span></button>';
+    }
+
+    var stampHtml = (has && !editing) ? '<span class="rs-update-stamp">' + rsEsc(u.stamp) + '</span>' : '';
+
+    return '' +
+      '<div class="rs-card">' +
+        '<span class="rs-card-title" onclick="rsToggleOpen(\'' + f.id + '\')">' + rsEsc(f.title) + '</span>' +
+        (open ? '<span class="rs-card-desc">' + rsEsc(f.desc) + '</span>' : '') +
+        '<div class="rs-update-wrap" style="background:' + wrapBg + ';border:1px solid ' + wrapBorder + ';">' +
+          '<div class="rs-update-top">' +
+            '<div class="rs-update-top-left"><span class="rs-update-dot" style="background:' + dotColor + ';"></span><span class="rs-update-label" style="color:' + labelColor + ';">ÚLTIMA ATUALIZAÇÃO</span></div>' +
+            stampHtml +
+          '</div>' +
+          updateInner +
+        '</div>' +
+        '<div class="rs-card-footer">' +
+          '<div class="rs-card-owner"><span class="rs-avatar" style="' + o.avatarStyle + '">' + o.initials + '</span><span class="rs-card-owner-name" style="color:' + o.ownerColor + ';">' + rsEsc(o.owner) + '</span></div>' +
+          '<span class="rs-card-date">' + rsEsc(f.date) + '</span>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function rsRenderBoard() {
+    var feat = RS_DATA.filter(function (d) { return d.area === 'feature'; });
+    var visible = feat.filter(function (f) { return RS_STATE.filter === 'todas' || f.status === RS_STATE.filter; });
+    var cols = [['pausado', 'PAUSADO'], ['andamento', 'EM ANDAMENTO'], ['concluido', 'CONCLUÍDO'], ['arquivado', 'ARQUIVADO']];
+
+    document.getElementById('rsBoard').innerHTML = cols.map(function (c) {
+      var key = c[0], label = c[1];
+      var items = visible.filter(function (f) { return f.status === key; });
+      var color = RS_STATUS[key].color;
+      return '' +
+        '<div class="rs-col">' +
+          '<div class="rs-col-head">' +
+            '<div class="rs-col-head-left"><span class="rs-col-dot" style="background:' + color + ';"></span><span class="rs-col-label">' + label + '</span></div>' +
+            '<span class="rs-col-count">' + items.length + '</span>' +
+          '</div>' +
+          items.map(rsCardHtml).join('') +
+        '</div>';
+    }).join('');
+
+    var semResumo = feat.filter(function (f) { return !(RS_STATE.updates[f.id] || {}).text; }).length;
+    var pausadas = feat.filter(function (f) { return f.status === 'pausado'; }).length;
+    document.getElementById('rsFeatCount').textContent = feat.length + ' demandas · ' + pausadas + ' pausadas · ' + semResumo + ' sem resumo';
+  }
+
+  function rsRenderAll() {
+    rsRenderFilters();
+    rsRenderProduto();
+    rsRenderBoard();
+  }
+
+  function rsSetFilter(k) { RS_STATE.filter = k; rsRenderAll(); }
+  function rsToggleOpen(id) { RS_STATE.open = (RS_STATE.open === id) ? null : id; rsRenderBoard(); }
+  function rsStartEdit(id) {
+    RS_STATE.editing = id;
+    RS_STATE.draft = (RS_STATE.updates[id] || {}).text || '';
+    rsRenderBoard();
+    var ta = document.getElementById('rsTa-' + id);
+    if (ta) { ta.focus(); }
+  }
+  function rsCancelEdit() { RS_STATE.editing = null; RS_STATE.draft = ''; rsRenderBoard(); }
+  function rsSave(id) {
+    var text = (RS_STATE.draft || '').trim();
+    var stamp = text ? new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) : '';
+    RS_STATE.updates[id] = { text: text, stamp: stamp };
+    RS_STATE.editing = null;
+    RS_STATE.draft = '';
+    rsRenderBoard();
+  }
+
+  rsRenderAll();
 
   function showFraudesView(view) {
     var discovery = document.getElementById('fraudes-view-discovery');
