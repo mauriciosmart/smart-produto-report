@@ -1025,9 +1025,9 @@
 
           <div class="kanban-cards-grid">
 
-          <button type="button" class="kanban-card" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 2 entregue, fase 3 em entrega">
-            <div class="kanban-card-title">🚨 Fraudes (Gratuidade) — Fase 2 entregue, Fase 3 em entrega</div>
-            <div class="kanban-card-sub">Roadmap formalizado com milestones no Jira. Fase 1 (04/08) e Fase 2 entregues; Fase 3 sendo entregue por Gui.</div>
+          <button type="button" class="kanban-card" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 2 entregue, fase 3 pausada">
+            <div class="kanban-card-title">🚨 Fraudes (Gratuidade) — Fase 2 entregue, Fase 3 pausada</div>
+            <div class="kanban-card-sub">Roadmap formalizado com milestones no Jira. Fase 1 e Fase 2 entregues; Fase 3 pausada — Gui realocado para bug do dashboard do Motor V2 desde 10/08.</div>
             <div class="kanban-card-footer">
               <span class="deadline-tag urgent">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
@@ -1267,7 +1267,7 @@
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">📊 Dashboard de Acompanhamento V2</div>
-          <span class="badge badge-pending">Bloqueado (lado técnico)</span>
+          <span class="badge badge-blocked">Bug identificado</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Último refinamento realizado com o time de BI e o time Smart. Documentação atualizada entregue e chamado aberto no GLPI para o time de BI iniciar o desenvolvimento.
@@ -1275,8 +1275,17 @@
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:6px;">
           <strong>12/08 — Daniel:</strong> o time de BI (Gui) encontrou gaps no dashboard e está há 2 dias trabalhando nesses problemas — tudo do lado técnico/BI, nada pendente do lado de produto no momento. O acompanhamento de Daniel fica um pouco travado enquanto isso não avança.
         </div>
+        <div class="blocker-box">
+          <strong>Bug identificado:</strong> falha de persistência de dados faz com que <strong>~8% dos bilhetes vendidos com conexão desde 24/06/2026</strong> fiquem sem o tipo de conexão registrado (mesma linha, cruzamento, vira-bandeira). Não afeta a receita total, mas distorce a quebra por modalidade.
+        </div>
+        <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
+          <strong>Decisão pendente:</strong> reprocessar ou não o histórico afetado — depende de validação com negócio.
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>Realocação de equipe:</strong> Guilherme Ortiz foi direcionado, a partir de 10/08, para focar nesse ajuste — pausando temporariamente a frente de Fraudes que ele conduzia.
+        </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> aguardar o time de BI resolver os gaps encontrados · sem data definida
+          <strong>Próx. passo:</strong> validar com negócio a decisão de reprocessamento do histórico · Guilherme segue no ajuste
         </div>
       </div>
 
@@ -2392,21 +2401,24 @@
 
     <!-- DESENVOLVIMENTO -->
     <div class="section">
-      <div class="section-label">Desenvolvimento — Fase 2 entregue, Fase 3 em entrega · 12/08</div>
+      <div class="section-label">Desenvolvimento — Fase 2 entregue, Fase 3 pausada · 12/08</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">🛠️ Roadmap de gratuidades avançando conforme planejado</div>
+          <div class="detail-title">🛠️ Roadmap de gratuidades — Fase 3 pausada por realocação</div>
           <span class="badge badge-done">Fase 2 entregue</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           <strong>Fase 1</strong> — deploy realizado na noite de 04/08: o bilhete da criança agora é cancelado junto com o bilhete principal, liberando a poltrona de gratuidade automaticamente.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:6px;">
-          <strong>12/08 — Daniel:</strong> Gui já entregou a <strong>Fase 2</strong> e está entregando a <strong>Fase 3</strong> do roadmap de gratuidades. Daniel formalizou todo o roadmap com milestones e já criou o acompanhamento no Jira.
+          <strong>12/08 — Daniel:</strong> Gui já entregou a <strong>Fase 2</strong> do roadmap de gratuidades. Daniel formalizou todo o roadmap com milestones e já criou o acompanhamento no Jira.
+        </div>
+        <div class="blocker-box">
+          <strong>Fase 3 pausada:</strong> Guilherme Ortiz foi realocado a partir de 10/08 para tratar um bug de persistência de dados no Dashboard de Acompanhamento do Motor V2 (ver aba Motor de Conexões) — pausando temporariamente a entrega da Fase 3 desta frente.
         </div>
         <div class="highlight-box blue">
-          <strong>Nota:</strong> esta frente é independente do Motor de Conexões V2 — o motor segue pausado para qualquer atualização, sem relação com este desenvolvimento.<br>
-          <strong>Próx. passo:</strong> concluir a entrega da Fase 3 · Gui/Daniel
+          <strong>Nota:</strong> esta frente é independente do Motor de Conexões V2 — o motor segue pausado para qualquer atualização, sem relação com este desenvolvimento (a realocação do Gui é a única interseção entre as duas frentes, por conta de alocação de equipe).<br>
+          <strong>Próx. passo:</strong> retomar a entrega da Fase 3 quando Gui for liberado do ajuste do dashboard · sem data definida
         </div>
       </div>
     </div>
