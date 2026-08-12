@@ -728,7 +728,8 @@
     text-align: center;
   }
   .kanban-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     text-align: left;
     font-family: inherit;
@@ -767,6 +768,7 @@
     justify-content: flex-start;
     gap: 6px;
     flex-wrap: wrap;
+    margin-top: auto;
   }
   .kanban-card-footer .badge:last-child { margin-left: auto; }
   .kanban-cards-grid {
@@ -962,14 +964,14 @@
   <!-- ══════════════ TAB: GERAL ══════════════ -->
   <div id="tab-geral" class="tab-panel active" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
     <div class="section">
-      <div class="section-label">Iniciativas da semana</div>
+      <div class="section-label">🎯 Demandas de Feature</div>
       <div class="kanban-board">
 
         <!-- COLUNA: REQUER ATENÇÃO -->
         <div class="kanban-column" style="--kb-color:#dc2626;">
           <div class="kanban-column-header">
             <span class="kanban-column-title">🔴 Requer Atenção</span>
-            <span class="kanban-count">4</span>
+            <span class="kanban-count">3</span>
           </div>
 
           <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: 100% dos PDVs offline ativados">
@@ -990,14 +992,6 @@
             </div>
           </button>
 
-          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Comercial pausado">
-            <div class="kanban-card-title">💼 Comercial — Portfólio estruturado</div>
-            <div class="kanban-card-sub">8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.</div>
-            <div class="kanban-card-footer">
-              <span class="badge badge-pending">Pausado</span>
-            </div>
-          </button>
-
           <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Rio Card pausado">
             <div class="kanban-card-title">🎫 Rio Card Totem RJ</div>
             <div class="kanban-card-sub">Reunião realizada, VPN sendo habilitada para testes. Pausado por foco no Motor V2.</div>
@@ -1011,7 +1005,7 @@
         <div class="kanban-column" style="--kb-color:#83C0F2; grid-column: span 2;">
           <div class="kanban-column-header">
             <span class="kanban-column-title">🔵 Em Andamento</span>
-            <span class="kanban-count">7</span>
+            <span class="kanban-count">5</span>
           </div>
 
           <div class="kanban-cards-grid">
@@ -1026,7 +1020,7 @@
 
           <button type="button" class="kanban-card" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 2 entregue, fase 3 pausada">
             <div class="kanban-card-title">🚨 Fraudes (Gratuidade) — Fase 2 entregue, Fase 3 pausada</div>
-            <div class="kanban-card-sub">Roadmap formalizado com milestones no Jira. Fase 1 e Fase 2 entregues; Fase 3 pausada — Gui realocado para bug do dashboard do Motor V2 desde 10/08.</div>
+            <div class="kanban-card-sub">Roadmap formalizado com milestones no Linear. Fase 1 e Fase 2 entregues; Fase 3 pausada — Gui realocado para bug do dashboard do Motor V2 desde 10/08.</div>
             <div class="kanban-card-footer">
               <span class="deadline-tag urgent">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
@@ -1042,36 +1036,18 @@
             </div>
           </button>
 
-          <button type="button" class="kanban-card" onclick="activateTab('viacoes')" aria-label="Ver detalhes em Outras Viações: Motta e Princesa sem avanço">
+          <button type="button" class="kanban-card" onclick="activateTab('viacoes')" aria-label="Ver detalhes em Outras Viações: Motta e Princesa e novas demandas">
             <div class="kanban-card-title">🚌 Outras Viações — Motta e Princesa</div>
-            <div class="kanban-card-sub">Sem avanço — novo refinamento a agendar por Daniel. Nova demanda de viação surgiu; organização geral a discutir na semanal.</div>
+            <div class="kanban-card-sub">Refinamento com Motta e Princesa marcado para amanhã com o time tech. Novas demandas de viação surgiram — como tratar a discutir na semanal.</div>
             <div class="kanban-card-footer">
               <span class="deadline-tag">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
             </div>
           </button>
 
-          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard bloqueado pelo time de BI">
+          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard com bug de persistência em correção">
             <div class="kanban-card-title">📊 Motor V2 — Dashboard de Acompanhamento</div>
-            <div class="kanban-card-sub">Bloqueado do lado técnico: time de BI (Gui) corrigindo gaps encontrados. Nada pendente do lado de produto.</div>
-            <div class="kanban-card-footer">
-              <span class="deadline-tag">12/08</span>
-              <span class="badge badge-ongoing">Em andamento</span>
-            </div>
-          </button>
-
-          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Product Discovery">
-            <div class="kanban-card-title">🧭 Product Discovery — Fluxo de produto</div>
-            <div class="kanban-card-sub">Fluxo completo no Jira, 20 iniciativas cadastradas. Próx.: migrar ideias do board antigo.</div>
-            <div class="kanban-card-footer">
-              <span class="deadline-tag">22/07</span>
-              <span class="badge badge-ongoing">Em andamento</span>
-            </div>
-          </button>
-
-          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Processos de Produto com acesso conquistado">
-            <div class="kanban-card-title">⚙️ Processos de Produto — Autonomia de Dados</div>
-            <div class="kanban-card-sub">Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.</div>
+            <div class="kanban-card-sub">Bug de persistência encontrado pelo time de BI. Gui foi realocado para corrigir o ajuste.</div>
             <div class="kanban-card-footer">
               <span class="deadline-tag">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
@@ -1127,6 +1103,59 @@
               <span class="badge" style="background:#e5e7eb;color:#6b7280;">Arquivado</span>
             </div>
           </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:26px;">
+      <div class="section-label">🧩 Demandas de Produto — iniciativas do time</div>
+      <div class="kanban-board" style="grid-template-columns: 1fr 2fr;">
+
+        <!-- COLUNA: REQUER ATENÇÃO -->
+        <div class="kanban-column" style="--kb-color:#dc2626;">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">🔴 Requer Atenção</span>
+            <span class="kanban-count">1</span>
+          </div>
+
+          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Comercial pausado">
+            <div class="kanban-card-title">💼 Comercial — Portfólio estruturado</div>
+            <div class="kanban-card-sub">8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.</div>
+            <div class="kanban-card-footer">
+              <span class="badge badge-pending">Pausado</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- COLUNA: EM ANDAMENTO (cards lado a lado) -->
+        <div class="kanban-column" style="--kb-color:#83C0F2;">
+          <div class="kanban-column-header">
+            <span class="kanban-column-title">🔵 Em Andamento</span>
+            <span class="kanban-count">2</span>
+          </div>
+
+          <div class="kanban-cards-grid">
+
+          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Product Discovery com painel de features">
+            <div class="kanban-card-title">🧭 Product Discovery — Painel de features</div>
+            <div class="kanban-card-sub">Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">12/08</span>
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
+
+          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Processos de Produto com acesso conquistado">
+            <div class="kanban-card-title">⚙️ Processos de Produto — Autonomia de Dados</div>
+            <div class="kanban-card-sub">Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">12/08</span>
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
+
+          </div>
         </div>
 
       </div>
@@ -1272,7 +1301,7 @@
           Último refinamento realizado com o time de BI e o time Smart. Documentação atualizada entregue e chamado aberto no GLPI para o time de BI iniciar o desenvolvimento.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:6px;">
-          <strong>12/08 — Daniel:</strong> o time de BI (Gui) encontrou gaps no dashboard e está há 2 dias trabalhando nesses problemas — tudo do lado técnico/BI, nada pendente do lado de produto no momento. O acompanhamento de Daniel fica um pouco travado enquanto isso não avança.
+          <strong>12/08 — Daniel:</strong> durante a construção do dashboard, o time de BI encontrou um bug de persistência de dados. Guilherme Ortiz foi direcionado para tratar esse ajuste.
         </div>
         <div class="blocker-box">
           <strong>Bug identificado:</strong> falha de persistência de dados faz com que <strong>~8% dos bilhetes vendidos com conexão desde 24/06/2026</strong> fiquem sem o tipo de conexão registrado (mesma linha, cruzamento, vira-bandeira). Não afeta a receita total, mas distorce a quebra por modalidade.
@@ -2245,6 +2274,9 @@
         <strong>22/07 — Daniel:</strong> todo o fluxo foi construído e as 20 iniciativas coletadas na rodoviária foram cadastradas. Melhor visibilidade dos projetos e organização do time de produto, com uma visão mais clara do backlog.
       </div>
       <div class="highlight-box blue" style="margin-top:10px;">
+        <strong>12/08 — Daniel:</strong> avanço da semana foi a organização das ideias com as features — novo painel de features criado, com os cards de ideias conectados aos cards de features correspondentes. Isso dá uma visão de progresso de cada ideia, do discovery até a entrega.
+      </div>
+      <div class="highlight-box blue" style="margin-top:10px;">
         <strong>Decisão:</strong> migrar todas as ideias e features em andamento para o novo fluxo.<br>
         <strong>Próx. passo:</strong> migrar as ideias do antigo board e cadastrar as features que já estão em andamento · Daniel
       </div>
@@ -2317,10 +2349,10 @@
           Daniel alinhou com Adones, que priorizou as duas demandas e já definiu o Dev responsável para o desenvolvimento.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
-          <strong>12/08 — Daniel:</strong> ainda sem avanço do lado da Motta e Princesa. Eles querem marcar um novo refinamento — Daniel vai agendar. Há também uma pendência de negócio/financeiro envolvendo o Rafa e papelada, ainda a resolver.
+          <strong>12/08 — Daniel:</strong> refinamento com a Motta e Princesa marcado para amanhã, com o time tech. Há também uma pendência de negócio/financeiro envolvendo o Rafa e papelada, ainda a resolver.
         </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Daniel agenda novo refinamento com Motta e Princesa · sem data confirmada
+          <strong>Próx. passo:</strong> refinamento com Motta e Princesa e o time tech · amanhã
         </div>
       </div>
     </div>
@@ -2328,17 +2360,17 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">02 · Nova demanda de viação · A organizar</div>
+      <div class="section-label">02 · Novas demandas de viação · A organizar</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">🆕 Mais uma demanda de viação surgiu</div>
+          <div class="detail-title">🆕 Novas demandas de viação surgiram</div>
           <span class="badge badge-pending">A definir</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
-          Além de Motta e Princesa, surgiu outra demanda de viação. Daniel sugere levar o tema para a reunião semanal para discutir como organizar a categoria "viações" como um todo — como agrupar, priorizar e reportar essas frentes daqui para frente.
+          Além de Motta e Princesa, surgiram novas demandas de viação. Precisamos discutir como vamos tratar essas frentes daqui para frente — como agrupar, priorizar e reportar.
         </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> discutir organização geral de "Outras Viações" na próxima semanal · Daniel + Maurício + Ítalo
+          <strong>Próx. passo:</strong> discutir como tratar as novas demandas de viação na próxima semanal · Daniel + Maurício + Ítalo
         </div>
       </div>
     </div>
@@ -2407,7 +2439,7 @@
           <strong>Fase 1</strong> — deploy realizado na noite de 04/08: o bilhete da criança agora é cancelado junto com o bilhete principal, liberando a poltrona de gratuidade automaticamente.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:6px;">
-          <strong>12/08 — Daniel:</strong> Gui já entregou a <strong>Fase 2</strong> do roadmap de gratuidades. Daniel formalizou todo o roadmap com milestones e já criou o acompanhamento no Jira.
+          <strong>12/08 — Daniel:</strong> Gui já entregou a <strong>Fase 2</strong> do roadmap de gratuidades. Daniel formalizou todo o roadmap com milestones e já criou o acompanhamento no Linear.
         </div>
         <div class="blocker-box">
           <strong>Fase 3 pausada:</strong> Guilherme Ortiz foi realocado a partir de 10/08 para tratar um bug de persistência de dados no Dashboard de Acompanhamento do Motor V2 (ver aba Motor de Conexões) — pausando temporariamente a entrega da Fase 3 desta frente.
