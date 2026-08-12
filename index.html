@@ -950,7 +950,7 @@
       <div class="header-meta">
         <div class="owner-label">Owner</div>
         <div class="owner-name">Maurício</div>
-        <div class="report-date">Atualizado 05 ago 2026</div>
+        <div class="report-date">Atualizado 12 ago 2026</div>
       </div>
     </div>
   </div>
@@ -969,14 +969,14 @@
         <div class="kanban-column" style="--kb-color:#dc2626;">
           <div class="kanban-column-header">
             <span class="kanban-column-title">🔴 Requer Atenção</span>
-            <span class="kanban-count">4</span>
+            <span class="kanban-count">5</span>
           </div>
 
-          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: 85% dos PDVs offline ativados">
-            <div class="kanban-card-title">🔌 Motor V2 — 85% dos PDVs offline</div>
-            <div class="kanban-card-sub">Conclusão da ativação offline desde 20/07. Pausado para qualquer nova melhoria — problema de performance no banco.</div>
+          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: 100% dos PDVs offline ativados">
+            <div class="kanban-card-title">🔌 Motor V2 — 100% dos PDVs offline</div>
+            <div class="kanban-card-sub">Ativação offline concluída em 12/08. Pausado para qualquer nova melhoria — problema de performance no banco.</div>
             <div class="kanban-card-footer">
-              <span class="deadline-tag">05/08</span>
+              <span class="deadline-tag">12/08</span>
               <span class="badge badge-pending">Pausado</span>
             </div>
           </button>
@@ -1005,49 +1005,58 @@
               <span class="badge badge-pending">Pausado</span>
             </div>
           </button>
+
+          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Apoio ao Viva travado">
+            <div class="kanban-card-title">🤝 Apoio ao Viva</div>
+            <div class="kanban-card-sub">16º refinamento sem avançar. Daniel deixa de entrar em todo refinamento — acompanha por gravação.</div>
+            <div class="kanban-card-footer">
+              <span class="deadline-tag">12/08</span>
+              <span class="badge badge-pending">Travado</span>
+            </div>
+          </button>
         </div>
 
         <!-- COLUNA: EM ANDAMENTO (largura dupla, cards lado a lado) -->
         <div class="kanban-column" style="--kb-color:#83C0F2; grid-column: span 2;">
           <div class="kanban-column-header">
             <span class="kanban-column-title">🔵 Em Andamento</span>
-            <span class="kanban-count">7</span>
+            <span class="kanban-count">6</span>
           </div>
 
           <div class="kanban-cards-grid">
 
-          <button type="button" class="kanban-card" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 1 entregue">
-            <div class="kanban-card-title">🚨 Fraudes (Gratuidade) — Fase 1 entregue</div>
-            <div class="kanban-card-sub">Deploy 04/08: cancelamento em cascata libera a poltrona da gratuidade. Fase 2 iniciada. Discovery ANTT: exposição de até R$ 92,6mi.</div>
+          <button type="button" class="kanban-card" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 2 entregue, fase 3 em entrega">
+            <div class="kanban-card-title">🚨 Fraudes (Gratuidade) — Fase 2 entregue, Fase 3 em entrega</div>
+            <div class="kanban-card-sub">Roadmap formalizado com milestones no Jira. Fase 1 (04/08) e Fase 2 entregues; Fase 3 sendo entregue por Gui.</div>
             <div class="kanban-card-footer">
-              <span class="deadline-tag urgent">04/08</span>
+              <span class="deadline-tag urgent">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
             </div>
           </button>
 
-          <button type="button" class="kanban-card" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: consultoria reprovada, CORE-009 e novas demandas">
+          <button type="button" class="kanban-card" onclick="activateTab('reforma')" aria-label="Ver detalhes em Reforma Tributária: E&Y reprovada, CORE-002 escorregou, novas demandas">
             <div class="kanban-card-title">📋 Reforma Tributária — RTC</div>
-            <div class="kanban-card-sub">Consultoria reprovada, prospecção continua. CORE-009 aguarda Praxio. CORE-002 no prazo (10-11/08). 3 novas demandas mapeadas.</div>
+            <div class="kanban-card-sub">E&Y não pode assumir (conflito de interesse); BDO é o novo prospect. CORE-002 desliza para 12-13/08. CORE-009 aguarda Proteus/Globus/Praxio.</div>
             <div class="kanban-card-footer">
-              <span class="deadline-tag">05/08</span>
+              <span class="deadline-tag urgent">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
             </div>
           </button>
 
-          <button type="button" class="kanban-card" onclick="activateTab('viacoes')" aria-label="Ver detalhes em Outras Viações: Motta e Princesa">
+          <button type="button" class="kanban-card" onclick="activateTab('viacoes')" aria-label="Ver detalhes em Outras Viações: Motta e Princesa sem avanço">
             <div class="kanban-card-title">🚌 Outras Viações — Motta e Princesa</div>
-            <div class="kanban-card-sub">Duas demandas priorizadas com Adones: Pix copia-e-cola e paradas de embarque. Refinamento com o time tech amanhã.</div>
+            <div class="kanban-card-sub">Sem avanço — novo refinamento a agendar por Daniel. Nova demanda de viação surgiu; organização geral a discutir na semanal.</div>
             <div class="kanban-card-footer">
-              <span class="deadline-tag">05/08</span>
+              <span class="deadline-tag">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
             </div>
           </button>
 
-          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard de Acompanhamento em desenvolvimento">
+          <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: Dashboard bloqueado pelo time de BI">
             <div class="kanban-card-title">📊 Motor V2 — Dashboard de Acompanhamento</div>
-            <div class="kanban-card-sub">Refinamento feito com BI + time Smart. Documentação entregue, chamado GLPI aberto.</div>
+            <div class="kanban-card-sub">Bloqueado do lado técnico: time de BI (Gui) corrigindo gaps encontrados. Nada pendente do lado de produto.</div>
             <div class="kanban-card-footer">
-              <span class="deadline-tag">29/07</span>
+              <span class="deadline-tag">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
             </div>
           </button>
@@ -1061,19 +1070,11 @@
             </div>
           </button>
 
-          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Processos de Produto">
+          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Processos de Produto com acesso conquistado">
             <div class="kanban-card-title">⚙️ Processos de Produto — Autonomia de Dados</div>
-            <div class="kanban-card-sub">Dashboard automatizado, Jira PM e acesso ao banco clone de produção em curso.</div>
+            <div class="kanban-card-sub">Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.</div>
             <div class="kanban-card-footer">
-              <span class="deadline-tag">05/08</span>
-              <span class="badge badge-ongoing">Em andamento</span>
-            </div>
-          </button>
-
-          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Apoio ao Viva">
-            <div class="kanban-card-title">🤝 Apoio ao Viva</div>
-            <div class="kanban-card-sub">Daniel apoia a Bidinha no desenvolvimento de venda com pontos Viva no frontoffice.</div>
-            <div class="kanban-card-footer">
+              <span class="deadline-tag">12/08</span>
               <span class="badge badge-ongoing">Em andamento</span>
             </div>
           </button>
@@ -1141,7 +1142,7 @@
       <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Meta: 15% da receita via conexões · Comitê semanal ativo desde 26/06</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
         <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Italo · Daniel · Guilherme</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 05 ago 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 12 ago 2026</span>
       </div>
     </div>
 
@@ -1151,8 +1152,8 @@
 
       <div class="alert-card danger">
         <div class="alert-card-label">⏸️ Pausado p/ novas melhorias</div>
-        <div class="alert-card-title">Motor V2 — 85% dos PDVs ativados no offline (05/08)</div>
-        <div class="alert-card-body">Depois do piloto inicial (18 PDVs, 15–17/07) e da expansão em lotes de 100 PDVs ao longo de 20–22/07 — pausada em 29/07 por um problema de performance no banco de dados —, Daniel confirma em 05/08: <strong>85% dos PDVs foram ativados no offline</strong>. O motor segue <strong>pausado para qualquer tipo de atualização/melhoria nova</strong> — o que avançou foi só a conclusão da ativação já em curso, não um novo desenvolvimento.</div>
+        <div class="alert-card-title">Motor V2 — 100% dos PDVs ativados no offline (12/08)</div>
+        <div class="alert-card-body">Depois do piloto inicial (18 PDVs, 15–17/07) e da expansão em lotes de 100 PDVs ao longo de 20–22/07 — pausada em 29/07 por um problema de performance no banco de dados —, Daniel confirma em 12/08: <strong>100% dos PDVs foram ativados no offline</strong>. O motor segue <strong>pausado para qualquer tipo de atualização/melhoria nova</strong> — o que avançou foi só a conclusão da ativação já em curso, não um novo desenvolvimento.</div>
         <div class="alert-card-foot">Decisão: motor pausado para novas atualizações · conclusão da ativação offline não conta como exceção</div>
         <div class="alert-card-foot" style="margin-top:6px;">Nota: a frente de Fraude/Gratuidade (poltrona de criança) é uma iniciativa separada — não faz parte do Motor V2. Ver aba Fraudes (Gratuidade).</div>
       </div>
@@ -1209,7 +1210,7 @@
       <div style="display:flex;align-items:center;padding:13px 16px;background:#fff;">
         <span style="width:10px;height:10px;border-radius:50%;background:#1D9E75;flex-shrink:0;margin-right:14px;"></span>
         <span style="font-size:14.5px;color:#2d3748;font-weight:700;min-width:130px;">PDVs / Totens</span>
-        <span style="font-size:14px;color:#4a5568;flex:1;">Mais de 300 PDVs ativos (offline). Novas melhorias pausadas em 29/07 — problema de performance no banco de dados tirando o SmartBus do ar</span>
+        <span style="font-size:14px;color:#4a5568;flex:1;">100% dos PDVs ativos (offline) — ativação concluída em 12/08. Novas melhorias seguem pausadas desde 29/07 — problema de performance no banco de dados tirando o SmartBus do ar</span>
         <span style="font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:10px;background:#fdecea;color:#c0392b;margin-left:12px;white-space:nowrap;letter-spacing:.4px;">PAUSADO</span>
       </div>
 
@@ -1266,16 +1267,16 @@
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">📊 Dashboard de Acompanhamento V2</div>
-          <span class="badge badge-ongoing">Em desenvolvimento</span>
+          <span class="badge badge-pending">Bloqueado (lado técnico)</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Último refinamento realizado com o time de BI e o time Smart. Documentação atualizada entregue e chamado aberto no GLPI para o time de BI iniciar o desenvolvimento.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:6px;">
-          <strong>29/07 — Daniel:</strong> maior visibilidade do motor para diretoria, negócio e produto, com monitoramento mais claro e acessível dos resultados.
+          <strong>12/08 — Daniel:</strong> o time de BI (Gui) encontrou gaps no dashboard e está há 2 dias trabalhando nesses problemas — tudo do lado técnico/BI, nada pendente do lado de produto no momento. O acompanhamento de Daniel fica um pouco travado enquanto isso não avança.
         </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> acompanhar o início do desenvolvimento pelo time de BI · sem data definida
+          <strong>Próx. passo:</strong> aguardar o time de BI resolver os gaps encontrados · sem data definida
         </div>
       </div>
 
@@ -1749,27 +1750,27 @@
   <!-- ══════════════ TAB: REFORMA TRIBUTÁRIA ══════════════ -->
   <div id="tab-reforma" class="tab-panel" role="region" aria-labelledby="tabbtn-reforma" tabindex="0">
     <div class="section" style="margin-bottom:0;">
-      <div class="section-label">Destaques da semana · 05/08</div>
+      <div class="section-label">Destaques da semana · 12/08</div>
       <div class="alert-grid" style="--alert-cols:4; margin-bottom:4px;">
         <div class="alert-card danger">
           <div class="alert-card-label">⚠️ Atenção</div>
-          <div class="alert-card-title" style="margin-bottom:0;">Consultoria Técnica-Fiscal reprovada</div>
-          <div class="alert-card-body">1ª proposta cobriu menos de 10% do escopo e não atendeu os 11 critérios de aceite. Prospecção de outras consultorias continua.</div>
+          <div class="alert-card-title" style="margin-bottom:0;">E&amp;Y não pode assumir a assessoria</div>
+          <div class="alert-card-body">Devolutiva de 11/08: conflito de interesse — E&amp;Y atua como auditoria do grupo. BDO é o novo prospect mais avançado.</div>
         </div>
         <div class="alert-card warning">
-          <div class="alert-card-label">⏳ Aguardando terceiro</div>
+          <div class="alert-card-label">⏳ Aguardando terceiros</div>
           <div class="alert-card-title" style="margin-bottom:0;">CORE-009 — Integração Globus</div>
-          <div class="alert-card-body">Ainda sem retorno da Praxio sobre os leiautes. Cobrança feita no grupo — aguardando Lorenza.</div>
+          <div class="alert-card-body">Reunião com Proteus feita na segunda. Globus sem atualização às últimas NTs. Praxio segue atrasada.</div>
         </div>
-        <div class="alert-card success">
-          <div class="alert-card-label">✅ No prazo</div>
+        <div class="alert-card warning">
+          <div class="alert-card-label">🔜 Deploy hoje/amanhã</div>
           <div class="alert-card-title" style="margin-bottom:0;">CORE-002 — Compras Governamentais</div>
-          <div class="alert-card-body">Liberado para teste, dentro do cronograma. Deploy previsto entre 10 e 11/08.</div>
+          <div class="alert-card-body">Deploy escorregou de 10-11/08 para 12-13/08. Só 1 cenário de pagamento suportado — os demais ficam em stand by.</div>
         </div>
         <div class="alert-card">
           <div class="alert-card-label">⏸️ On hold</div>
           <div class="alert-card-title" style="margin-bottom:0;">Motor Tributário + Pagamentos</div>
-          <div class="alert-card-body">Sem reforma B2C prevista para início de 2027. SEFAZ postergou de novo a obrigatoriedade dos campos IBS/CBS.</div>
+          <div class="alert-card-body">Prazo do IBS/CBS obrigatório adiado de novo (jan→abr→ago→sem nova data). Próximo marco: vínculo de pagamento.</div>
         </div>
       </div>
     </div>
@@ -1777,23 +1778,30 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">RTC · Consultoria Técnica-Fiscal — Seleção · 05/08</div>
+      <div class="section-label">RTC · Assessoria Técnica-Fiscal — Seleção · 12/08</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">🔍 Consultoria Técnica-Fiscal — primeira proposta reprovada</div>
+          <div class="detail-title">🔍 Assessoria Técnica-Fiscal — E&amp;Y não pode assumir</div>
           <span class="badge badge-blocked">Atenção</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
-          Escopo definido: a consultoria precisa dominar BPe + RTC e atuar desde a leitura da norma até a validação do requisito. Brief de Escopo, Protocolo de Envolvimento Fiscal e Matriz de Responsabilidades formalizados.
+          Escopo definido: a assessoria precisa dominar BPe + RTC e atuar desde a leitura da norma até a validação do requisito. Brief de Escopo, Protocolo de Envolvimento Fiscal e Matriz de Responsabilidades formalizados. Documento de escopo aprimorado e planilha/checklist criada para avaliar aderência de cada parceiro.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
-          <strong>05/08 · Update</strong> — a primeira consultoria a responder retornou proposta cobrindo <strong>menos de 10% do escopo</strong>, não atendeu os 11 critérios de aceite e não tem o perfil necessário. O escopo geral da reforma é público — a necessidade real é apoio específico na fase anterior aos requisitos.
+          <strong>Nomenclatura ajustada:</strong> o termo correto é <strong>assessoria técnica fiscal</strong>, não "consultoria" — é apoio direto nas questões da reforma, não uma auditoria.
         </div>
-        <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
-          <strong>Decisão:</strong> não faz sentido contratar consultoria que não atenda o mínimo necessário. Reunião de alinhamento de escopo e devolutiva agendada — segue a prospecção das demais consultorias.
+        <div class="blocker-box">
+          <strong>11/08 — Devolutiva da Ernst &amp; Young:</strong> não conseguem prosseguir no modelo necessário. Motivo: conflito de interesse — a E&amp;Y atua como auditoria do grupo e não pode acumular a assessoria técnica fiscal.
         </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>12/08 — BDO:</strong> conversa desta semana foi bem mais receptiva. Contato (Thiago) entendeu bem o problema e vai levar internamente para definir o escopo. Ítalo espera um retorno mais concreto entre quinta e sexta para verificar aderência.
+        </div>
+        <ul class="update-list" style="margin-top:8px;">
+          <li>Aguardando Caparica e Nuno (com apoio de Benício) na busca por mais parceiros.</li>
+          <li>Nenhum parceiro aprovado até o momento — só E&amp;Y avaliada formalmente, sem sucesso.</li>
+        </ul>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> devolutiva e avaliação das outras consultorias · Maurício
+          <strong>Próx. passo:</strong> aguardar retorno da BDO (quinta/sexta) e avaliar aderência via checklist · Ítalo + Maurício
         </div>
       </div>
     </div>
@@ -1805,26 +1813,27 @@
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">🆕 Atualização de leiautes para as NTs 2026.001/2026.002 (IBS/CBS)</div>
-          <span class="badge badge-pending">Aguardando terceiro</span>
+          <span class="badge badge-pending">Aguardando terceiros</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           Criado em 28/07 · Maurício. Validação em produção com a Expresso MS (27/07) mapeou campos pendentes do lado Smartbus para a API de Excessos (<code>/Globus/ExcessBaggage</code>). Os leiautes da Praxio estão desatualizados em relação às NTs 2026.001 e 2026.002.
         </div>
-        <div class="blocker-box">
-          <strong>NT 2026.002 — IBS/CBS obrigatório (CRT 3) em produção a partir de 03/08/2026.</strong>
+        <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
+          <strong>Atenção:</strong> a obrigatoriedade do informe dos campos IBS/CBS (NT 2026.002) já foi adiada três vezes — de janeiro para abril, de abril para agosto, e de agosto <strong>sem nova data anunciada</strong>. Não há garantia de que aconteça nem em janeiro/2027.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
           <strong>O que já está funcionando:</strong> WS Bilhetes (SOAP) e API Excessos (REST) — IBS/CBS, cstIbsCbs, cClassTrib, alíquotas e reduções: tudo OK em produção.
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
-          <strong>05/08 · Update</strong> — integração puxada por Maurício, ainda sem retorno da Praxio. Cobrança feita no grupo.
+          <strong>12/08 · Update</strong> — reunião com a Proteus realizada na segunda-feira sobre os arquivos; Ítalo vai especificar como fica a integração via API. Globus ainda não está atualizado para as últimas notas técnicas — aguardando a devolutiva deles. A Praxio segue atrasada.
         </div>
         <ul class="update-list" style="margin-top:8px;">
           <li><strong>Dependência 1:</strong> campos <code>gCompraGov</code> aguardam a conclusão do CORE-002.</li>
           <li><strong>Dependência 2:</strong> resposta da Praxio sobre os leiautes das NTs 2026.001/2026.002 (e-mail enviado em 28/07).</li>
+          <li><strong>Dependência 3:</strong> devolutiva do Globus sobre as últimas notas técnicas.</li>
         </ul>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> retorno de Lorenza com as informações de integração · Maurício acompanha
+          <strong>Próx. passo:</strong> Ítalo especifica a integração de API com a Proteus · aguardar devolutiva de Globus e Praxio
         </div>
       </div>
     </div>
@@ -1911,7 +1920,7 @@
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">🔗 CORE-004 · Integrações Smartbus e ERPs (NT v1.14 + Leiaute v200)</div>
-          <span class="badge badge-pending">Aguardando refinamento técnico</span>
+          <span class="badge badge-ongoing">Refinado</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           <strong>Spec concluída — 16 regras de negócio mapeadas.</strong> Escopo delimitado em reunião de 09/07 com Prevatto, Victor, Flávia, Cristiane e Benício. A integração atual (NT v1.10 + Leiaute v193) não cobre as evoluções exigidas pela NT v1.14 e Leiaute v200 — novos campos no BPE (45, 46, 47), IBE (13, 14, 15) e dois novos registros (RDD e IRD).
@@ -1927,8 +1936,11 @@
         <div class="highlight-box" style="background:#fffbeb;border-left-color:#d97706;">
           <strong>29/07 — Rodrigo Adones:</strong> "Ainda está on hold. Na próxima semana será realizado o refinamento técnico."
         </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>12/08 · Update</strong> — refinamento técnico realizado e já apresentado ao time as atualizações das integrações do Fortes.
+        </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> Refinamento técnico · Adones + Maurício · semana de 04/08
+          <strong>Próx. passo:</strong> desenvolvimento das atualizações já refinadas · Fortes/Adones
         </div>
       </div>
     </div>
@@ -1940,7 +1952,7 @@
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">🏛️ CORE-002 · Compras Governamentais — suporte ao grupo gCompraGov</div>
-          <span class="badge badge-done">No prazo</span>
+          <span class="badge badge-ongoing">Deploy hoje/amanhã</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
           <strong>Spec v13 fechada.</strong> Decisões consolidadas em reuniões de 30/06 e 08/07 com André Rocha e Paulo Balbino: modelo 1:N de Entidade Governamental com vigências, pRedutor e zeragem de alíquota por tpEnteGov (Art. 472/473). Menu Administração &gt; Fiscal confirmado com Paulo Balbino. Desenvolvimento autorizado a avançar em paralelo à contratação da consultoria.
@@ -1960,11 +1972,17 @@
         <div class="highlight-box">
           <strong>05/08 · Update</strong> — liberado para teste, dentro do cronograma. <strong>Deploy previsto entre 10 e 11/08</strong>, Ítalo.
         </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>12/08 · Update</strong> — deploy escorregou para hoje/amanhã (12–13/08). Refinamento adicional feito e apresentado ao time sobre as atualizações das integrações do Fortes.
+        </div>
+        <div class="blocker-box">
+          <strong>Novo achado:</strong> hoje só é possível atender <strong>1 cenário</strong> de compra governamental — fornecimento com pagamento posterior. Os demais modelos de operação com pagamento exigem vínculo do DFE (nota fiscal paga) no BPE, o que ainda <strong>não está definido pelo time contábil</strong>. Esse cenário fica em stand by dentro da linha de Compras Governamentais.
+        </div>
         <div class="highlight-box" style="background:#fff8f0;border-left-color:#f4a250;">
-          <strong>Atenção:</strong> Lacunas de interpretação normativa (itens BPE-08, BPE-06, BPE-13 do Caderno de Testes) podem gerar retrabalho se a consultoria revisar a leitura das NTs.
+          <strong>Atenção:</strong> Lacunas de interpretação normativa (itens BPE-08, BPE-06, BPE-13 do Caderno de Testes) podem gerar retrabalho se a assessoria revisar a leitura das NTs.
         </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> deploy entre 10 e 11/08 · Ítalo
+          <strong>Próx. passo:</strong> deploy hoje/amanhã (12–13/08) · Ítalo · acompanhar comportamento pós-deploy e as demandas levantadas por Paulo
         </div>
       </div>
     </div>
@@ -1972,7 +1990,7 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">RTC · Motor Tributário e Domínio de Pagamentos · On hold · 05/08</div>
+      <div class="section-label">RTC · Motor Tributário e Domínio de Pagamentos · On hold · 12/08</div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">🧮 Motor Tributário + Domínio de Pagamentos — 1 frente de discovery</div>
@@ -1981,14 +1999,18 @@
         <ul class="update-list">
           <li>Motor Tributário segue on hold. Calculadora oficial da RF (piloto-cbs.tributos.gov.br, build V0038) em beta — sem cobertura confirmada para BP-e e compras governamentais (tpEnteGov). Não é opção viável no curto prazo.</li>
           <li>Domínio de Pagamentos (motor de clientes, split) não se justifica agora — depende das definições de reforma.</li>
-          <li>Já é certo que <strong>não haverá reforma para B2C no início de 2027</strong>.</li>
-          <li>Consultoria mais lenta que o necessário e SEFAZ atrasada: a obrigatoriedade de informe dos campos IBS e CBS, prevista para esta semana, foi <strong>postergada novamente</strong>.</li>
+          <li>Já é certo que <strong>não haverá reforma para B2C no início de 2027</strong> — primeira fase será B2B.</li>
+          <li>Apuração assistida hoje só existe a nível de <strong>CBS</strong> — ainda não tem IBS, e só para alguns tipos de CST.</li>
+          <li>Prazo do IBS/CBS obrigatório adiado sucessivamente: de janeiro para abril, de abril para agosto, e de agosto <strong>sem nova data</strong> — nem para janeiro/2027 há garantia.</li>
         </ul>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>12/08 · Próximo marco de produto:</strong> vínculo de pagamento das informações de pagamento — prepara o DF para o split payment do ano que vem. Ítalo está focado em viabilizar um conciliador com a apuração assistida: a equipe fiscal da Guanabara precisa de um ajuste relacionado a filtro de data, ainda em definição antes de especificar para o tech.
+        </div>
         <div class="highlight-box" style="background:#f8fafc;border-left-color:#94a3b8;">
-          <strong>05/08 · Decisão:</strong> manter as duas frentes em espera, avançando no que já está definido.
+          <strong>Decisão:</strong> manter as duas frentes em espera, avançando no que já está definido.
         </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> reavaliar após novas definições de reforma · Maurício
+          <strong>Próx. passo:</strong> Ítalo define o ajuste do filtro de data para a apuração assistida e especifica para o tech · Maurício reavalia após novas definições de reforma
         </div>
       </div>
     </div>
@@ -1996,7 +2018,7 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">RTC · Discovery vínculo de pagamento no BPE · Em andamento · 05/08</div>
+      <div class="section-label">RTC · Discovery vínculo de pagamento no BPE · Em andamento · 12/08</div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">🆕 Discovery da nota técnica de vínculo de pagamento</div>
@@ -2013,6 +2035,25 @@
     </div>
 
     <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">RTC · Filtros do Relatório de Tributos IVA (RTI) · Nova demanda · 12/08</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🆕 Ajuste de filtro de data no RTI para a equipe fiscal</div>
+          <span class="badge badge-pending">Em definição</span>
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          Demanda surgida na reunião desta manhã com Ítalo: a equipe fiscal da Guanabara precisa de um ajuste relacionado a filtro de data no Relatório de Tributos IVA (RTI), para viabilizar um conciliador com a apuração assistida.
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          Ainda em definição — produto precisa entender, refinar e especificar antes de passar para o tech. Mesmo com prazo apertado (muita coisa já publicada nas notas técnicas não condiz com a realidade da produção da reforma), a demanda segue o fluxo normal de refinamento.
+        </div>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> Ítalo finaliza a definição e especifica para o time tech · sem data confirmada
+        </div>
+      </div>
+    </div>
 
     <div class="divider"></div>
 
@@ -2089,9 +2130,13 @@
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">01 · Apoio ao Viva</div>
+          <span class="badge badge-pending">Travado</span>
         </div>
         <div class="detail-body">
           Daniel apoia a Bidinha para o desenvolvimento de venda com pontos Viva no frontoffice.
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>12/08 — Daniel:</strong> já é o 16º refinamento e o time ainda não consegue avançar. Decisão: Daniel não precisa mais entrar em todo refinamento — vai acompanhar por gravação/bullet points e alinhar diretamente com a Bidinha só quando precisar de apoio específico, para não consumir tempo desproporcional a um papel de suporte.
         </div>
       </div>
     </div>
@@ -2206,17 +2251,21 @@
     <div class="divider"></div>
 
     <div class="section">
-      <div class="section-label">05 · Processos de Produto — Autonomia de Dados e Jira PM · 05/08</div>
+      <div class="section-label">05 · Processos de Produto — Autonomia de Dados e Jira PM · 12/08</div>
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">Contexto</div>
+          <span class="badge badge-ongoing">Acesso conquistado</span>
         </div>
         <div class="detail-body">
           Três frentes de otimização em curso: <strong>dashboard automatizado</strong>, <strong>cadastro das frentes de melhoria no Jira Product Manager</strong>, e <strong>acesso via ADBC ao banco clone de produção</strong>. O acesso ao banco habilita monitoramento de desempenho de venda do Motor V2, gratuidades, antifraude e duplicidades — dando autonomia de dados ao time de produto.
         </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>12/08 — Maurício:</strong> avançou — já têm acesso ao <strong>Athena</strong>, ao banco de BI e ao banco de produção do SmartBus para Discovery. Ítalo já tem mais autonomia (vinha do time de atendimento); Daniel também precisa ganhar mais autonomia para trabalhar com isso.
+        </div>
       </div>
       <div class="highlight-box blue">
-        <strong>Próx. passo:</strong> reunião de migração do acesso ao banco já marcada · Maurício, depois Ítalo
+        <strong>Próx. passo:</strong> homologar o acesso e aplicar no dia a dia · criar divisão própria no status report para reportar essa frente · Maurício + Ítalo + Daniel
       </div>
     </div>
 
@@ -2244,7 +2293,7 @@
       <div style="font-size:14px; color:#5c6577; margin-bottom:4px;">Demandas pontuais de viações fora do escopo VTR — aberta em 05/08</div>
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
         <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">👥 Daniel · Ítalo</span>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 05 ago 2026</span>
+        <span style="display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:#f7f9fc;border:1px solid #eaecf2;border-radius:6px;padding:3px 9px;color:#4a5568;">📅 Atualizado 12 ago 2026</span>
       </div>
     </div>
 
@@ -2262,8 +2311,29 @@
         <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
           Daniel alinhou com Adones, que priorizou as duas demandas e já definiu o Dev responsável para o desenvolvimento.
         </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
+          <strong>12/08 — Daniel:</strong> ainda sem avanço do lado da Motta e Princesa. Eles querem marcar um novo refinamento — Daniel vai agendar. Há também uma pendência de negócio/financeiro envolvendo o Rafa e papelada, ainda a resolver.
+        </div>
         <div class="highlight-box blue">
-          <strong>Próx. passo:</strong> reunião de refinamento das duas demandas com o time tech · Daniel, com apoio de Ítalo · amanhã
+          <strong>Próx. passo:</strong> Daniel agenda novo refinamento com Motta e Princesa · sem data confirmada
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">02 · Nova demanda de viação · A organizar</div>
+      <div class="detail-block">
+        <div class="detail-header">
+          <div class="detail-title">🆕 Mais uma demanda de viação surgiu</div>
+          <span class="badge badge-pending">A definir</span>
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6;">
+          Além de Motta e Princesa, surgiu outra demanda de viação. Daniel sugere levar o tema para a reunião semanal para discutir como organizar a categoria "viações" como um todo — como agrupar, priorizar e reportar essas frentes daqui para frente.
+        </div>
+        <div class="highlight-box blue">
+          <strong>Próx. passo:</strong> discutir organização geral de "Outras Viações" na próxima semanal · Daniel + Maurício + Ítalo
         </div>
       </div>
     </div>
@@ -2322,18 +2392,21 @@
 
     <!-- DESENVOLVIMENTO -->
     <div class="section">
-      <div class="section-label">Desenvolvimento — Fase 1 entregue · 04/08</div>
+      <div class="section-label">Desenvolvimento — Fase 2 entregue, Fase 3 em entrega · 12/08</div>
       <div class="detail-block">
         <div class="detail-header">
-          <div class="detail-title">🛠️ Cancelamento automático libera a poltrona da gratuidade de criança</div>
-          <span class="badge badge-done">Fase 1 entregue</span>
+          <div class="detail-title">🛠️ Roadmap de gratuidades avançando conforme planejado</div>
+          <span class="badge badge-done">Fase 2 entregue</span>
         </div>
         <div style="font-size:14px; color:#4a5568; line-height:1.6;">
-          Deploy realizado na noite de 04/08: o bilhete da criança agora é cancelado junto com o bilhete principal, liberando a poltrona de gratuidade automaticamente. Fase 2 já iniciada. Todas as fases de melhorias e evolução do sistema referentes às gratuidades já foram levantadas e apresentadas ao time tech.
+          <strong>Fase 1</strong> — deploy realizado na noite de 04/08: o bilhete da criança agora é cancelado junto com o bilhete principal, liberando a poltrona de gratuidade automaticamente.
+        </div>
+        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:6px;">
+          <strong>12/08 — Daniel:</strong> Gui já entregou a <strong>Fase 2</strong> e está entregando a <strong>Fase 3</strong> do roadmap de gratuidades. Daniel formalizou todo o roadmap com milestones e já criou o acompanhamento no Jira.
         </div>
         <div class="highlight-box blue">
           <strong>Nota:</strong> esta frente é independente do Motor de Conexões V2 — o motor segue pausado para qualquer atualização, sem relação com este desenvolvimento.<br>
-          <strong>Próx. passo:</strong> Daniel organiza e documenta todas as fases do plano de melhorias · em andamento
+          <strong>Próx. passo:</strong> concluir a entrega da Fase 3 · Gui/Daniel
         </div>
       </div>
     </div>
@@ -3421,7 +3494,7 @@
     <!-- FOOTER -->
     <div class="card-footer">
       <div class="footer-brand">Smart Travel IT · Arara Tech</div>
-      <div class="footer-date">Atualizado em 05 ago 2026 · 14:45</div>
+      <div class="footer-date">Atualizado em 12 ago 2026 · 13:45</div>
     </div>
 
   </div>
