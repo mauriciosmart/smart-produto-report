@@ -969,7 +969,7 @@
         <div class="kanban-column" style="--kb-color:#dc2626;">
           <div class="kanban-column-header">
             <span class="kanban-column-title">🔴 Requer Atenção</span>
-            <span class="kanban-count">5</span>
+            <span class="kanban-count">4</span>
           </div>
 
           <button type="button" class="kanban-card" onclick="activateTab('motor')" aria-label="Ver detalhes em Motor de Conexões: 100% dos PDVs offline ativados">
@@ -1005,25 +1005,24 @@
               <span class="badge badge-pending">Pausado</span>
             </div>
           </button>
-
-          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Apoio ao Viva travado">
-            <div class="kanban-card-title">🤝 Apoio ao Viva</div>
-            <div class="kanban-card-sub">16º refinamento sem avançar. Daniel deixa de entrar em todo refinamento — acompanha por gravação.</div>
-            <div class="kanban-card-footer">
-              <span class="deadline-tag">12/08</span>
-              <span class="badge badge-pending">Travado</span>
-            </div>
-          </button>
         </div>
 
         <!-- COLUNA: EM ANDAMENTO (largura dupla, cards lado a lado) -->
         <div class="kanban-column" style="--kb-color:#83C0F2; grid-column: span 2;">
           <div class="kanban-column-header">
             <span class="kanban-column-title">🔵 Em Andamento</span>
-            <span class="kanban-count">6</span>
+            <span class="kanban-count">7</span>
           </div>
 
           <div class="kanban-cards-grid">
+
+          <button type="button" class="kanban-card" onclick="activateTab('outras')" aria-label="Ver detalhes em Outras Frentes: Apoio ao Viva">
+            <div class="kanban-card-title">🤝 Apoio ao Viva</div>
+            <div class="kanban-card-sub">Daniel apoia a Bidinha no desenvolvimento de venda com pontos Viva no frontoffice.</div>
+            <div class="kanban-card-footer">
+              <span class="badge badge-ongoing">Em andamento</span>
+            </div>
+          </button>
 
           <button type="button" class="kanban-card" onclick="activateTab('fraudes')" aria-label="Ver detalhes em Fraudes (Gratuidade): fase 2 entregue, fase 3 pausada">
             <div class="kanban-card-title">🚨 Fraudes (Gratuidade) — Fase 2 entregue, Fase 3 pausada</div>
@@ -2139,13 +2138,10 @@
       <div class="detail-block">
         <div class="detail-header">
           <div class="detail-title">01 · Apoio ao Viva</div>
-          <span class="badge badge-pending">Travado</span>
+          <span class="badge badge-ongoing">Em andamento</span>
         </div>
         <div class="detail-body">
           Daniel apoia a Bidinha para o desenvolvimento de venda com pontos Viva no frontoffice.
-        </div>
-        <div style="font-size:14px; color:#4a5568; line-height:1.6; margin-top:8px;">
-          <strong>12/08 — Daniel:</strong> já é o 16º refinamento e o time ainda não consegue avançar. Decisão: Daniel não precisa mais entrar em todo refinamento — vai acompanhar por gravação/bullet points e alinhar diretamente com a Bidinha só quando precisar de apoio específico, para não consumir tempo desproporcional a um papel de suporte.
         </div>
       </div>
     </div>
