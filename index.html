@@ -928,9 +928,19 @@
     display: flex; align-items: center; justify-content: center; flex: none;
   }
   .rs-owner-row { display: flex; align-items: center; gap: 8px; }
-  .rs-progress-label { font-size: 12px; font-weight: 700; color: #5B4BE8; }
-  .rs-progress-track { height: 4px; border-radius: 99px; background: #EDE9FB; overflow: hidden; }
-  .rs-progress-bar { height: 100%; border-radius: 99px; }
+  .rs-owner-edit { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border-radius: 6px; padding: 2px 5px; margin: -2px -5px; }
+  .rs-owner-edit:hover { background: #F2F4F8; }
+  .rs-owner-edit-form { display: flex; align-items: center; gap: 5px; }
+  .rs-owner-input {
+    font-family: inherit; font-size: 12px; padding: 4px 7px; width: 96px;
+    border: 1px solid #C9BEFF; border-radius: 6px; outline: none;
+  }
+  .rs-owner-icon-btn {
+    border: none; background: none; cursor: pointer; font-size: 13px;
+    width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  }
+  .rs-owner-icon-btn.save { color: #12855B; } .rs-owner-icon-btn.save:hover { background: #E4F5EE; }
+  .rs-owner-icon-btn.cancel { color: #C0392B; } .rs-owner-icon-btn.cancel:hover { background: #FDECEA; }
 
   .rs-feature-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
   .rs-feature-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #5C6473; }
@@ -992,8 +1002,6 @@
   }
   .rs-btn-cancel:hover { background: #F2F4F8; }
   .rs-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 2px; }
-  .rs-card-owner { display: flex; align-items: center; gap: 7px; }
-  .rs-card-owner-name { font-size: 11.5px; font-weight: 600; }
   .rs-card-date { font-size: 11.5px; color: #9AA3B2; font-variant-numeric: tabular-nums; }
 
 </style>
@@ -3766,11 +3774,11 @@
   };
 
   var RS_DATA = [
-    { id:'p1', area:'produto', status:'pausado', date:'05/08', progress:60, title:'Comercial — Portfólio estruturado',
+    { id:'p1', area:'produto', status:'pausado', date:'05/08', title:'Comercial — Portfólio estruturado',
       desc:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.', owner:'' },
-    { id:'p2', area:'produto', status:'andamento', date:'12/08', progress:45, title:'Product Discovery — Painel de features',
+    { id:'p2', area:'produto', status:'andamento', date:'12/08', title:'Product Discovery — Painel de features',
       desc:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.', owner:'' },
-    { id:'p3', area:'produto', status:'andamento', date:'12/08', progress:70, title:'Processos de Produto — Autonomia de Dados',
+    { id:'p3', area:'produto', status:'andamento', date:'12/08', title:'Processos de Produto — Autonomia de Dados',
       desc:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.', owner:'' },
 
     { id:'f1', area:'feature', status:'pausado', date:'12/08', title:'Motor V2 — 100% dos PDVs offline',
@@ -3819,26 +3827,55 @@
     open: null,
     editing: null,
     draft: '',
-    updates: {}
+    updates: {},
+    owners: {},
+    editingOwner: null,
+    ownerDraft: ''
   };
   RS_DATA.forEach(function (d) {
     RS_STATE.updates[d.id] = { text: d.update || '', stamp: d.updateStamp || '' };
+    RS_STATE.owners[d.id] = d.owner || '';
   });
 
   function rsEsc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
-  function rsOwner(it) {
-    if (it.owner) {
-      return {
-        owner: it.owner, initials: it.owner.slice(0, 2).toUpperCase(),
-        avatarStyle: 'background:#E7E4FB;color:#4437B8;', ownerColor: '#3C4453'
-      };
+  function rsOwnerDisplay(name) {
+    if (name) {
+      return { owner: name, initials: name.slice(0, 2).toUpperCase(), avatarStyle: 'background:#E7E4FB;color:#4437B8;', ownerColor: '#3C4453' };
     }
-    return {
-      owner: 'sem dono', initials: '?',
-      avatarStyle: 'background:#fff;border:1px dashed #CBD2DD;color:#AAB2BF;', ownerColor: '#AAB2BF'
-    };
+    return { owner: 'sem dono', initials: '?', avatarStyle: 'background:#fff;border:1px dashed #CBD2DD;color:#AAB2BF;', ownerColor: '#AAB2BF' };
+  }
+  function rsOwnerBlock(id) {
+    var name = RS_STATE.owners[id] || '';
+    if (RS_STATE.editingOwner === id) {
+      return '' +
+        '<div class="rs-owner-edit-form">' +
+          '<input type="text" class="rs-owner-input" id="rsOwnerInput-' + id + '" value="' + rsEsc(RS_STATE.ownerDraft) + '" placeholder="Nome do dono" oninput="RS_STATE.ownerDraft=this.value" onkeydown="if(event.key===\'Enter\'){rsSaveOwner(\'' + id + '\');} if(event.key===\'Escape\'){rsCancelOwnerEdit();}">' +
+          '<button type="button" class="rs-owner-icon-btn save" title="Salvar" onclick="rsSaveOwner(\'' + id + '\')">✓</button>' +
+          '<button type="button" class="rs-owner-icon-btn cancel" title="Cancelar" onclick="rsCancelOwnerEdit()">✕</button>' +
+        '</div>';
+    }
+    var o = rsOwnerDisplay(name);
+    return '' +
+      '<div class="rs-owner-edit" title="Clique para definir o dono" onclick="rsStartEditOwner(\'' + id + '\')">' +
+        '<span class="rs-avatar" style="' + o.avatarStyle + '">' + o.initials + '</span>' +
+        '<span style="font-size:12.5px;font-weight:600;color:' + o.ownerColor + ';">' + rsEsc(o.owner) + '</span>' +
+      '</div>';
+  }
+  function rsStartEditOwner(id) {
+    RS_STATE.editingOwner = id;
+    RS_STATE.ownerDraft = RS_STATE.owners[id] || '';
+    rsRenderAll();
+    var inp = document.getElementById('rsOwnerInput-' + id);
+    if (inp) { inp.focus(); inp.select(); }
+  }
+  function rsCancelOwnerEdit() { RS_STATE.editingOwner = null; RS_STATE.ownerDraft = ''; rsRenderAll(); }
+  function rsSaveOwner(id) {
+    RS_STATE.owners[id] = (RS_STATE.ownerDraft || '').trim();
+    RS_STATE.editingOwner = null;
+    RS_STATE.ownerDraft = '';
+    rsRenderAll();
   }
 
   function rsRenderFilters() {
@@ -3862,9 +3899,7 @@
     }).join('');
 
     document.getElementById('rsProdCards').innerHTML = prod.map(function (p) {
-      var o = rsOwner(p);
       var st = RS_STATUS[p.status];
-      var barColor = p.status === 'pausado' ? '#C2790B' : '#5B4BE8';
       return '' +
         '<div class="rs-produto-card">' +
           '<div class="rs-produto-card-top">' +
@@ -3874,16 +3909,13 @@
           '<span class="rs-produto-card-title">' + rsEsc(p.title) + '</span>' +
           '<span class="rs-produto-card-desc">' + rsEsc(p.desc) + '</span>' +
           '<div class="rs-produto-card-footer">' +
-            '<div class="rs-owner-row"><span class="rs-avatar" style="' + o.avatarStyle + '">' + o.initials + '</span><span style="font-size:12.5px;font-weight:600;color:' + o.ownerColor + ';">' + rsEsc(o.owner) + '</span></div>' +
-            '<span class="rs-progress-label">' + p.progress + '%</span>' +
+            rsOwnerBlock(p.id) +
           '</div>' +
-          '<div class="rs-progress-track"><div class="rs-progress-bar" style="width:' + p.progress + '%;background:' + barColor + ';"></div></div>' +
         '</div>';
     }).join('');
   }
 
   function rsCardHtml(f) {
-    var o = rsOwner(f);
     var u = RS_STATE.updates[f.id] || { text: '', stamp: '' };
     var open = RS_STATE.open === f.id;
     var editing = RS_STATE.editing === f.id;
@@ -3913,7 +3945,7 @@
     var stampHtml = (has && !editing) ? '<span class="rs-update-stamp">' + rsEsc(u.stamp) + '</span>' : '';
 
     return '' +
-      '<div class="rs-card">' +
+      '<div class="rs-card" style="border-left:3px solid ' + st.color + ';">' +
         '<span class="rs-card-title" onclick="rsToggleOpen(\'' + f.id + '\')">' + rsEsc(f.title) + '</span>' +
         (open ? '<span class="rs-card-desc">' + rsEsc(f.desc) + '</span>' : '') +
         '<div class="rs-update-wrap" style="background:' + wrapBg + ';border:1px solid ' + wrapBorder + ';">' +
@@ -3924,7 +3956,7 @@
           updateInner +
         '</div>' +
         '<div class="rs-card-footer">' +
-          '<div class="rs-card-owner"><span class="rs-avatar" style="' + o.avatarStyle + '">' + o.initials + '</span><span class="rs-card-owner-name" style="color:' + o.ownerColor + ';">' + rsEsc(o.owner) + '</span></div>' +
+          rsOwnerBlock(f.id) +
           '<span class="rs-card-date">' + rsEsc(f.date) + '</span>' +
         '</div>' +
       '</div>';
