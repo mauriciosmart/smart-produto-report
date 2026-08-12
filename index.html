@@ -910,7 +910,7 @@
   @media (max-width: 860px) { .rs-produto-grid { grid-template-columns: 1fr; } }
   .rs-produto-card {
     background: #fff; border: 1px solid #E4DEFF; border-radius: 14px; padding: 18px 20px;
-    display: flex; flex-direction: column; gap: 12px;
+    display: flex; flex-direction: column; gap: 12px; position: relative;
     box-shadow: 0 1px 2px rgba(27,20,64,0.04);
   }
   .rs-produto-card:hover { border-color: #B9A9FF; box-shadow: 0 6px 20px rgba(60,40,160,0.10); }
@@ -918,6 +918,20 @@
     display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 6px;
     font-size: 10.5px; font-weight: 800; letter-spacing: 0.07em; white-space: nowrap;
   }
+  .rs-pill-btn { border: none; cursor: pointer; font-family: inherit; }
+  .rs-pill-btn:hover { filter: brightness(0.95); }
+  .rs-status-menu {
+    position: absolute; top: 100%; left: 0; margin-top: 4px; z-index: 20;
+    background: #fff; border: 1px solid #E5E9F1; border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(20,30,60,0.14); padding: 5px; min-width: 150px;
+  }
+  .rs-status-menu-item {
+    display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+    border: none; background: none; font-family: inherit; font-size: 12.5px; font-weight: 600;
+    padding: 7px 8px; border-radius: 7px; cursor: pointer; color: #3C4453;
+  }
+  .rs-status-menu-item:hover { background: #F2F4F8; }
+  .rs-status-menu-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
   .rs-produto-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .rs-produto-card-date { font-size: 12px; color: #9A94B2; font-variant-numeric: tabular-nums; }
   .rs-produto-card-title { font-size: 16px; font-weight: 750; letter-spacing: -0.015em; color: #1B1440; line-height: 1.3; }
@@ -954,8 +968,11 @@
   @media (max-width: 640px) { .rs-board { grid-template-columns: 1fr; } }
   .rs-col {
     background: #fff; border: 1px solid #E5E9F1; border-radius: 16px; padding: 16px;
-    display: flex; flex-direction: column; gap: 12px; min-height: 120px;
+    display: flex; flex-direction: column; gap: 12px; min-height: 160px;
+    transition: background .12s;
   }
+  .rs-col.rs-col-drag-over { background: #F7F6FF; }
+  .rs-col-drop-end { flex: 1; min-height: 24px; }
   .rs-col-head {
     display: flex; align-items: center; justify-content: space-between;
     padding: 4px 6px 12px; border-bottom: 1px solid #F0F2F7;
@@ -970,8 +987,12 @@
   .rs-card {
     border: 1px solid #E9ECF2; border-radius: 12px; padding: 16px 18px;
     display: flex; flex-direction: column; gap: 12px; background: #FDFDFE;
+    cursor: grab; transition: opacity .12s, border-color .12s, box-shadow .12s;
   }
   .rs-card:hover { border-color: #CFD6E2; box-shadow: 0 4px 14px rgba(20,30,60,0.06); }
+  .rs-card.rs-dragging { opacity: 0.4; }
+  .rs-card.rs-drag-over-top { box-shadow: inset 0 3px 0 0 #5B4BE8; }
+  .rs-card.rs-drag-over-bottom { box-shadow: inset 0 -3px 0 0 #5B4BE8; }
   .rs-card-title { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1B2130; letter-spacing: -0.01em; cursor: pointer; }
   .rs-card-desc { font-size: 13.5px; line-height: 1.6; color: #5C6473; }
   .rs-update-wrap { display: flex; flex-direction: column; gap: 8px; border-radius: 10px; padding: 11px 13px; }
@@ -1123,6 +1144,7 @@
       <div>
         <div class="rs-header-eyebrow">SEMANAL DE PRODUTO</div>
         <div class="rs-header-title">Demandas — semana de 12/08</div>
+        <div style="font-size:11.5px;color:#B0AECB;margin-top:4px;">Arraste os cards, clique no status ou nos campos para editar — as alterações valem para esta sessão do navegador; persistência entre navegadores ainda não foi configurada.</div>
       </div>
       <div class="rs-filters" id="rsFilters"></div>
     </div>
@@ -3836,12 +3858,20 @@
     updates: {},
     owners: {},
     editingOwner: null,
-    ownerDraft: ''
+    ownerDraft: '',
+    cardStatus: {},
+    order: [],
+    statusMenuOpen: null
   };
+  var RS_DATA_BY_ID = {};
   RS_DATA.forEach(function (d) {
+    RS_DATA_BY_ID[d.id] = d;
     RS_STATE.updates[d.id] = { text: d.update || '', stamp: d.updateStamp || '' };
     RS_STATE.owners[d.id] = d.owner || '';
+    RS_STATE.cardStatus[d.id] = d.status;
   });
+  RS_STATE.order = RS_DATA.filter(function (d) { return d.area === 'feature'; }).map(function (d) { return d.id; });
+  var RS_DRAG_ID = null;
 
   function rsEsc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -3893,24 +3923,38 @@
     document.getElementById('rsFilters').innerHTML = html;
   }
 
+  var RS_PRODUTO_STATUSES = ['pausado', 'andamento', 'concluido'];
+
   function rsRenderProduto() {
     var prod = RS_DATA.filter(function (d) { return d.area === 'produto'; });
     var kpis = [
       { value: String(prod.length), label: 'INICIATIVAS', color: '#1B1440' },
-      { value: String(prod.filter(function (p) { return p.status === 'andamento'; }).length), label: 'EM ANDAMENTO', color: '#5B4BE8' },
-      { value: String(prod.filter(function (p) { return p.status === 'pausado'; }).length), label: 'PAUSADAS', color: '#C2790B' }
+      { value: String(prod.filter(function (p) { return RS_STATE.cardStatus[p.id] === 'andamento'; }).length), label: 'EM ANDAMENTO', color: '#5B4BE8' },
+      { value: String(prod.filter(function (p) { return RS_STATE.cardStatus[p.id] === 'pausado'; }).length), label: 'PAUSADAS', color: '#C2790B' }
     ];
     document.getElementById('rsProdKpis').innerHTML = kpis.map(function (k) {
       return '<div class="rs-kpi"><span class="rs-kpi-value" style="color:' + k.color + ';">' + k.value + '</span><span class="rs-kpi-label">' + k.label + '</span></div>';
     }).join('');
 
     document.getElementById('rsProdCards').innerHTML = prod.map(function (p) {
-      var st = RS_STATUS[p.status];
+      var curStatus = RS_STATE.cardStatus[p.id];
+      var st = RS_STATUS[curStatus];
+      var menuOpen = RS_STATE.statusMenuOpen === p.id;
+      var menuHtml = '';
+      if (menuOpen) {
+        menuHtml = '<div class="rs-status-menu" onclick="event.stopPropagation()">' +
+          RS_PRODUTO_STATUSES.map(function (s) {
+            var sst = RS_STATUS[s];
+            return '<button type="button" class="rs-status-menu-item" onclick="rsSetCardStatus(\'' + p.id + '\',\'' + s + '\')"><span class="rs-status-menu-dot" style="background:' + sst.color + ';"></span>' + sst.label + '</button>';
+          }).join('') +
+        '</div>';
+      }
       return '' +
         '<div class="rs-produto-card">' +
           '<div class="rs-produto-card-top">' +
-            '<span class="rs-pill" style="background:' + st.bg + ';color:' + st.fg + ';">' + st.label + '</span>' +
+            '<button type="button" class="rs-pill rs-pill-btn" style="background:' + st.bg + ';color:' + st.fg + ';" onclick="event.stopPropagation();rsToggleStatusMenu(\'' + p.id + '\')">' + st.label + ' ▾</button>' +
             '<span class="rs-produto-card-date">' + rsEsc(p.date) + '</span>' +
+            menuHtml +
           '</div>' +
           '<span class="rs-produto-card-title">' + rsEsc(p.title) + '</span>' +
           '<span class="rs-produto-card-desc">' + rsEsc(p.desc) + '</span>' +
@@ -3920,13 +3964,29 @@
         '</div>';
     }).join('');
   }
+  function rsToggleStatusMenu(id) {
+    RS_STATE.statusMenuOpen = (RS_STATE.statusMenuOpen === id) ? null : id;
+    rsRenderProduto();
+  }
+  function rsSetCardStatus(id, status) {
+    RS_STATE.cardStatus[id] = status;
+    RS_STATE.statusMenuOpen = null;
+    rsRenderProduto();
+  }
+  document.addEventListener('click', function (e) {
+    if (RS_STATE.statusMenuOpen && !e.target.closest('.rs-produto-card-top')) {
+      RS_STATE.statusMenuOpen = null;
+      rsRenderProduto();
+    }
+  });
 
   function rsCardHtml(f) {
     var u = RS_STATE.updates[f.id] || { text: '', stamp: '' };
     var open = RS_STATE.open === f.id;
     var editing = RS_STATE.editing === f.id;
     var has = !!u.text;
-    var st = RS_STATUS[f.status];
+    var curStatus = RS_STATE.cardStatus[f.id];
+    var st = RS_STATUS[curStatus];
     var dotColor = has ? st.color : '#CBD2DD';
     var labelColor = has ? '#6B7382' : '#A6AEBB';
     var wrapBg = has ? '#F8F9FC' : '#FCFCFD';
@@ -3951,7 +4011,11 @@
     var stampHtml = (has && !editing) ? '<span class="rs-update-stamp">' + rsEsc(u.stamp) + '</span>' : '';
 
     return '' +
-      '<div class="rs-card" style="border-left:3px solid ' + st.color + ';">' +
+      '<div class="rs-card" draggable="true" data-id="' + f.id + '" ' +
+        'ondragstart="rsDragStart(event,\'' + f.id + '\')" ondragend="rsDragEnd(event)" ' +
+        'ondragover="rsDragOverCard(event,\'' + f.id + '\')" ondragleave="rsDragLeaveCard(event)" ' +
+        'ondrop="rsDropOnCard(event,\'' + f.id + '\',\'' + curStatus + '\')" ' +
+        'style="border-left:3px solid ' + st.color + ';">' +
         '<span class="rs-card-title" onclick="rsToggleOpen(\'' + f.id + '\')">' + rsEsc(f.title) + '</span>' +
         (open ? '<span class="rs-card-desc">' + rsEsc(f.desc) + '</span>' : '') +
         '<div class="rs-update-wrap" style="background:' + wrapBg + ';border:1px solid ' + wrapBorder + ';">' +
@@ -3969,26 +4033,31 @@
   }
 
   function rsRenderBoard() {
-    var feat = RS_DATA.filter(function (d) { return d.area === 'feature'; });
-    var visible = feat.filter(function (f) { return RS_STATE.filter === 'todas' || f.status === RS_STATE.filter; });
+    var visibleIds = RS_STATE.order.filter(function (id) {
+      var st = RS_STATE.cardStatus[id];
+      return RS_STATE.filter === 'todas' || st === RS_STATE.filter;
+    });
     var cols = [['pausado', 'PAUSADO'], ['andamento', 'EM ANDAMENTO'], ['concluido', 'CONCLUÍDO'], ['arquivado', 'ARQUIVADO']];
 
     document.getElementById('rsBoard').innerHTML = cols.map(function (c) {
       var key = c[0], label = c[1];
-      var items = visible.filter(function (f) { return f.status === key; });
+      var ids = visibleIds.filter(function (id) { return RS_STATE.cardStatus[id] === key; });
+      var items = ids.map(function (id) { return RS_DATA_BY_ID[id]; });
       var color = RS_STATUS[key].color;
       return '' +
-        '<div class="rs-col">' +
+        '<div class="rs-col" data-status="' + key + '" ondragover="rsDragOverColumn(event,\'' + key + '\')" ondragleave="rsDragLeaveColumn(event)" ondrop="rsDropOnColumn(event,\'' + key + '\')">' +
           '<div class="rs-col-head">' +
             '<div class="rs-col-head-left"><span class="rs-col-dot" style="background:' + color + ';"></span><span class="rs-col-label">' + label + '</span></div>' +
             '<span class="rs-col-count">' + items.length + '</span>' +
           '</div>' +
           items.map(rsCardHtml).join('') +
+          '<div class="rs-col-drop-end"></div>' +
         '</div>';
     }).join('');
 
+    var feat = RS_DATA.filter(function (d) { return d.area === 'feature'; });
     var semResumo = feat.filter(function (f) { return !(RS_STATE.updates[f.id] || {}).text; }).length;
-    var pausadas = feat.filter(function (f) { return f.status === 'pausado'; }).length;
+    var pausadas = feat.filter(function (f) { return RS_STATE.cardStatus[f.id] === 'pausado'; }).length;
     document.getElementById('rsFeatCount').textContent = feat.length + ' demandas · ' + pausadas + ' pausadas · ' + semResumo + ' sem resumo';
   }
 
@@ -4014,6 +4083,76 @@
     RS_STATE.updates[id] = { text: text, stamp: stamp };
     RS_STATE.editing = null;
     RS_STATE.draft = '';
+    rsRenderBoard();
+  }
+
+  /* ── Drag and drop entre/dentro das colunas ── */
+  function rsDragStart(e, id) {
+    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') {
+      e.preventDefault();
+      return;
+    }
+    RS_DRAG_ID = id;
+    e.dataTransfer.effectAllowed = 'move';
+    try { e.dataTransfer.setData('text/plain', id); } catch (err) {}
+    e.currentTarget.classList.add('rs-dragging');
+  }
+  function rsDragEnd(e) {
+    e.currentTarget.classList.remove('rs-dragging');
+    RS_DRAG_ID = null;
+    document.querySelectorAll('.rs-drag-over-top, .rs-drag-over-bottom').forEach(function (el) {
+      el.classList.remove('rs-drag-over-top', 'rs-drag-over-bottom');
+    });
+    document.querySelectorAll('.rs-col-drag-over').forEach(function (el) { el.classList.remove('rs-col-drag-over'); });
+  }
+  function rsDragOverCard(e, overId) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!RS_DRAG_ID || RS_DRAG_ID === overId) return;
+    var rect = e.currentTarget.getBoundingClientRect();
+    var before = (e.clientY - rect.top) < rect.height / 2;
+    e.currentTarget.classList.toggle('rs-drag-over-top', before);
+    e.currentTarget.classList.toggle('rs-drag-over-bottom', !before);
+  }
+  function rsDragLeaveCard(e) {
+    e.currentTarget.classList.remove('rs-drag-over-top', 'rs-drag-over-bottom');
+  }
+  function rsDropOnCard(e, overId, overStatus) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.currentTarget.classList.remove('rs-drag-over-top', 'rs-drag-over-bottom');
+    var dragId = RS_DRAG_ID;
+    if (!dragId || dragId === overId) return;
+    var rect = e.currentTarget.getBoundingClientRect();
+    var before = (e.clientY - rect.top) < rect.height / 2;
+    rsMoveCard(dragId, overStatus, overId, before);
+  }
+  function rsDragOverColumn(e, status) {
+    e.preventDefault();
+    e.currentTarget.classList.add('rs-col-drag-over');
+  }
+  function rsDragLeaveColumn(e) {
+    e.currentTarget.classList.remove('rs-col-drag-over');
+  }
+  function rsDropOnColumn(e, status) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('rs-col-drag-over');
+    var dragId = RS_DRAG_ID;
+    if (!dragId) return;
+    rsMoveCard(dragId, status, null, false);
+  }
+  function rsMoveCard(dragId, newStatus, refId, before) {
+    RS_STATE.cardStatus[dragId] = newStatus;
+    var order = RS_STATE.order;
+    var idx = order.indexOf(dragId);
+    if (idx > -1) order.splice(idx, 1);
+    if (refId) {
+      var rIdx = order.indexOf(refId);
+      order.splice(before ? rIdx : rIdx + 1, 0, dragId);
+    } else {
+      order.push(dragId);
+    }
+    RS_DRAG_ID = null;
     rsRenderBoard();
   }
 
