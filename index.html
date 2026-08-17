@@ -1055,11 +1055,11 @@
       </svg>
       <span class="sidebar-logo-text">Smart <strong>Travel</strong></span>
     </div>
-    <button type="button" class="side-item" id="tabbtn-resumo" data-tab="resumo" onclick="activateTab('resumo')">
+    <button type="button" class="side-item active" id="tabbtn-resumo" data-tab="resumo" aria-current="page" onclick="activateTab('resumo')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 12v5"/></svg>
       Resumo Executivo
     </button>
-    <button type="button" class="side-item active" id="tabbtn-geral" data-tab="geral" aria-current="page" onclick="activateTab('geral')">
+    <button type="button" class="side-item" id="tabbtn-geral" data-tab="geral" onclick="activateTab('geral')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
       Visão Geral
     </button>
@@ -1135,10 +1135,10 @@
 
     <!-- CONTEÚDO -->
     <div class="content">
-      <div class="content-inner">
+      <div class="content-inner rs-wide">
 
   <!-- ══════════════ TAB: RESUMO EXECUTIVO ══════════════ -->
-  <div id="tab-resumo" class="tab-panel" role="region" aria-labelledby="tabbtn-resumo" tabindex="0">
+  <div id="tab-resumo" class="tab-panel active" role="region" aria-labelledby="tabbtn-resumo" tabindex="0">
 
     <div class="rs-header">
       <div>
@@ -1149,6 +1149,8 @@
       <div class="rs-filters" id="rsFilters"></div>
     </div>
 
+    <div class="rs-kpis" id="rsGlobalKpis" style="margin-bottom:22px;"></div>
+
     <div class="rs-produto-box">
       <div class="rs-produto-head">
         <div>
@@ -1156,7 +1158,6 @@
           <span class="rs-produto-title">Iniciativas do time</span><br>
           <span class="rs-produto-desc">Trabalho que o time de produto conduz por conta própria, fora do backlog de feature.</span>
         </div>
-        <div class="rs-kpis" id="rsProdKpis"></div>
       </div>
       <div class="rs-produto-grid" id="rsProdCards"></div>
     </div>
@@ -1171,7 +1172,7 @@
   </div>
 
   <!-- ══════════════ TAB: GERAL ══════════════ -->
-  <div id="tab-geral" class="tab-panel active" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
+  <div id="tab-geral" class="tab-panel" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
     <div class="section">
       <div class="section-label">🎯 Demandas de Feature</div>
       <div class="kanban-board">
@@ -3925,17 +3926,21 @@
 
   var RS_PRODUTO_STATUSES = ['pausado', 'andamento', 'concluido'];
 
-  function rsRenderProduto() {
-    var prod = RS_DATA.filter(function (d) { return d.area === 'produto'; });
+  function rsRenderGlobalKpis() {
+    var all = RS_DATA;
     var kpis = [
-      { value: String(prod.length), label: 'INICIATIVAS', color: '#1B1440' },
-      { value: String(prod.filter(function (p) { return RS_STATE.cardStatus[p.id] === 'andamento'; }).length), label: 'EM ANDAMENTO', color: '#5B4BE8' },
-      { value: String(prod.filter(function (p) { return RS_STATE.cardStatus[p.id] === 'pausado'; }).length), label: 'PAUSADAS', color: '#C2790B' }
+      { value: String(all.length), label: 'INICIATIVAS (PRODUTO + FEATURE)', color: '#1B1440' },
+      { value: String(all.filter(function (d) { return RS_STATE.cardStatus[d.id] === 'andamento'; }).length), label: 'EM ANDAMENTO', color: '#5B4BE8' },
+      { value: String(all.filter(function (d) { return RS_STATE.cardStatus[d.id] === 'pausado'; }).length), label: 'PAUSADAS', color: '#C2790B' },
+      { value: String(all.filter(function (d) { return RS_STATE.cardStatus[d.id] === 'concluido'; }).length), label: 'CONCLUÍDAS', color: '#12855B' }
     ];
-    document.getElementById('rsProdKpis').innerHTML = kpis.map(function (k) {
+    document.getElementById('rsGlobalKpis').innerHTML = kpis.map(function (k) {
       return '<div class="rs-kpi"><span class="rs-kpi-value" style="color:' + k.color + ';">' + k.value + '</span><span class="rs-kpi-label">' + k.label + '</span></div>';
     }).join('');
+  }
 
+  function rsRenderProduto() {
+    var prod = RS_DATA.filter(function (d) { return d.area === 'produto'; });
     document.getElementById('rsProdCards').innerHTML = prod.map(function (p) {
       var curStatus = RS_STATE.cardStatus[p.id];
       var st = RS_STATUS[curStatus];
@@ -4063,6 +4068,7 @@
 
   function rsRenderAll() {
     rsRenderFilters();
+    rsRenderGlobalKpis();
     rsRenderProduto();
     rsRenderBoard();
   }
@@ -4187,7 +4193,7 @@
   }
 
   function initTabFromHash() {
-    var id = (location.hash || '#geral').replace('#', '');
+    var id = (location.hash || '#resumo').replace('#', '');
     activateTab(id);
   }
 
