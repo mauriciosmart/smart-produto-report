@@ -876,44 +876,22 @@
   }
   .rs-header-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #8A93A3; }
   .rs-header-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #12141A; }
-  .rs-filters { display: flex; gap: 8px; flex-wrap: wrap; }
-  .rs-filter-btn {
-    font-family: inherit; font-size: 12.5px; font-weight: 700;
-    padding: 8px 13px; border-radius: 9px; cursor: pointer;
-    border: 1px solid #DDE2EA; background: #fff; color: #4A5364;
-  }
-  .rs-filter-btn:hover { filter: brightness(0.97); }
-  .rs-filter-btn.active { border-color: #12141A; background: #12141A; color: #fff; }
 
-  .rs-produto-box {
-    background: linear-gradient(180deg,#F3F1FF 0%,#FBFAFF 100%);
-    border: 1px solid #DDD6FF; border-radius: 16px;
-    padding: 24px 26px; margin-bottom: 28px;
+  .rs-statusbar { width: 460px; flex-shrink: 0; align-self: center; }
+  .rs-statusbar-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 7px; font-size: 11.5px; font-weight: 700; color: #6B7382;
   }
-  .rs-produto-head {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    flex-wrap: wrap; gap: 20px; margin-bottom: 20px;
+  .rs-statusbar-track {
+    display: flex; height: 7px; border-radius: 99px; overflow: hidden;
+    background: #EDEFF4; width: 100%;
   }
-  .rs-produto-eyebrow { display: flex; align-items: center; gap: 9px; margin-bottom: 5px; }
-  .rs-produto-eyebrow span:first-child { width: 7px; height: 7px; border-radius: 50%; background: #5B4BE8; }
-  .rs-produto-eyebrow span:last-child { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #5B4BE8; }
-  .rs-produto-title { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: #1B1440; display: block; margin-bottom: 3px; }
-  .rs-produto-desc { font-size: 13px; color: #6E6790; max-width: 520px; display: block; }
-  .rs-kpis { display: flex; gap: 14px; flex-wrap: wrap; }
-  .rs-kpi {
-    min-width: 122px; background: #fff; border: 1px solid #E4DEFF; border-radius: 12px;
-    padding: 14px 16px; display: flex; flex-direction: column; gap: 4px;
-  }
-  .rs-kpi-value { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-  .rs-kpi-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #8A85A8; }
-  .rs-produto-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; align-items: stretch; }
-  @media (max-width: 860px) { .rs-produto-grid { grid-template-columns: 1fr; } }
-  .rs-produto-card {
-    background: #fff; border: 1px solid #E4DEFF; border-radius: 14px; padding: 18px 20px;
-    display: flex; flex-direction: column; gap: 12px; position: relative;
-    box-shadow: 0 1px 2px rgba(27,20,64,0.04);
-  }
-  .rs-produto-card:hover { border-color: #B9A9FF; box-shadow: 0 6px 20px rgba(60,40,160,0.10); }
+  .rs-statusbar-seg { height: 100%; transition: width .2s; }
+  .rs-statusbar-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
+  .rs-statusbar-legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: #6B7382; }
+  .rs-statusbar-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+  @media (max-width: 700px) { .rs-statusbar { width: 100%; } }
+
   .rs-pill {
     display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 6px;
     font-size: 10.5px; font-weight: 800; letter-spacing: 0.07em; white-space: nowrap;
@@ -932,14 +910,6 @@
   }
   .rs-status-menu-item:hover { background: #F2F4F8; }
   .rs-status-menu-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
-  .rs-produto-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .rs-produto-card-date { font-size: 12px; color: #9A94B2; font-variant-numeric: tabular-nums; }
-  .rs-produto-card-title { font-size: 16px; font-weight: 750; letter-spacing: -0.015em; color: #1B1440; line-height: 1.3; }
-  .rs-produto-card-desc { font-size: 13.5px; line-height: 1.55; color: #5C567A; }
-  .rs-produto-card-footer {
-    margin-top: auto; padding-top: 14px; border-top: 1px solid #F0EDFB;
-    display: flex; align-items: center; justify-content: space-between;
-  }
   .rs-avatar {
     width: 22px; height: 22px; border-radius: 50%; font-size: 9.5px; font-weight: 800;
     display: flex; align-items: center; justify-content: center; flex: none;
@@ -959,56 +929,40 @@
   .rs-owner-icon-btn.save { color: #12855B; } .rs-owner-icon-btn.save:hover { background: #E4F5EE; }
   .rs-owner-icon-btn.cancel { color: #C0392B; } .rs-owner-icon-btn.cancel:hover { background: #FDECEA; }
 
-  .rs-feature-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-  .rs-feature-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: #5C6473; }
-  .rs-feature-rule { flex: 1; height: 1px; background: #E4E8F0; min-width: 24px; }
-  .rs-feature-count { font-size: 12px; color: #8A93A3; }
-  .rs-board { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; align-items: start; }
-  @media (max-width: 1300px) { .rs-board { grid-template-columns: repeat(2,1fr); } }
-  @media (max-width: 640px) { .rs-board { grid-template-columns: 1fr; } }
-  .rs-col {
-    background: #fff; border: 1px solid #E5E9F1; border-radius: 16px; padding: 16px;
-    display: flex; flex-direction: column; gap: 12px; min-height: 160px;
-    transition: background .12s;
+  .rs-board { display: flex; flex-direction: column; gap: 14px; }
+  .rs-theme-row {
+    display: flex; gap: 18px; align-items: stretch;
+    background: #FAFAF8; border: 1px solid #EEF0F4; border-radius: 14px;
+    padding: 20px;
   }
-  .rs-col.rs-col-drag-over { background: #F7F6FF; }
-  .rs-col-drop-end { flex: 1; min-height: 24px; }
-  .rs-col-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 4px 6px 12px; border-bottom: 1px solid #F0F2F7;
+  .rs-theme-label-box {
+    width: 150px; flex-shrink: 0; border-left: 3px solid #3C4453; padding-left: 14px;
   }
-  .rs-col-head-left { display: flex; align-items: center; gap: 8px; }
-  .rs-col-dot { width: 8px; height: 8px; border-radius: 50%; }
-  .rs-col-label { font-size: 12.5px; font-weight: 800; letter-spacing: 0.05em; color: #3C4453; }
-  .rs-col-count {
-    font-size: 11.5px; font-weight: 800; color: #7A8494; background: #F2F4F8;
-    border-radius: 6px; padding: 2px 8px; font-variant-numeric: tabular-nums;
+  .rs-theme-label-title { font-size: 15px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .rs-theme-label-count-row { display: flex; align-items: baseline; gap: 5px; }
+  .rs-theme-label-count { font-size: 15px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .rs-theme-label-count-text { font-size: 12px; font-weight: 600; color: #9AA3B2; }
+  .rs-theme-label-line { height: 3px; border-radius: 99px; width: 100%; margin-top: 14px; }
+  .rs-theme-cards { flex: 1; display: flex; flex-wrap: wrap; gap: 16px; min-width: 0; }
+  @media (max-width: 700px) {
+    .rs-theme-row { flex-direction: column; gap: 10px; }
+    .rs-theme-label-box { width: auto; }
   }
-  .rs-card {
-    border: 1px solid #E9ECF2; border-radius: 12px; padding: 16px 18px;
-    display: flex; flex-direction: column; gap: 12px; background: #FDFDFE;
-    cursor: grab; transition: opacity .12s, border-color .12s, box-shadow .12s;
+  .rs-theme-card {
+    flex: 1 1 220px; max-width: 280px; min-width: 200px;
+    border: 1px solid #E9ECF2; border-radius: 12px; padding: 13px 15px;
+    display: flex; flex-direction: column; gap: 8px; background: #FDFDFE;
+    transition: border-color .12s, box-shadow .12s;
   }
-  .rs-card:hover { border-color: #CFD6E2; box-shadow: 0 4px 14px rgba(20,30,60,0.06); }
-  .rs-card.rs-dragging { opacity: 0.4; }
-  .rs-card.rs-drag-over-top { box-shadow: inset 0 3px 0 0 #5B4BE8; }
-  .rs-card.rs-drag-over-bottom { box-shadow: inset 0 -3px 0 0 #5B4BE8; }
-  .rs-card-title { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1B2130; letter-spacing: -0.01em; cursor: pointer; }
-  .rs-card-desc { font-size: 13.5px; line-height: 1.6; color: #5C6473; }
-  .rs-update-wrap { display: flex; flex-direction: column; gap: 8px; border-radius: 10px; padding: 11px 13px; }
-  .rs-update-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .rs-update-top-left { display: flex; align-items: center; gap: 6px; }
-  .rs-update-dot { width: 5px; height: 5px; border-radius: 50%; }
-  .rs-update-label { font-size: 9.5px; font-weight: 800; letter-spacing: 0.09em; }
-  .rs-update-stamp { font-size: 10px; font-weight: 700; color: #A6AEBB; font-variant-numeric: tabular-nums; }
-  .rs-update-text { font-size: 12.5px; line-height: 1.5; color: #3C4453; cursor: text; }
-  .rs-update-text:hover { color: #5B4BE8; }
-  .rs-update-empty-btn {
-    align-self: flex-start; display: flex; align-items: center; gap: 5px;
-    border: 1px dashed #CBD2DD; background: none; color: #8A93A3; font-family: inherit;
-    font-size: 11.5px; font-weight: 700; padding: 5px 9px; border-radius: 7px; cursor: pointer;
-  }
-  .rs-update-empty-btn:hover { border-color: #B9A9FF; color: #5B4BE8; background: #F7F5FF; }
+  .rs-theme-card:hover { border-color: #CFD6E2; box-shadow: 0 4px 14px rgba(20,30,60,0.06); }
+  .rs-theme-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; position: relative; }
+  .rs-theme-card-date { font-size: 11.5px; color: #9AA3B2; font-variant-numeric: tabular-nums; }
+  .rs-theme-card-title { font-size: 13.5px; font-weight: 700; line-height: 1.4; color: #1B2130; letter-spacing: -0.01em; }
+  .rs-theme-card-body { font-size: 13px; line-height: 1.55; color: #3C4453; cursor: text; }
+  .rs-theme-card-body:hover { color: #5B4BE8; }
+  .rs-theme-card-body.empty { color: #A6AEBB; font-style: italic; cursor: pointer; }
+  .rs-theme-card-body.empty:hover { color: #5B4BE8; }
+  .rs-theme-card-footer { margin-top: auto; padding-top: 4px; }
   .rs-update-textarea {
     width: 100%; box-sizing: border-box; resize: vertical; border: 1px solid #C9BEFF;
     border-radius: 8px; padding: 8px 9px; font-size: 12.5px; line-height: 1.5; color: #1B2130;
@@ -1025,8 +979,6 @@
     font-size: 11.5px; font-weight: 700; padding: 7px 11px; border-radius: 7px; cursor: pointer;
   }
   .rs-btn-cancel:hover { background: #F2F4F8; }
-  .rs-card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 2px; }
-  .rs-card-date { font-size: 11.5px; color: #9AA3B2; font-variant-numeric: tabular-nums; }
 
 </style>
 </head>
@@ -1055,11 +1007,11 @@
       </svg>
       <span class="sidebar-logo-text">Smart <strong>Travel</strong></span>
     </div>
-    <button type="button" class="side-item" id="tabbtn-resumo" data-tab="resumo" onclick="activateTab('resumo')">
+    <button type="button" class="side-item active" id="tabbtn-resumo" data-tab="resumo" aria-current="page" onclick="activateTab('resumo')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 13v4M12 9v8M16 12v5"/></svg>
       Resumo Executivo
     </button>
-    <button type="button" class="side-item active" id="tabbtn-geral" data-tab="geral" aria-current="page" onclick="activateTab('geral')">
+    <button type="button" class="side-item" id="tabbtn-geral" data-tab="geral" onclick="activateTab('geral')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
       Visão Geral
     </button>
@@ -1135,10 +1087,10 @@
 
     <!-- CONTEÚDO -->
     <div class="content">
-      <div class="content-inner">
+      <div class="content-inner rs-wide">
 
   <!-- ══════════════ TAB: RESUMO EXECUTIVO ══════════════ -->
-  <div id="tab-resumo" class="tab-panel" role="region" aria-labelledby="tabbtn-resumo" tabindex="0">
+  <div id="tab-resumo" class="tab-panel active" role="region" aria-labelledby="tabbtn-resumo" tabindex="0">
 
     <div class="rs-header">
       <div>
@@ -1146,32 +1098,21 @@
         <div class="rs-header-title">Demandas — semana de 12/08</div>
         <div style="font-size:11.5px;color:#B0AECB;margin-top:4px;">Arraste os cards, clique no status ou nos campos para editar — as alterações valem para esta sessão do navegador; persistência entre navegadores ainda não foi configurada.</div>
       </div>
-      <div class="rs-filters" id="rsFilters"></div>
-    </div>
-
-    <div class="rs-produto-box">
-      <div class="rs-produto-head">
-        <div>
-          <div class="rs-produto-eyebrow"><span></span><span>DEMANDAS DE PRODUTO</span></div>
-          <span class="rs-produto-title">Iniciativas do time</span><br>
-          <span class="rs-produto-desc">Trabalho que o time de produto conduz por conta própria, fora do backlog de feature.</span>
+      <div class="rs-statusbar">
+        <div class="rs-statusbar-top">
+          <span id="rsBarTotal"></span>
         </div>
-        <div class="rs-kpis" id="rsProdKpis"></div>
+        <div class="rs-statusbar-track" id="rsBarTrack"></div>
+        <div class="rs-statusbar-legend" id="rsBarLegend"></div>
       </div>
-      <div class="rs-produto-grid" id="rsProdCards"></div>
     </div>
 
-    <div class="rs-feature-head">
-      <span class="rs-feature-eyebrow">DEMANDAS DE FEATURE</span>
-      <span class="rs-feature-rule"></span>
-      <span class="rs-feature-count" id="rsFeatCount"></span>
-    </div>
     <div class="rs-board" id="rsBoard"></div>
 
   </div>
 
   <!-- ══════════════ TAB: GERAL ══════════════ -->
-  <div id="tab-geral" class="tab-panel active" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
+  <div id="tab-geral" class="tab-panel" role="region" aria-labelledby="tabbtn-geral" tabindex="0">
     <div class="section">
       <div class="section-label">🎯 Demandas de Feature</div>
       <div class="kanban-board">
@@ -3796,63 +3737,84 @@
   /* ══════════════ RESUMO EXECUTIVO — dados e renderização ══════════════ */
   var RS_STATUS = {
     pausado:   { label: 'PAUSADO',      color: '#C2790B', bg: '#FDF3E1', fg: '#8A5606' },
-    andamento: { label: 'EM ANDAMENTO', color: '#5B4BE8', bg: '#EEEBFF', fg: '#4437B8' },
+    andamento: { label: 'EM DESENVOLVIMENTO', color: '#2E7FC7', bg: '#DCEEFB', fg: '#155586' },
     concluido: { label: 'CONCLUÍDO',    color: '#12855B', bg: '#E4F5EE', fg: '#0B6144' },
-    arquivado: { label: 'ARQUIVADO',    color: '#98A1AF', bg: '#F1F3F7', fg: '#697285' }
+    arquivado: { label: 'ARQUIVADO',    color: '#98A1AF', bg: '#F1F3F7', fg: '#697285' },
+    discovery: { label: 'EM DISCOVERY', color: '#8B5CF6', bg: '#EDE9FE', fg: '#6D28D9' },
+    a_fazer:   { label: 'A FAZER',      color: '#9CA3AF', bg: '#F3F4F6', fg: '#6B7280' },
+    sem_status:{ label: 'SEM STATUS',   color: '#9CA3AF', bg: '#F3F4F6', fg: '#6B7280' }
   };
 
   var RS_DATA = [
-    { id:'p1', area:'produto', status:'pausado', date:'05/08', title:'Comercial — Portfólio estruturado',
-      desc:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.', owner:'' },
-    { id:'p2', area:'produto', status:'andamento', date:'12/08', title:'Product Discovery — Painel de features',
-      desc:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.', owner:'' },
-    { id:'p3', area:'produto', status:'andamento', date:'12/08', title:'Processos de Produto — Autonomia de Dados',
-      desc:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.', owner:'' },
+    { id:'p1', area:'produto', theme:'Time', status:'pausado', date:'05/08', title:'Comercial — Portfólio estruturado',
+      desc:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.',
+      update:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.', updateStamp:'05/08', owner:'' },
+    { id:'p2', area:'produto', theme:'Time', status:'andamento', date:'12/08', title:'Product Discovery — Painel de features',
+      desc:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.',
+      update:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.', updateStamp:'12/08', owner:'' },
+    { id:'p3', area:'produto', theme:'Time', status:'andamento', date:'12/08', title:'Processos de Produto — Autonomia de Dados',
+      desc:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.',
+      update:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.', updateStamp:'12/08', owner:'' },
 
-    { id:'f1', area:'feature', status:'pausado', date:'12/08', title:'Motor V2 — 100% dos PDVs offline',
-      desc:'Ativação offline concluída em 12/08. Pausado para qualquer nova melhoria — problema de performance no banco.',
-      update:'Ativação offline concluída em todos os PDVs. Novas melhorias travadas até resolver a performance do banco.', updateStamp:'12/08', owner:'' },
-    { id:'f2', area:'feature', status:'pausado', date:'05/08', title:'Simultâneas Parciais (OSP)',
+    { id:'f8', area:'feature', theme:'Motor V2', status:'andamento', date:'12/08', title:'Dashboard de acompanhamento',
+      desc:'Bug de persistência encontrado pelo time de BI. Gui foi realocado para corrigir o ajuste.',
+      update:'', updateStamp:'', owner:'Gui' },
+    { id:'f1', area:'feature', theme:'Motor V2', status:'concluido', date:'12/08', title:'100% dos PDVs offline',
+      desc:'Ativação offline concluída em 12/08.',
+      update:'', updateStamp:'', owner:'' },
+    { id:'f20', area:'feature', theme:'Motor V2', status:'andamento', date:'—', title:'Planejamento de ativação do online',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f2', area:'feature', theme:'OSP', status:'pausado', date:'05/08', title:'Simultâneas Parciais (OSP)',
       desc:'Pausada — capacidade do time concentrada na frente de Gratuidades. Retomada sem data definida.',
       update:'Capacidade do time segue alocada em Gratuidades. Sem data de retomada.', updateStamp:'05/08', owner:'' },
-    { id:'f3', area:'feature', status:'pausado', date:'—', title:'Rio Card Totem RJ',
-      desc:'Reunião realizada, VPN sendo habilitada para testes. Pausado por foco no Motor V2.',
-      update:'', updateStamp:'', owner:'' },
 
-    { id:'f4', area:'feature', status:'andamento', date:'—', title:'Apoio ao Viva',
-      desc:'Daniel apoia a Bidinha no desenvolvimento de venda com pontos Viva no frontoffice.',
-      update:'', updateStamp:'', owner:'Daniel' },
-    { id:'f5', area:'feature', status:'andamento', date:'12/08', title:'Fraudes (Gratuidade) — Fase 2 entregue, Fase 3 pausada',
-      desc:'Roadmap formalizado com milestones no Linear. Fase 1 e Fase 2 entregues; Fase 3 pausada — Gui realocado para bug do dashboard do Motor V2 desde 10/08.',
-      update:'Fase 2 entregue. Fase 3 parada desde 10/08 com a realocação do Gui.', updateStamp:'12/08', owner:'Gui' },
-    { id:'f6', area:'feature', status:'andamento', date:'12/08', title:'Reforma Tributária — RTC',
-      desc:'E&Y não pode assumir (conflito de interesse); BDO é o novo prospect. CORE-002 desliza para 12-13/08. CORE-009 aguarda Proteus/Globus/Praxio. Novo: CORE-012, discovery de vínculo de pagamento do DFe.',
-      update:'BDO entra no lugar da E&Y. CORE-002 desliza para 12-13/08. CORE-012 (NT 2026.001) inicia discovery.', updateStamp:'12/08', owner:'' },
-    { id:'f7', area:'feature', status:'andamento', date:'12/08', title:'Outras Viações — Motta e Princesa',
+    { id:'f21', area:'feature', theme:'Fraudes', status:'andamento', date:'—', title:'Cancelamento, troca, transferência e devolução em cascata',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f22', area:'feature', theme:'Fraudes', status:'discovery', date:'—', title:'Tipo de passagem do acompanhante e validação de idade na emissão',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f23', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Travas de marcação e termo de recusa',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f24', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Comprovação do benefício de gratuidade',
+      desc:'', update:'', updateStamp:'', owner:'' },
+
+    { id:'f13', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Dedução de ICMS/PIS/COFINS da BC do IBS/CBS no Excesso de Bagagem',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f14', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Compras Governamentais com Pagamento Antecipado (tpOperGov 2, 3 e 4)',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f15', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Vinculação com a Transação de Pagamento do DFe (NT 2026.001)',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f16', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Separação do IBS Estadual e Municipal no BPe',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f17', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Integração Smartbus x Globus — Atualização NTs (IBS/CBS)',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f18', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Compras Governamentais no BPe',
+      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f19', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Integrações Smartbus e ERPs (Protheus e Fortes)',
+      desc:'', update:'', updateStamp:'', owner:'' },
+
+    { id:'f7', area:'feature', theme:'Viações', status:'andamento', date:'12/08', title:'Outras Viações — Motta e Princesa',
       desc:'Refinamento com Motta e Princesa marcado para amanhã com o time tech. Novas demandas de viação surgiram — como tratar a discutir na semanal.',
       update:'Refinamento com o time tech marcado para amanhã.', updateStamp:'12/08', owner:'' },
-    { id:'f8', area:'feature', status:'andamento', date:'12/08', title:'Motor V2 — Dashboard de Acompanhamento',
-      desc:'Bug de persistência encontrado pelo time de BI. Gui foi realocado para corrigir o ajuste.',
-      update:'Bug de persistência achado pelo BI; Gui realocado para a correção.', updateStamp:'12/08', owner:'Gui' },
-
-    { id:'f9', area:'feature', status:'concluido', date:'05/08', title:'Time de Produto — Ítalo é PM Júnior',
-      desc:'Maurício (GPM) lidera; Daniel (PM Pleno) e Ítalo (agora PM Júnior) reportam a ele.',
-      update:'Estrutura do time formalizada.', updateStamp:'05/08', owner:'Maurício' },
-    { id:'f10', area:'feature', status:'concluido', date:'15/07', title:'Motor V2 — Nova Tela Frontoffice',
-      desc:'Entregue em 15/07. Deploy validado pelo time de negócio, elogios da operação.',
-      update:'Deploy validado pelo negócio.', updateStamp:'15/07', owner:'' },
-    { id:'f11', area:'feature', status:'concluido', date:'—', title:'Tickets Viações — Backlog resolvido',
+    { id:'f11', area:'feature', theme:'Viações', status:'concluido', date:'—', title:'Tickets Viações — Backlog resolvido',
       desc:'14 tickets zerados: 3 resolvidos direto, 11 mapeados no Linear para o time tech.',
       update:'', updateStamp:'', owner:'' },
-
-    { id:'f12', area:'feature', status:'arquivado', date:'05/08', title:'VTR',
+    { id:'f12', area:'feature', theme:'Viações', status:'arquivado', date:'05/08', title:'VTR',
       desc:'Saiu de pauta em 05/08. Mantida arquivada para rastreio histórico (VG/Senna, dados macro, conflitos PE/PB).',
+      update:'', updateStamp:'', owner:'' },
+
+    { id:'f9', area:'feature', theme:'Time', status:'concluido', date:'05/08', title:'Time de Produto — Ítalo é PM Júnior',
+      desc:'Maurício (GPM) lidera; Daniel (PM Pleno) e Ítalo (agora PM Júnior) reportam a ele.',
+      update:'Estrutura do time formalizada.', updateStamp:'05/08', owner:'Maurício' },
+
+    { id:'f4', area:'feature', theme:'Comercial', status:'andamento', date:'—', title:'Apoio ao Viva',
+      desc:'Daniel apoia a Bidinha no desenvolvimento de venda com pontos Viva no frontoffice.',
+      update:'', updateStamp:'', owner:'Daniel' },
+    { id:'f3', area:'feature', theme:'Comercial', status:'pausado', date:'—', title:'Rio Card Totem RJ',
+      desc:'Reunião realizada, VPN sendo habilitada para testes. Pausado por foco no Motor V2.',
       update:'', updateStamp:'', owner:'' }
   ];
 
   var RS_STATE = {
-    filter: 'todas',
-    open: null,
     editing: null,
     draft: '',
     updates: {},
@@ -3860,7 +3822,6 @@
     editingOwner: null,
     ownerDraft: '',
     cardStatus: {},
-    order: [],
     statusMenuOpen: null
   };
   var RS_DATA_BY_ID = {};
@@ -3870,8 +3831,6 @@
     RS_STATE.owners[d.id] = d.owner || '';
     RS_STATE.cardStatus[d.id] = d.status;
   });
-  RS_STATE.order = RS_DATA.filter(function (d) { return d.area === 'feature'; }).map(function (d) { return d.id; });
-  var RS_DRAG_ID = null;
 
   function rsEsc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -3914,87 +3873,82 @@
     rsRenderAll();
   }
 
-  function rsRenderFilters() {
-    var filters = [['todas', 'Todas'], ['pausado', 'Pausadas'], ['andamento', 'Em andamento'], ['concluido', 'Concluídas']];
-    var html = filters.map(function (f) {
-      var active = RS_STATE.filter === f[0];
-      return '<button type="button" class="rs-filter-btn' + (active ? ' active' : '') + '" onclick="rsSetFilter(\'' + f[0] + '\')">' + f[1] + '</button>';
+
+  function rsRenderStatusBar() {
+    var order = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'concluido'];
+    var counts = {};
+    order.forEach(function (k) {
+      counts[k] = RS_DATA.filter(function (d) { return RS_STATE.cardStatus[d.id] === k; }).length;
+    });
+    var total = order.reduce(function (sum, k) { return sum + counts[k]; }, 0);
+    document.getElementById('rsBarTotal').textContent = total + ' iniciativas';
+
+    var legendLabels = {
+      sem_status: 'sem status', a_fazer: 'a fazer', pausado: 'pausadas',
+      discovery: 'em discovery', andamento: 'em desenvolvimento', concluido: 'concluídas'
+    };
+    document.getElementById('rsBarTrack').innerHTML = order.map(function (k) {
+      var count = counts[k];
+      var pct = total ? (count / total * 100) : 0;
+      if (pct <= 0) return '';
+      return '<div class="rs-statusbar-seg" style="width:' + pct + '%;background:' + RS_STATUS[k].color + ';" title="' + RS_STATUS[k].label + ': ' + count + '"></div>';
     }).join('');
-    document.getElementById('rsFilters').innerHTML = html;
-  }
 
-  var RS_PRODUTO_STATUSES = ['pausado', 'andamento', 'concluido'];
-
-  function rsRenderProduto() {
-    var prod = RS_DATA.filter(function (d) { return d.area === 'produto'; });
-    var kpis = [
-      { value: String(prod.length), label: 'INICIATIVAS', color: '#1B1440' },
-      { value: String(prod.filter(function (p) { return RS_STATE.cardStatus[p.id] === 'andamento'; }).length), label: 'EM ANDAMENTO', color: '#5B4BE8' },
-      { value: String(prod.filter(function (p) { return RS_STATE.cardStatus[p.id] === 'pausado'; }).length), label: 'PAUSADAS', color: '#C2790B' }
-    ];
-    document.getElementById('rsProdKpis').innerHTML = kpis.map(function (k) {
-      return '<div class="rs-kpi"><span class="rs-kpi-value" style="color:' + k.color + ';">' + k.value + '</span><span class="rs-kpi-label">' + k.label + '</span></div>';
-    }).join('');
-
-    document.getElementById('rsProdCards').innerHTML = prod.map(function (p) {
-      var curStatus = RS_STATE.cardStatus[p.id];
-      var st = RS_STATUS[curStatus];
-      var menuOpen = RS_STATE.statusMenuOpen === p.id;
-      var menuHtml = '';
-      if (menuOpen) {
-        menuHtml = '<div class="rs-status-menu" onclick="event.stopPropagation()">' +
-          RS_PRODUTO_STATUSES.map(function (s) {
-            var sst = RS_STATUS[s];
-            return '<button type="button" class="rs-status-menu-item" onclick="rsSetCardStatus(\'' + p.id + '\',\'' + s + '\')"><span class="rs-status-menu-dot" style="background:' + sst.color + ';"></span>' + sst.label + '</button>';
-          }).join('') +
-        '</div>';
-      }
-      return '' +
-        '<div class="rs-produto-card">' +
-          '<div class="rs-produto-card-top">' +
-            '<button type="button" class="rs-pill rs-pill-btn" style="background:' + st.bg + ';color:' + st.fg + ';" onclick="event.stopPropagation();rsToggleStatusMenu(\'' + p.id + '\')">' + st.label + ' ▾</button>' +
-            '<span class="rs-produto-card-date">' + rsEsc(p.date) + '</span>' +
-            menuHtml +
-          '</div>' +
-          '<span class="rs-produto-card-title">' + rsEsc(p.title) + '</span>' +
-          '<span class="rs-produto-card-desc">' + rsEsc(p.desc) + '</span>' +
-          '<div class="rs-produto-card-footer">' +
-            rsOwnerBlock(p.id) +
-          '</div>' +
-        '</div>';
+    document.getElementById('rsBarLegend').innerHTML = order.map(function (k) {
+      if (counts[k] <= 0) return '';
+      return '<span class="rs-statusbar-legend-item"><span class="rs-statusbar-legend-dot" style="background:' + RS_STATUS[k].color + ';"></span>' + counts[k] + ' ' + legendLabels[k] + '</span>';
     }).join('');
   }
+
+  function rsStatusMenuHtml(id, statusList, containerSelector) {
+    if (RS_STATE.statusMenuOpen !== id) return '';
+    return '<div class="rs-status-menu" onclick="event.stopPropagation()">' +
+      statusList.map(function (s) {
+        var sst = RS_STATUS[s];
+        return '<button type="button" class="rs-status-menu-item" onclick="rsSetCardStatus(\'' + id + '\',\'' + s + '\')"><span class="rs-status-menu-dot" style="background:' + sst.color + ';"></span>' + sst.label + '</button>';
+      }).join('') +
+    '</div>';
+  }
+
   function rsToggleStatusMenu(id) {
     RS_STATE.statusMenuOpen = (RS_STATE.statusMenuOpen === id) ? null : id;
-    rsRenderProduto();
+    rsRenderThemes();
   }
   function rsSetCardStatus(id, status) {
     RS_STATE.cardStatus[id] = status;
     RS_STATE.statusMenuOpen = null;
-    rsRenderProduto();
+    rsRenderThemes();
   }
   document.addEventListener('click', function (e) {
-    if (RS_STATE.statusMenuOpen && !e.target.closest('.rs-produto-card-top')) {
+    if (RS_STATE.statusMenuOpen && !e.target.closest('.rs-theme-card-top')) {
       RS_STATE.statusMenuOpen = null;
-      rsRenderProduto();
+      rsRenderThemes();
     }
   });
 
+  var RS_FEATURE_STATUSES = ['sem_status', 'a_fazer', 'discovery', 'andamento', 'pausado', 'concluido', 'arquivado'];
+  var RS_THEME_ORDER = ['Fiscal', 'Motor V2', 'Fraudes', 'Time', 'Viações', 'OSP', 'Comercial'];
+  var RS_THEME_LABELS = {
+    'Fiscal': 'Reforma<br>Tributária',
+    'Motor V2': 'Motor de<br>Conexões V2',
+    'Fraudes': 'Gratuidade',
+    'Time': 'Iniciativas<br>do Time',
+    'Viações': 'Viações',
+    'OSP': 'Operações<br>Simultâneas<br>Parciais',
+    'Comercial': 'Outras Demandas'
+  };
+  var RS_THEME_COLOR = '#3C4453';
+
   function rsCardHtml(f) {
     var u = RS_STATE.updates[f.id] || { text: '', stamp: '' };
-    var open = RS_STATE.open === f.id;
     var editing = RS_STATE.editing === f.id;
     var has = !!u.text;
     var curStatus = RS_STATE.cardStatus[f.id];
     var st = RS_STATUS[curStatus];
-    var dotColor = has ? st.color : '#CBD2DD';
-    var labelColor = has ? '#6B7382' : '#A6AEBB';
-    var wrapBg = has ? '#F8F9FC' : '#FCFCFD';
-    var wrapBorder = editing ? '#C9BEFF' : '#EDEFF4';
 
-    var updateInner = '';
+    var bodyInner = '';
     if (editing) {
-      updateInner =
+      bodyInner =
         '<div style="display:flex;flex-direction:column;gap:7px;">' +
           '<textarea class="rs-update-textarea" id="rsTa-' + f.id + '" rows="3" placeholder="O que mudou nesta semana?" oninput="RS_STATE.draft=this.value">' + rsEsc(RS_STATE.draft) + '</textarea>' +
           '<div class="rs-update-actions">' +
@@ -4003,157 +3957,80 @@
           '</div>' +
         '</div>';
     } else if (has) {
-      updateInner = '<span class="rs-update-text" onclick="rsStartEdit(\'' + f.id + '\')">' + rsEsc(u.text) + '</span>';
+      bodyInner = '<span class="rs-theme-card-body" onclick="rsStartEdit(\'' + f.id + '\')">' + rsEsc(u.text) + '</span>';
     } else {
-      updateInner = '<button type="button" class="rs-update-empty-btn" onclick="rsStartEdit(\'' + f.id + '\')"><span style="font-size:13px;line-height:1;">+</span><span>Adicionar resumo</span></button>';
+      bodyInner = '<span class="rs-theme-card-body empty" onclick="rsStartEdit(\'' + f.id + '\')">Sem resumo registrado.</span>';
     }
 
-    var stampHtml = (has && !editing) ? '<span class="rs-update-stamp">' + rsEsc(u.stamp) + '</span>' : '';
-
     return '' +
-      '<div class="rs-card" draggable="true" data-id="' + f.id + '" ' +
-        'ondragstart="rsDragStart(event,\'' + f.id + '\')" ondragend="rsDragEnd(event)" ' +
-        'ondragover="rsDragOverCard(event,\'' + f.id + '\')" ondragleave="rsDragLeaveCard(event)" ' +
-        'ondrop="rsDropOnCard(event,\'' + f.id + '\',\'' + curStatus + '\')" ' +
-        'style="border-left:3px solid ' + st.color + ';">' +
-        '<span class="rs-card-title" onclick="rsToggleOpen(\'' + f.id + '\')">' + rsEsc(f.title) + '</span>' +
-        (open ? '<span class="rs-card-desc">' + rsEsc(f.desc) + '</span>' : '') +
-        '<div class="rs-update-wrap" style="background:' + wrapBg + ';border:1px solid ' + wrapBorder + ';">' +
-          '<div class="rs-update-top">' +
-            '<div class="rs-update-top-left"><span class="rs-update-dot" style="background:' + dotColor + ';"></span><span class="rs-update-label" style="color:' + labelColor + ';">ÚLTIMA ATUALIZAÇÃO</span></div>' +
-            stampHtml +
-          '</div>' +
-          updateInner +
+      '<div class="rs-theme-card" style="border-left:3px solid ' + st.color + ';">' +
+        '<div class="rs-theme-card-top">' +
+          '<button type="button" class="rs-pill rs-pill-btn" style="background:' + st.bg + ';color:' + st.fg + ';" onclick="event.stopPropagation();rsToggleStatusMenu(\'' + f.id + '\')">' + st.label + ' ▾</button>' +
+          '<span class="rs-theme-card-date">' + rsEsc(f.date) + '</span>' +
+          rsStatusMenuHtml(f.id, RS_FEATURE_STATUSES) +
         '</div>' +
-        '<div class="rs-card-footer">' +
+        '<div class="rs-theme-card-title">' + rsEsc(f.title) + '</div>' +
+        bodyInner +
+        '<div class="rs-theme-card-footer">' +
           rsOwnerBlock(f.id) +
-          '<span class="rs-card-date">' + rsEsc(f.date) + '</span>' +
         '</div>' +
       '</div>';
   }
 
-  function rsRenderBoard() {
-    var visibleIds = RS_STATE.order.filter(function (id) {
-      var st = RS_STATE.cardStatus[id];
-      return RS_STATE.filter === 'todas' || st === RS_STATE.filter;
-    });
-    var cols = [['pausado', 'PAUSADO'], ['andamento', 'EM ANDAMENTO'], ['concluido', 'CONCLUÍDO'], ['arquivado', 'ARQUIVADO']];
+  var RS_STATUS_ORDER = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'concluido', 'arquivado'];
 
-    document.getElementById('rsBoard').innerHTML = cols.map(function (c) {
-      var key = c[0], label = c[1];
-      var ids = visibleIds.filter(function (id) { return RS_STATE.cardStatus[id] === key; });
-      var items = ids.map(function (id) { return RS_DATA_BY_ID[id]; });
-      var color = RS_STATUS[key].color;
+  function rsRenderThemes() {
+    var all = RS_DATA;
+    var byTheme = {};
+    all.forEach(function (f) {
+      if (!byTheme[f.theme]) byTheme[f.theme] = [];
+      byTheme[f.theme].push(f);
+    });
+    var themes = RS_THEME_ORDER.filter(function (t) { return byTheme[t]; });
+    Object.keys(byTheme).forEach(function (t) { if (themes.indexOf(t) === -1) themes.push(t); });
+
+    document.getElementById('rsBoard').innerHTML = themes.map(function (theme) {
+      var items = byTheme[theme].slice().sort(function (a, b) {
+        var ia = RS_STATUS_ORDER.indexOf(RS_STATE.cardStatus[a.id]);
+        var ib = RS_STATUS_ORDER.indexOf(RS_STATE.cardStatus[b.id]);
+        return ia - ib;
+      });
+      var color = RS_THEME_COLOR;
       return '' +
-        '<div class="rs-col" data-status="' + key + '" ondragover="rsDragOverColumn(event,\'' + key + '\')" ondragleave="rsDragLeaveColumn(event)" ondrop="rsDropOnColumn(event,\'' + key + '\')">' +
-          '<div class="rs-col-head">' +
-            '<div class="rs-col-head-left"><span class="rs-col-dot" style="background:' + color + ';"></span><span class="rs-col-label">' + label + '</span></div>' +
-            '<span class="rs-col-count">' + items.length + '</span>' +
+        '<div class="rs-theme-row">' +
+          '<div class="rs-theme-label-box" style="border-left-color:' + color + ';">' +
+            '<div class="rs-theme-label-title" style="color:' + color + ';">' + (RS_THEME_LABELS[theme] || rsEsc(theme)) + '</div>' +
+            '<div class="rs-theme-label-count-row">' +
+              '<span class="rs-theme-label-count" style="color:' + color + ';">' + items.length + '</span>' +
+              '<span class="rs-theme-label-count-text">demanda' + (items.length === 1 ? '' : 's') + '</span>' +
+            '</div>' +
+            '<div class="rs-theme-label-line" style="background:' + color + '33;"></div>' +
           '</div>' +
-          items.map(rsCardHtml).join('') +
-          '<div class="rs-col-drop-end"></div>' +
+          '<div class="rs-theme-cards">' + items.map(rsCardHtml).join('') + '</div>' +
         '</div>';
     }).join('');
-
-    var feat = RS_DATA.filter(function (d) { return d.area === 'feature'; });
-    var semResumo = feat.filter(function (f) { return !(RS_STATE.updates[f.id] || {}).text; }).length;
-    var pausadas = feat.filter(function (f) { return RS_STATE.cardStatus[f.id] === 'pausado'; }).length;
-    document.getElementById('rsFeatCount').textContent = feat.length + ' demandas · ' + pausadas + ' pausadas · ' + semResumo + ' sem resumo';
   }
 
   function rsRenderAll() {
-    rsRenderFilters();
-    rsRenderProduto();
-    rsRenderBoard();
+    rsRenderStatusBar();
+    rsRenderThemes();
   }
 
-  function rsSetFilter(k) { RS_STATE.filter = k; rsRenderAll(); }
-  function rsToggleOpen(id) { RS_STATE.open = (RS_STATE.open === id) ? null : id; rsRenderBoard(); }
   function rsStartEdit(id) {
     RS_STATE.editing = id;
     RS_STATE.draft = (RS_STATE.updates[id] || {}).text || '';
-    rsRenderBoard();
+    rsRenderThemes();
     var ta = document.getElementById('rsTa-' + id);
     if (ta) { ta.focus(); }
   }
-  function rsCancelEdit() { RS_STATE.editing = null; RS_STATE.draft = ''; rsRenderBoard(); }
+  function rsCancelEdit() { RS_STATE.editing = null; RS_STATE.draft = ''; rsRenderThemes(); }
   function rsSave(id) {
     var text = (RS_STATE.draft || '').trim();
     var stamp = text ? new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) : '';
     RS_STATE.updates[id] = { text: text, stamp: stamp };
     RS_STATE.editing = null;
     RS_STATE.draft = '';
-    rsRenderBoard();
-  }
-
-  /* ── Drag and drop entre/dentro das colunas ── */
-  function rsDragStart(e, id) {
-    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') {
-      e.preventDefault();
-      return;
-    }
-    RS_DRAG_ID = id;
-    e.dataTransfer.effectAllowed = 'move';
-    try { e.dataTransfer.setData('text/plain', id); } catch (err) {}
-    e.currentTarget.classList.add('rs-dragging');
-  }
-  function rsDragEnd(e) {
-    e.currentTarget.classList.remove('rs-dragging');
-    RS_DRAG_ID = null;
-    document.querySelectorAll('.rs-drag-over-top, .rs-drag-over-bottom').forEach(function (el) {
-      el.classList.remove('rs-drag-over-top', 'rs-drag-over-bottom');
-    });
-    document.querySelectorAll('.rs-col-drag-over').forEach(function (el) { el.classList.remove('rs-col-drag-over'); });
-  }
-  function rsDragOverCard(e, overId) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!RS_DRAG_ID || RS_DRAG_ID === overId) return;
-    var rect = e.currentTarget.getBoundingClientRect();
-    var before = (e.clientY - rect.top) < rect.height / 2;
-    e.currentTarget.classList.toggle('rs-drag-over-top', before);
-    e.currentTarget.classList.toggle('rs-drag-over-bottom', !before);
-  }
-  function rsDragLeaveCard(e) {
-    e.currentTarget.classList.remove('rs-drag-over-top', 'rs-drag-over-bottom');
-  }
-  function rsDropOnCard(e, overId, overStatus) {
-    e.preventDefault();
-    e.stopPropagation();
-    e.currentTarget.classList.remove('rs-drag-over-top', 'rs-drag-over-bottom');
-    var dragId = RS_DRAG_ID;
-    if (!dragId || dragId === overId) return;
-    var rect = e.currentTarget.getBoundingClientRect();
-    var before = (e.clientY - rect.top) < rect.height / 2;
-    rsMoveCard(dragId, overStatus, overId, before);
-  }
-  function rsDragOverColumn(e, status) {
-    e.preventDefault();
-    e.currentTarget.classList.add('rs-col-drag-over');
-  }
-  function rsDragLeaveColumn(e) {
-    e.currentTarget.classList.remove('rs-col-drag-over');
-  }
-  function rsDropOnColumn(e, status) {
-    e.preventDefault();
-    e.currentTarget.classList.remove('rs-col-drag-over');
-    var dragId = RS_DRAG_ID;
-    if (!dragId) return;
-    rsMoveCard(dragId, status, null, false);
-  }
-  function rsMoveCard(dragId, newStatus, refId, before) {
-    RS_STATE.cardStatus[dragId] = newStatus;
-    var order = RS_STATE.order;
-    var idx = order.indexOf(dragId);
-    if (idx > -1) order.splice(idx, 1);
-    if (refId) {
-      var rIdx = order.indexOf(refId);
-      order.splice(before ? rIdx : rIdx + 1, 0, dragId);
-    } else {
-      order.push(dragId);
-    }
-    RS_DRAG_ID = null;
-    rsRenderBoard();
+    rsRenderThemes();
   }
 
   rsRenderAll();
@@ -4187,7 +4064,7 @@
   }
 
   function initTabFromHash() {
-    var id = (location.hash || '#geral').replace('#', '');
+    var id = (location.hash || '#resumo').replace('#', '');
     activateTab(id);
   }
 
