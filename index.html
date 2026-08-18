@@ -870,14 +870,21 @@
 
   .rs-header {
     display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 14px;
-    padding-bottom: 18px; margin-bottom: 22px;
-    border-bottom: 1px solid #E9ECF2;
+    flex-wrap: nowrap; gap: 24px;
+    padding-bottom: 18px; margin-bottom: 0;
   }
   .rs-header-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #8A93A3; }
-  .rs-header-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #12141A; }
+  .rs-header-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #12141A; white-space: nowrap; }
 
-  .rs-statusbar { width: 460px; flex-shrink: 0; align-self: center; }
+  .rs-owner-divider { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin: 0 0 22px; }
+  .rs-owner-divider-line { flex: 1; height: 1px; background: #E9ECF2; }
+  .rs-owner-divider-text {
+    font-size: 11.5px; font-weight: 600; color: #8A93A3; white-space: nowrap;
+    display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+  }
+  .rs-owner-divider-text b { color: #4F3FD6; font-weight: 800; }
+
+  .rs-statusbar { width: 560px; max-width: 100%; flex-shrink: 0; align-self: center; }
   .rs-statusbar-top {
     display: flex; align-items: baseline; justify-content: space-between;
     margin-bottom: 7px; font-size: 11.5px; font-weight: 700; color: #6B7382;
@@ -887,10 +894,15 @@
     background: #EDEFF4; width: 100%;
   }
   .rs-statusbar-seg { height: 100%; transition: width .2s; }
-  .rs-statusbar-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
-  .rs-statusbar-legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: #6B7382; }
+  .rs-statusbar-legend { display: flex; justify-content: center; gap: 10px; flex-wrap: nowrap; margin-top: 10px; white-space: nowrap; }
+  .rs-statusbar-legend-item { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: #6B7382; white-space: nowrap; }
   .rs-statusbar-legend-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
-  @media (max-width: 700px) { .rs-statusbar { width: 100%; } }
+  @media (max-width: 900px) {
+    .rs-header { flex-wrap: wrap; }
+    .rs-statusbar { width: 100%; }
+    .rs-statusbar-legend { flex-wrap: wrap; white-space: normal; }
+    .rs-statusbar-legend-item { white-space: normal; }
+  }
 
   .rs-pill {
     display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 6px;
@@ -929,7 +941,33 @@
   .rs-owner-icon-btn.save { color: #12855B; } .rs-owner-icon-btn.save:hover { background: #E4F5EE; }
   .rs-owner-icon-btn.cancel { color: #C0392B; } .rs-owner-icon-btn.cancel:hover { background: #FDECEA; }
 
+  .rs-filterbar { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .rs-filter-btn {
+    border: 1.5px solid #E4E7EE; background: #fff; color: #6B7382;
+    font-size: 12.5px; font-weight: 700; padding: 7px 14px; border-radius: 99px;
+    cursor: pointer; font-family: inherit; transition: all .12s; display: inline-flex; align-items: center; gap: 7px;
+  }
+  .rs-filter-btn:hover { border-color: #C9BEFF; color: #4F3FD6; }
+  .rs-filter-btn.active {
+    background: linear-gradient(#fff, #fff) padding-box, var(--brand-gradient, linear-gradient(90deg, #F482E7, #83C0F2)) border-box;
+    border-color: transparent;
+  }
+  .rs-filter-btn-label { display: inline-flex; }
+  .rs-filter-btn.active .rs-filter-btn-label {
+    background: linear-gradient(90deg, #F482E7, #83C0F2);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  }
+  .rs-filter-btn-count {
+    font-size: 11px; font-weight: 800; background: rgba(0,0,0,0.06); color: inherit;
+    border-radius: 99px; padding: 1px 7px;
+  }
+  .rs-filter-btn.active .rs-filter-btn-count { background: rgba(244,130,231,0.14); color: #B0399E; }
+
   .rs-board { display: flex; flex-direction: column; gap: 14px; }
+  .rs-empty-state {
+    text-align: center; padding: 40px 20px; color: #9AA3B2; font-size: 13.5px;
+    background: #FAFAF8; border: 1px dashed #E4E7EE; border-radius: 14px;
+  }
   .rs-theme-row {
     display: flex; gap: 18px; align-items: stretch;
     background: #FAFAF8; border: 1px solid #EEF0F4; border-radius: 14px;
@@ -1096,7 +1134,6 @@
       <div>
         <div class="rs-header-eyebrow">SEMANAL DE PRODUTO</div>
         <div class="rs-header-title">Demandas — semana de 12/08</div>
-        <div style="font-size:11.5px;color:#B0AECB;margin-top:4px;">Arraste os cards, clique no status ou nos campos para editar — as alterações valem para esta sessão do navegador; persistência entre navegadores ainda não foi configurada.</div>
       </div>
       <div class="rs-statusbar">
         <div class="rs-statusbar-top">
@@ -1106,6 +1143,13 @@
         <div class="rs-statusbar-legend" id="rsBarLegend"></div>
       </div>
     </div>
+
+    <div class="rs-owner-divider">
+      <span class="rs-owner-divider-line"></span>
+      <span class="rs-owner-divider-text" id="rsOwnerSummary"></span>
+    </div>
+
+    <div class="rs-filterbar" id="rsFilterBar"></div>
 
     <div class="rs-board" id="rsBoard"></div>
 
@@ -3748,59 +3792,65 @@
   var RS_DATA = [
     { id:'p1', area:'produto', theme:'Time', status:'pausado', date:'05/08', title:'Comercial — Portfólio estruturado',
       desc:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.',
-      update:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.', updateStamp:'05/08', owner:'' },
+      update:'8 módulos, 5 canais de venda e 6 dores de mercado eliminadas. Pausado — precificação ainda não avançou.', updateStamp:'05/08', owner:'Daniel' },
     { id:'p2', area:'produto', theme:'Time', status:'andamento', date:'12/08', title:'Product Discovery — Painel de features',
       desc:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.',
-      update:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.', updateStamp:'12/08', owner:'' },
+      update:'Novo painel de features, com cards de ideias conectados às features — visão de progresso de cada ideia.', updateStamp:'12/08', owner:'Daniel' },
     { id:'p3', area:'produto', theme:'Time', status:'andamento', date:'12/08', title:'Processos de Produto — Autonomia de Dados',
       desc:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.',
-      update:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.', updateStamp:'12/08', owner:'' },
+      update:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.', updateStamp:'12/08', owner:'Maurício' },
 
     { id:'f8', area:'feature', theme:'Motor V2', status:'andamento', date:'12/08', title:'Dashboard de acompanhamento',
       desc:'Bug de persistência encontrado pelo time de BI. Gui foi realocado para corrigir o ajuste.',
-      update:'', updateStamp:'', owner:'Gui' },
+      update:'', updateStamp:'', owner:'Daniel' },
     { id:'f1', area:'feature', theme:'Motor V2', status:'concluido', date:'12/08', title:'100% dos PDVs offline',
       desc:'Ativação offline concluída em 12/08.',
-      update:'', updateStamp:'', owner:'' },
+      update:'', updateStamp:'', owner:'Daniel' },
     { id:'f20', area:'feature', theme:'Motor V2', status:'andamento', date:'—', title:'Planejamento de ativação do online',
-      desc:'', update:'', updateStamp:'', owner:'' },
+      desc:'', update:'', updateStamp:'', owner:'Daniel' },
     { id:'f2', area:'feature', theme:'OSP', status:'pausado', date:'05/08', title:'Simultâneas Parciais (OSP)',
       desc:'Pausada — capacidade do time concentrada na frente de Gratuidades. Retomada sem data definida.',
-      update:'Capacidade do time segue alocada em Gratuidades. Sem data de retomada.', updateStamp:'05/08', owner:'' },
+      update:'Capacidade do time segue alocada em Gratuidades. Sem data de retomada.', updateStamp:'05/08', owner:'Daniel' },
 
     { id:'f21', area:'feature', theme:'Fraudes', status:'andamento', date:'—', title:'Cancelamento, troca, transferência e devolução em cascata',
-      desc:'', update:'', updateStamp:'', owner:'' },
+      desc:'', update:'', updateStamp:'', owner:'Daniel' },
     { id:'f22', area:'feature', theme:'Fraudes', status:'discovery', date:'—', title:'Tipo de passagem do acompanhante e validação de idade na emissão',
-      desc:'', update:'', updateStamp:'', owner:'' },
+      desc:'', update:'', updateStamp:'', owner:'Daniel' },
     { id:'f23', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Travas de marcação e termo de recusa',
-      desc:'', update:'', updateStamp:'', owner:'' },
+      desc:'', update:'', updateStamp:'', owner:'Daniel' },
     { id:'f24', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Comprovação do benefício de gratuidade',
-      desc:'', update:'', updateStamp:'', owner:'' },
+      desc:'', update:'', updateStamp:'', owner:'Daniel' },
 
-    { id:'f13', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Dedução de ICMS/PIS/COFINS da BC do IBS/CBS no Excesso de Bagagem',
-      desc:'', update:'', updateStamp:'', owner:'' },
-    { id:'f14', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Compras Governamentais com Pagamento Antecipado (tpOperGov 2, 3 e 4)',
-      desc:'', update:'', updateStamp:'', owner:'' },
-    { id:'f15', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Vinculação com a Transação de Pagamento do DFe (NT 2026.001)',
-      desc:'', update:'', updateStamp:'', owner:'' },
-    { id:'f16', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Separação do IBS Estadual e Municipal no BPe',
-      desc:'', update:'', updateStamp:'', owner:'' },
-    { id:'f17', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Integração Smartbus x Globus — Atualização NTs (IBS/CBS)',
-      desc:'', update:'', updateStamp:'', owner:'' },
-    { id:'f18', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Compras Governamentais no BPe',
-      desc:'', update:'', updateStamp:'', owner:'' },
-    { id:'f19', area:'feature', theme:'Fiscal', status:'sem_status', date:'—', title:'Integrações Smartbus e ERPs (Protheus e Fortes)',
-      desc:'', update:'', updateStamp:'', owner:'' },
+    { id:'f13', area:'feature', theme:'Fiscal', status:'discovery', date:'05/08', title:'Dedução de ICMS/PIS/COFINS da BC do IBS/CBS no Excesso de Bagagem',
+      desc:'Não há dedução de ICMS na base de cálculo do excesso de bagagem — o ICMS é emitido em outro documento fiscal (CTOS), o que exigiria envio pelo Proteus. Reunião marcada para definir cobrança/abatimento.',
+      update:'Não há dedução de ICMS na base de cálculo do excesso de bagagem — o ICMS é emitido em outro documento fiscal (CTOS), o que exigiria envio pelo Proteus. Reunião marcada para definir cobrança/abatimento.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
+    { id:'f14', area:'feature', theme:'Fiscal', status:'a_fazer', date:'—', title:'Compras Governamentais com Pagamento Antecipado (tpOperGov 2, 3 e 4)',
+      desc:'', update:'', updateStamp:'', owner:'Maurício e Ítalo' },
+    { id:'f15', area:'feature', theme:'Fiscal', status:'andamento', date:'05/08', title:'Vinculação com a Transação de Pagamento do DFe (NT 2026.001)',
+      desc:'Discovery da nota técnica sobre vínculo das informações de pagamento do BPE em andamento — vai direcionar a necessidade de motor tributário e motor de pagamentos. Condução a quatro mãos, com responsabilidade transferida para Ítalo.',
+      update:'Discovery da NT sobre vínculo das informações de pagamento do BPE em andamento — vai direcionar a necessidade de motor tributário e motor de pagamentos.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
+    { id:'f16', area:'feature', theme:'Fiscal', status:'andamento', date:'05/08', title:'Separação do IBS Estadual e Municipal no BPe',
+      desc:'Refinamento concluído e repassado ao time. Hoje só o IBS estadual é persistido e replicado, o municipal fica zerado — a partir de 2027 passa a ser dividido. Pendente definição do fiscal/contábil se os relatórios de IVA trazem colunas separadas ou agrupadas.',
+      update:'Refinamento concluído e repassado ao time. Hoje só o IBS estadual é persistido e replicado; a partir de 2027 passa a ser dividido entre estadual e municipal.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
+    { id:'f17', area:'feature', theme:'Fiscal', status:'pausado', date:'05/08', title:'Integração Smartbus x Globus — Atualização NTs (IBS/CBS)',
+      desc:'Integração puxada, sem retorno da Prax até agora. Cobrança feita no grupo — aguardando retorno de Lorenza com as informações de integração.',
+      update:'Integração puxada, sem retorno da Prax até agora. Cobrança feita no grupo — aguardando retorno de Lorenza.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
+    { id:'f18', area:'feature', theme:'Fiscal', status:'andamento', date:'05/08', title:'Compras Governamentais no BPe',
+      desc:'Liberado para teste, dentro do cronograma. Deploy previsto entre 10 e 11/08.',
+      update:'Liberado para teste, dentro do cronograma. Deploy previsto entre 10 e 11/08.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
+    { id:'f19', area:'feature', theme:'Fiscal', status:'pausado', date:'29/07', title:'Integrações Smartbus e ERPs (Protheus e Fortes)',
+      desc:'Ainda em on hold. Refinamento técnico previsto para a semana de 04/08. Versão-alvo atualizada de v199 para v200 (Registro ARA · Tipo de Crédito, sem impacto para o Smart).',
+      update:'Ainda está on hold. Refinamento técnico previsto para a semana de 04/08.', updateStamp:'29/07', owner:'Maurício e Ítalo' },
 
     { id:'f7', area:'feature', theme:'Viações', status:'andamento', date:'12/08', title:'Outras Viações — Motta e Princesa',
       desc:'Refinamento com Motta e Princesa marcado para amanhã com o time tech. Novas demandas de viação surgiram — como tratar a discutir na semanal.',
-      update:'Refinamento com o time tech marcado para amanhã.', updateStamp:'12/08', owner:'' },
+      update:'Refinamento com o time tech marcado para amanhã.', updateStamp:'12/08', owner:'Daniel' },
     { id:'f11', area:'feature', theme:'Viações', status:'concluido', date:'—', title:'Tickets Viações — Backlog resolvido',
       desc:'14 tickets zerados: 3 resolvidos direto, 11 mapeados no Linear para o time tech.',
-      update:'', updateStamp:'', owner:'' },
+      update:'', updateStamp:'', owner:'Daniel' },
     { id:'f12', area:'feature', theme:'Viações', status:'arquivado', date:'05/08', title:'VTR',
       desc:'Saiu de pauta em 05/08. Mantida arquivada para rastreio histórico (VG/Senna, dados macro, conflitos PE/PB).',
-      update:'', updateStamp:'', owner:'' },
+      update:'', updateStamp:'', owner:'Daniel' },
 
     { id:'f9', area:'feature', theme:'Time', status:'concluido', date:'05/08', title:'Time de Produto — Ítalo é PM Júnior',
       desc:'Maurício (GPM) lidera; Daniel (PM Pleno) e Ítalo (agora PM Júnior) reportam a ele.',
@@ -3811,7 +3861,7 @@
       update:'', updateStamp:'', owner:'Daniel' },
     { id:'f3', area:'feature', theme:'Comercial', status:'pausado', date:'—', title:'Rio Card Totem RJ',
       desc:'Reunião realizada, VPN sendo habilitada para testes. Pausado por foco no Motor V2.',
-      update:'', updateStamp:'', owner:'' }
+      update:'', updateStamp:'', owner:'Daniel' }
   ];
 
   var RS_STATE = {
@@ -3874,6 +3924,26 @@
   }
 
 
+  function rsRenderOwnerSummary() {
+    var counts = {};
+    var orderSeen = [];
+    RS_DATA.forEach(function (d) {
+      if (RS_STATE.cardStatus[d.id] === 'arquivado') return;
+      var name = (RS_STATE.owners[d.id] || '').trim() || 'sem dono';
+      if (!(name in counts)) { counts[name] = 0; orderSeen.push(name); }
+      counts[name]++;
+    });
+    orderSeen.sort(function (a, b) {
+      if (a === 'sem dono') return 1;
+      if (b === 'sem dono') return -1;
+      return counts[b] - counts[a];
+    });
+    var text = 'Por dono — ' + orderSeen.map(function (name) {
+      return '<b>' + rsEsc(name) + '</b> ' + counts[name];
+    }).join(' &nbsp;·&nbsp; ');
+    document.getElementById('rsOwnerSummary').innerHTML = text;
+  }
+
   function rsRenderStatusBar() {
     var order = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'concluido'];
     var counts = {};
@@ -3882,6 +3952,7 @@
     });
     var total = order.reduce(function (sum, k) { return sum + counts[k]; }, 0);
     document.getElementById('rsBarTotal').textContent = total + ' iniciativas';
+    rsRenderOwnerSummary();
 
     var legendLabels = {
       sem_status: 'sem status', a_fazer: 'a fazer', pausado: 'pausadas',
@@ -3917,6 +3988,7 @@
   function rsSetCardStatus(id, status) {
     RS_STATE.cardStatus[id] = status;
     RS_STATE.statusMenuOpen = null;
+    rsRenderStatusBar();
     rsRenderThemes();
   }
   document.addEventListener('click', function (e) {
@@ -3979,15 +4051,52 @@
 
   var RS_STATUS_ORDER = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'concluido', 'arquivado'];
 
+  var RS_FILTER_GROUPS = [
+    { key: 'todos',     label: 'Todos',         statuses: null },
+    { key: 'a_fazer',   label: 'A fazer',       statuses: ['a_fazer', 'arquivado'] },
+    { key: 'pausado',   label: 'Pausado',       statuses: ['pausado'] },
+    { key: 'andamento', label: 'Em andamento',  statuses: ['discovery', 'andamento'] },
+    { key: 'concluido', label: 'Concluído',     statuses: ['concluido'] }
+  ];
+  RS_STATE.activeFilter = 'andamento';
+
+  function rsSetFilter(key) {
+    RS_STATE.activeFilter = key;
+    rsRenderFilterBar();
+    rsRenderThemes();
+  }
+
+  function rsRenderFilterBar() {
+    var activeGroup = RS_FILTER_GROUPS.filter(function (g) { return g.key === RS_STATE.activeFilter; })[0];
+    var activeStatuses = activeGroup ? activeGroup.statuses : [];
+    document.getElementById('rsFilterBar').innerHTML = RS_FILTER_GROUPS.map(function (g) {
+      var count = g.statuses ? RS_DATA.filter(function (d) { return g.statuses.indexOf(RS_STATE.cardStatus[d.id]) !== -1; }).length : RS_DATA.length;
+      var isActive = g.key === RS_STATE.activeFilter;
+      return '<button type="button" class="rs-filter-btn' + (isActive ? ' active' : '') + '" onclick="rsSetFilter(\'' + g.key + '\')">' +
+        '<span class="rs-filter-btn-label">' + rsEsc(g.label) + '</span>' +
+        '<span class="rs-filter-btn-count">' + count + '</span>' +
+      '</button>';
+    }).join('');
+  }
+
   function rsRenderThemes() {
-    var all = RS_DATA;
+    var activeGroup = RS_FILTER_GROUPS.filter(function (g) { return g.key === RS_STATE.activeFilter; })[0];
+    var activeStatuses = activeGroup ? activeGroup.statuses : null;
+    var all = RS_DATA.filter(function (f) {
+      return !activeStatuses || activeStatuses.indexOf(RS_STATE.cardStatus[f.id]) !== -1;
+    });
     var byTheme = {};
     all.forEach(function (f) {
       if (!byTheme[f.theme]) byTheme[f.theme] = [];
       byTheme[f.theme].push(f);
     });
-    var themes = RS_THEME_ORDER.filter(function (t) { return byTheme[t]; });
-    Object.keys(byTheme).forEach(function (t) { if (themes.indexOf(t) === -1) themes.push(t); });
+    var themes = RS_THEME_ORDER.filter(function (t) { return byTheme[t] && byTheme[t].length; });
+    Object.keys(byTheme).forEach(function (t) { if (byTheme[t].length && themes.indexOf(t) === -1) themes.push(t); });
+
+    if (!themes.length) {
+      document.getElementById('rsBoard').innerHTML = '<div class="rs-empty-state">Nenhuma iniciativa com esse status.</div>';
+      return;
+    }
 
     document.getElementById('rsBoard').innerHTML = themes.map(function (theme) {
       var items = byTheme[theme].slice().sort(function (a, b) {
@@ -4013,6 +4122,7 @@
 
   function rsRenderAll() {
     rsRenderStatusBar();
+    rsRenderFilterBar();
     rsRenderThemes();
   }
 
