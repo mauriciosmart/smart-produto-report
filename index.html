@@ -3782,6 +3782,7 @@
   var RS_STATUS = {
     pausado:   { label: 'PAUSADO',      color: '#C2790B', bg: '#FDF3E1', fg: '#8A5606' },
     andamento: { label: 'EM DESENVOLVIMENTO', color: '#2E7FC7', bg: '#DCEEFB', fg: '#155586' },
+    validacao: { label: 'EM VALIDAÇÃO', color: '#0E9488', bg: '#DFF5F2', fg: '#0C6E64' },
     concluido: { label: 'CONCLUÍDO',    color: '#12855B', bg: '#E4F5EE', fg: '#0B6144' },
     arquivado: { label: 'ARQUIVADO',    color: '#98A1AF', bg: '#F1F3F7', fg: '#697285' },
     discovery: { label: 'EM DISCOVERY', color: '#8B5CF6', bg: '#EDE9FE', fg: '#6D28D9' },
@@ -3800,51 +3801,67 @@
       desc:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.',
       update:'Acesso ao Athena, BI e produção do SmartBus conquistado. Próx.: homologar e aplicar no dia a dia.', updateStamp:'12/08', owner:'Maurício' },
 
-    { id:'f8', area:'feature', theme:'Motor V2', status:'andamento', date:'12/08', title:'Dashboard de acompanhamento',
-      desc:'Bug de persistência encontrado pelo time de BI. Gui foi realocado para corrigir o ajuste.',
-      update:'', updateStamp:'', owner:'Daniel' },
+    { id:'f8', area:'feature', theme:'Motor V2', status:'validacao', date:'24/08', title:'Dashboard de acompanhamento',
+      desc:'Parte 1 do dashboard entregue em 24/08 e liberada para validação de Daniel Silva. Prazo para concluir os testes: 28/08.',
+      update:'Parte 1 do dashboard entregue em 24/08 e liberada para validação de Daniel Silva. Prazo para concluir os testes: 28/08.', updateStamp:'24/08', owner:'Daniel' },
     { id:'f1', area:'feature', theme:'Motor V2', status:'concluido', date:'12/08', title:'100% dos PDVs offline',
       desc:'Ativação offline concluída em 12/08.',
       update:'', updateStamp:'', owner:'Daniel' },
-    { id:'f20', area:'feature', theme:'Motor V2', status:'andamento', date:'—', title:'Planejamento de ativação do online',
-      desc:'', update:'', updateStamp:'', owner:'Daniel' },
+    { id:'f20', area:'feature', theme:'Motor V2', status:'andamento', date:'24/08', title:'Planejamento de ativação do online',
+      desc:'Plano de ativação definido em 3 fases: Fase 1 — 10% de cobertura (125 localidades), início 25/08; Fase 2 — 40% de cobertura (509 localidades), início 31/08; Fase 3 — 100% de cobertura (1.271 localidades), início 08/09.',
+      update:'Plano de ativação definido em 3 fases: Fase 1 — 10% de cobertura (125 localidades), início 25/08; Fase 2 — 40% de cobertura (509 localidades), início 31/08; Fase 3 — 100% de cobertura (1.271 localidades), início 08/09.', updateStamp:'24/08', owner:'Daniel' },
+    { id:'f29', area:'feature', theme:'Motor V2', status:'concluido', date:'25/08', title:'Ampliação do limite de conexões por serviço',
+      desc:'Ampliado o limite de conexões para o mesmo serviço. Em algumas situações, a limitação anterior impedia a disponibilização das classes Executivo e Semi Leito nas opções de conexão — ponto solucionado nesta semana.',
+      update:'Limite de conexões ampliado — classes Executivo e Semi Leito voltaram a ser disponibilizadas nas opções de conexão.', updateStamp:'25/08', owner:'Daniel' },
     { id:'f2', area:'feature', theme:'OSP', status:'pausado', date:'05/08', title:'Simultâneas Parciais (OSP)',
       desc:'Pausada — capacidade do time concentrada na frente de Gratuidades. Retomada sem data definida.',
       update:'Capacidade do time segue alocada em Gratuidades. Sem data de retomada.', updateStamp:'05/08', owner:'Daniel' },
 
-    { id:'f21', area:'feature', theme:'Fraudes', status:'andamento', date:'—', title:'Cancelamento, troca, transferência e devolução em cascata',
-      desc:'', update:'', updateStamp:'', owner:'Daniel' },
-    { id:'f22', area:'feature', theme:'Fraudes', status:'discovery', date:'—', title:'Tipo de passagem do acompanhante e validação de idade na emissão',
-      desc:'', update:'', updateStamp:'', owner:'Daniel' },
+    { id:'f21', area:'feature', theme:'Fraudes', status:'validacao', date:'24/08', title:'Cancelamento, troca, transferência e devolução em cascata',
+      desc:'Desenvolvimento em fase final. Deploy do fluxo de cancelamento já realizado; deploy dos fluxos de troca e transferência previsto para hoje.',
+      update:'Desenvolvimento em fase final. Deploy do fluxo de cancelamento já realizado; deploy dos fluxos de troca e transferência previsto para hoje.', updateStamp:'24/08', owner:'Daniel' },
+    { id:'f22', area:'feature', theme:'Fraudes', status:'andamento', date:'24/08', title:'Destaque no bilhete e vínculo obrigatório',
+      desc:'Discovery e refinamento técnico concluídos. Demanda repassada ao time de engenharia para início do desenvolvimento.',
+      update:'Discovery e refinamento técnico concluídos. Demanda repassada ao time de engenharia para início do desenvolvimento.', updateStamp:'24/08', owner:'Daniel' },
     { id:'f23', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Travas de marcação e termo de recusa',
       desc:'', update:'', updateStamp:'', owner:'Daniel' },
     { id:'f24', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Comprovação do benefício de gratuidade',
       desc:'', update:'', updateStamp:'', owner:'Daniel' },
 
-    { id:'f13', area:'feature', theme:'Fiscal', status:'discovery', date:'05/08', title:'Dedução de ICMS/PIS/COFINS da BC do IBS/CBS no Excesso de Bagagem',
-      desc:'Não há dedução de ICMS na base de cálculo do excesso de bagagem — o ICMS é emitido em outro documento fiscal (CTOS), o que exigiria envio pelo Proteus. Reunião marcada para definir cobrança/abatimento.',
-      update:'Não há dedução de ICMS na base de cálculo do excesso de bagagem — o ICMS é emitido em outro documento fiscal (CTOS), o que exigiria envio pelo Proteus. Reunião marcada para definir cobrança/abatimento.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
-    { id:'f14', area:'feature', theme:'Fiscal', status:'a_fazer', date:'—', title:'Compras Governamentais com Pagamento Antecipado (tpOperGov 2, 3 e 4)',
-      desc:'', update:'', updateStamp:'', owner:'Maurício e Ítalo' },
+    { id:'f13', area:'feature', theme:'Fiscal', status:'discovery', date:'25/08', title:'Dedução de ICMS/PIS/COFINS da BC do IBS/CBS no Excesso de Bagagem',
+      desc:'Não há dedução de ICMS na base de cálculo do excesso de bagagem — o ICMS é emitido em outro documento fiscal (CTOS), o que exigiria envio pelo Proteus. Ainda sem decisão, pendente de definição do Comitê Gestor do IBS/CBS.',
+      update:'Sem decisão ainda — pendente de definição do Comitê Gestor do IBS/CBS sobre o encaminhamento.', updateStamp:'25/08', owner:'Maurício e Ítalo' },
+    { id:'f14', area:'feature', theme:'Fiscal', status:'a_fazer', date:'25/08', title:'Compras Governamentais com Pagamento Antecipado (tpOperGov 2, 3 e 4)',
+      desc:'Tipos 2 (recebimento do pagamento com fornecimento já realizado) e 3 (fornecimento com pagamento já realizado) seguem aguardando definição do Comitê. Tipo 4 já avançou dentro da iniciativa CORE-002 — ver "Compras Governamentais no BPe".',
+      update:'Tipos 2 e 3 seguem aguardando definição do Comitê. Pendente de decisão para avançar.', updateStamp:'25/08', owner:'Maurício e Ítalo' },
     { id:'f15', area:'feature', theme:'Fiscal', status:'andamento', date:'05/08', title:'Vinculação com a Transação de Pagamento do DFe (NT 2026.001)',
       desc:'Discovery da nota técnica sobre vínculo das informações de pagamento do BPE em andamento — vai direcionar a necessidade de motor tributário e motor de pagamentos. Condução a quatro mãos, com responsabilidade transferida para Ítalo.',
       update:'Discovery da NT sobre vínculo das informações de pagamento do BPE em andamento — vai direcionar a necessidade de motor tributário e motor de pagamentos.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
-    { id:'f16', area:'feature', theme:'Fiscal', status:'andamento', date:'05/08', title:'Separação do IBS Estadual e Municipal no BPe',
-      desc:'Refinamento concluído e repassado ao time. Hoje só o IBS estadual é persistido e replicado, o municipal fica zerado — a partir de 2027 passa a ser dividido. Pendente definição do fiscal/contábil se os relatórios de IVA trazem colunas separadas ou agrupadas.',
-      update:'Refinamento concluído e repassado ao time. Hoje só o IBS estadual é persistido e replicado; a partir de 2027 passa a ser dividido entre estadual e municipal.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
-    { id:'f17', area:'feature', theme:'Fiscal', status:'pausado', date:'05/08', title:'Integração Smartbus x Globus — Atualização NTs (IBS/CBS)',
-      desc:'Integração puxada, sem retorno da Prax até agora. Cobrança feita no grupo — aguardando retorno de Lorenza com as informações de integração.',
-      update:'Integração puxada, sem retorno da Prax até agora. Cobrança feita no grupo — aguardando retorno de Lorenza.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
-    { id:'f18', area:'feature', theme:'Fiscal', status:'andamento', date:'05/08', title:'Compras Governamentais no BPe',
-      desc:'Liberado para teste, dentro do cronograma. Deploy previsto entre 10 e 11/08.',
-      update:'Liberado para teste, dentro do cronograma. Deploy previsto entre 10 e 11/08.', updateStamp:'05/08', owner:'Maurício e Ítalo' },
+    { id:'f16', area:'feature', theme:'Fiscal', status:'andamento', date:'25/08', title:'Separação do IBS Estadual e Municipal no BPe',
+      desc:'Refinamento concluído e repassado ao time. Hoje só o IBS estadual é persistido e replicado, o municipal fica zerado — a partir de 2027 passa a ser dividido. Reunião com o time fiscal/contábil já realizada: decidido que os relatórios de IVA trarão as colunas de IBS estadual e municipal separadas.',
+      update:'Decisão confirmada com o fiscal/contábil: relatórios de IVA trarão IBS estadual e municipal em colunas separadas. Próximo passo: finalizar especificação e direcionar à equipe técnica.', updateStamp:'25/08', owner:'Maurício e Ítalo' },
+    { id:'f17', area:'feature', theme:'Fiscal', status:'pausado', date:'25/08', title:'Integração Smartbus x Globus — Atualização NTs (IBS/CBS)',
+      desc:'Dependência dos campos gCompraGov (vinculada ao CORE-002 Tipo 1) já resolvida — está em produção. Seguem em aberto: leiautes da Praxio desatualizados em relação às NTs 2026.001/2026.002, e devolutiva do Globus sobre as últimas notas técnicas ainda pendente.',
+      update:'Dependência dos campos gCompraGov resolvida (CORE-002 Tipo 1 em produção). Ítalo segue especificando a integração de API com a Proteus, aguardando devolutiva de Globus e Praxio.', updateStamp:'25/08', owner:'Maurício e Ítalo' },
+    { id:'f18', area:'feature', theme:'Fiscal', status:'validacao', date:'25/08', title:'Compras Governamentais no BPe',
+      desc:'Deploy realizado com sucesso. Tipo 1 (fornecimento com pagamento posterior) já está em produção. Tipo 4 (recebimento do pagamento com fornecimento posterior) passou pela bateria de testes em homologação com retorno positivo e segue para publicação em produção. Tipos 2 e 3 seguem aguardando definições do Comitê.',
+      update:'Tipo 1 em produção. Tipo 4 aprovado em homologação, seguindo para produção. Tipos 2 e 3 pendentes de definição do Comitê.', updateStamp:'25/08', owner:'Maurício e Ítalo' },
     { id:'f19', area:'feature', theme:'Fiscal', status:'pausado', date:'29/07', title:'Integrações Smartbus e ERPs (Protheus e Fortes)',
       desc:'Ainda em on hold. Refinamento técnico previsto para a semana de 04/08. Versão-alvo atualizada de v199 para v200 (Registro ARA · Tipo de Crédito, sem impacto para o Smart).',
       update:'Ainda está on hold. Refinamento técnico previsto para a semana de 04/08.', updateStamp:'29/07', owner:'Maurício e Ítalo' },
+    { id:'f25', area:'feature', theme:'Fiscal', status:'discovery', date:'25/08', title:'Assessoria Técnica-Fiscal',
+      desc:'BDO retornou informando que o modelo solicitado não pode ser efetivado, devido à auditoria já realizada pela BDO no Grupo Guanabara — o único caminho seria revisar o que já foi feito, o que não atende à necessidade. Parceria com a BDO descartada. Com isso, tanto E&Y quanto BDO já foram descartadas — nenhum parceiro aprovado até o momento.',
+      update:'E&Y e BDO descartadas — nenhum parceiro aprovado até o momento. Segue a busca por novos parceiros com apoio de Caparica, Nuno e Benício.', updateStamp:'25/08', owner:'Maurício e Ítalo' },
+    { id:'f26', area:'feature', theme:'Fiscal', status:'andamento', date:'25/08', title:'Treinamento Reforma Tributária e sua Regulamentação',
+      desc:'Treinamento em andamento, nos formatos presencial e online, para todos os envolvidos no projeto no Grupo Guanabara. Ministrado pelo Prof. Irapuã Beltrão. Iniciou em 18/08, já com 2 aulas realizadas.',
+      update:'Treinamento seguindo cronograma. 3ª aula em 25/08 e 4ª (última) aula em 27/08.', updateStamp:'25/08', owner:'Ítalo' },
+    { id:'f27', area:'feature', theme:'Fiscal', status:'andamento', date:'25/08', title:'Documentação de Escopo Implementado — BPe (XML)',
+      desc:'Identificada a necessidade de documentar todo o escopo já implementado com base no BPe (XML), levantando as últimas notas técnicas e schemas do portal do Bilhete Eletrônico. Objetivo: ter visibilidade do que já foi atendido e do que ainda está pendente, revisar pontos que não se aplicam ao modelo de negócio e encaminhar ao Comitê Gestor as dúvidas sem definição.',
+      update:'Levantamento e documentação em andamento.', updateStamp:'25/08', owner:'Maurício e Ítalo' },
 
-    { id:'f7', area:'feature', theme:'Viações', status:'andamento', date:'12/08', title:'Outras Viações — Motta e Princesa',
-      desc:'Refinamento com Motta e Princesa marcado para amanhã com o time tech. Novas demandas de viação surgiram — como tratar a discutir na semanal.',
-      update:'Refinamento com o time tech marcado para amanhã.', updateStamp:'12/08', owner:'Daniel' },
+    { id:'f7', area:'feature', theme:'Viações', status:'validacao', date:'24/08', title:'Outras Viações — Motta e Princesa',
+      desc:'3 melhorias desenvolvidas para a Princesa: 2 já entregues e a terceira com desenvolvimento concluído pelo time de engenharia — deploy previsto para hoje.',
+      update:'3 melhorias desenvolvidas para a Princesa: 2 já entregues e a terceira com desenvolvimento concluído — deploy previsto para hoje.', updateStamp:'24/08', owner:'Daniel' },
     { id:'f11', area:'feature', theme:'Viações', status:'concluido', date:'—', title:'Tickets Viações — Backlog resolvido',
       desc:'14 tickets zerados: 3 resolvidos direto, 11 mapeados no Linear para o time tech.',
       update:'', updateStamp:'', owner:'Daniel' },
@@ -3856,9 +3873,9 @@
       desc:'Maurício (GPM) lidera; Daniel (PM Pleno) e Ítalo (agora PM Júnior) reportam a ele.',
       update:'Estrutura do time formalizada.', updateStamp:'05/08', owner:'Maurício' },
 
-    { id:'f4', area:'feature', theme:'Comercial', status:'andamento', date:'—', title:'Apoio ao Viva',
-      desc:'Daniel apoia a Bidinha no desenvolvimento de venda com pontos Viva no frontoffice.',
-      update:'', updateStamp:'', owner:'Daniel' },
+    { id:'f4', area:'feature', theme:'Comercial', status:'andamento', date:'24/08', title:'Apoio ao Viva',
+      desc:'Daniel apoia a Bidinha no desenvolvimento de venda com pontos Viva no frontoffice. Desenvolvimento já iniciado pelo time de engenharia.',
+      update:'Desenvolvimento já iniciado pelo time de engenharia.', updateStamp:'24/08', owner:'Daniel' },
     { id:'f3', area:'feature', theme:'Comercial', status:'pausado', date:'—', title:'Rio Card Totem RJ',
       desc:'Reunião realizada, VPN sendo habilitada para testes. Pausado por foco no Motor V2.',
       update:'', updateStamp:'', owner:'Daniel' }
@@ -3945,7 +3962,7 @@
   }
 
   function rsRenderStatusBar() {
-    var order = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'concluido'];
+    var order = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'validacao', 'concluido'];
     var counts = {};
     order.forEach(function (k) {
       counts[k] = RS_DATA.filter(function (d) { return RS_STATE.cardStatus[d.id] === k; }).length;
@@ -3956,7 +3973,7 @@
 
     var legendLabels = {
       sem_status: 'sem status', a_fazer: 'a fazer', pausado: 'pausadas',
-      discovery: 'em discovery', andamento: 'em desenvolvimento', concluido: 'concluídas'
+      discovery: 'em discovery', andamento: 'em desenvolvimento', validacao: 'em validação', concluido: 'concluídas'
     };
     document.getElementById('rsBarTrack').innerHTML = order.map(function (k) {
       var count = counts[k];
@@ -3998,8 +4015,8 @@
     }
   });
 
-  var RS_FEATURE_STATUSES = ['sem_status', 'a_fazer', 'discovery', 'andamento', 'pausado', 'concluido', 'arquivado'];
-  var RS_THEME_ORDER = ['Fiscal', 'Motor V2', 'Fraudes', 'Time', 'Viações', 'OSP', 'Comercial'];
+  var RS_FEATURE_STATUSES = ['sem_status', 'a_fazer', 'discovery', 'andamento', 'validacao', 'pausado', 'concluido', 'arquivado'];
+  var RS_THEME_ORDER = ['Fiscal', 'Motor V2', 'Fraudes', 'OSP', 'Comercial', 'Viações', 'Time'];
   var RS_THEME_LABELS = {
     'Fiscal': 'Reforma<br>Tributária',
     'Motor V2': 'Motor de<br>Conexões V2',
@@ -4049,13 +4066,13 @@
       '</div>';
   }
 
-  var RS_STATUS_ORDER = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'concluido', 'arquivado'];
+  var RS_STATUS_ORDER = ['sem_status', 'a_fazer', 'pausado', 'discovery', 'andamento', 'validacao', 'concluido', 'arquivado'];
 
   var RS_FILTER_GROUPS = [
     { key: 'todos',     label: 'Todos',         statuses: null },
     { key: 'a_fazer',   label: 'A fazer',       statuses: ['a_fazer', 'arquivado'] },
     { key: 'pausado',   label: 'Pausado',       statuses: ['pausado'] },
-    { key: 'andamento', label: 'Em andamento',  statuses: ['discovery', 'andamento'] },
+    { key: 'andamento', label: 'Em andamento',  statuses: ['discovery', 'andamento', 'validacao'] },
     { key: 'concluido', label: 'Concluído',     statuses: ['concluido'] }
   ];
   RS_STATE.activeFilter = 'andamento';
