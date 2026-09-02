@@ -3823,8 +3823,9 @@
     { id:'f22', area:'feature', theme:'Fraudes', status:'andamento', date:'02/09', title:'Destaque no bilhete e vínculo obrigatório',
       desc:'O bilhete passa a exibir uma tarja de destaque visual com o tipo de passagem do passageiro, logo abaixo do QR Code. O acompanhante do titular de passe livre — pessoa, criança de colo, cão ou gato — só pode ser emitido com o titular selecionado no mesmo serviço.',
       update:'Destaque do tipo de desconto no PDF finalizado — deploy hoje. Próx.: adicionar a tarja preta no PDF e o tipo de desconto com a tarja no bilhete impresso.', updateStamp:'02/09', owner:'Daniel' },
-    { id:'f23', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Travas de marcação e termo de recusa',
-      desc:'', update:'', updateStamp:'', owner:'Daniel' },
+    { id:'f23', area:'feature', theme:'Fraudes', status:'discovery', date:'02/09', title:'Travas de marcação e termo de recusa',
+      desc:'Entrega três regras de bloqueio automático direto no backend — duplicidade de poltrona, viagem em curso e validação de faixa etária — e o módulo de termo de recusa, que formaliza qualquer negativa gerada por essas regras.',
+      update:'Foi finalizado o discovery. Daniel está concluindo a documentação, e na próxima semana deve marcar o refinamento técnico. Impacto: as três regras passam a barrar a marcação indevida direto no backend, no momento da tentativa, e o termo de recusa dá respaldo formal para negar sem expor a empresa a risco de autuação. Próx. passo: finalizar a documentação e marcar o refinamento técnico.', updateStamp:'02/09', owner:'Daniel' },
     { id:'f24', area:'feature', theme:'Fraudes', status:'a_fazer', date:'—', title:'Comprovação do benefício de gratuidade',
       desc:'', update:'', updateStamp:'', owner:'Daniel' },
 
@@ -3879,9 +3880,9 @@
     { id:'f3', area:'feature', theme:'Comercial', status:'pausado', date:'—', title:'Rio Card Totem RJ',
       desc:'Reunião realizada, VPN sendo habilitada para testes. Pausado por foco no Motor V2.',
       update:'', updateStamp:'', owner:'Daniel' },
-    { id:'f30', area:'feature', theme:'Comercial', status:'a_fazer', date:'02/09', title:'ClickBus <> Smart',
+    { id:'f30', area:'feature', theme:'Comercial', status:'discovery', date:'02/09', title:'ClickBus <> Smart',
       desc:'Solicitação aberta para desenvolver a opção de troca via API da Smart.',
-      update:'Reunião marcada para 04/09 com os times de produto da ClickBus e da Smart. Impacto ainda não estimado. Próx.: pré-discovery para entender o impacto e a quantidade de solicitações dos passageiros nesse cenário, e estimar a prioridade.', updateStamp:'02/09', owner:'' }
+      update:'Reunião marcada para 04/09 com os times de produto da ClickBus e da Smart. Impacto ainda não estimado. Próx.: pré-discovery para entender o impacto e a quantidade de solicitações dos passageiros nesse cenário, e estimar a prioridade.', updateStamp:'02/09', owner:'Daniel' }
   ];
 
   var RS_STATE = {
